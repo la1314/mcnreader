@@ -1,0 +1,34 @@
+{
+  "name": "mcnreader",
+  "version": "1.0.0",
+  "description": "Final Proyect DAW",
+  "main": "server.js",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "dev:server": "cd client && yarn build && cd .. && yarn start",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/la1314/mcnreader.git"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "create-react-app"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/la1314/mcnreader/issues"
+  },
+  "homepage": "https://github.com/la1314/mcnreader#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "path": "^0.12.7"
+  }
+}
