@@ -10,19 +10,22 @@ export default class Main extends Component {
 
     callAPI() {
 
-        const requestOptions = {
+        /*const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             //body: JSON.stringify({ title: 'React POST Request Example' })
-        };
+        };*/
 
         /*fetch("/users", requestOptions)
             .then(res => res.text())
             .then(res => this.setState({ postResponse: res }));*/
         fetch("/api/obras")
             .then(res => res.text())
-            .then(res => this.setState({ apiResponse: res }));
-
+            .then(res => {
+                //console.log(JSON.parse(res))
+                this.setState({ apiResponse: res })
+            }
+            );
 
     }
 

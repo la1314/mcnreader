@@ -1,0 +1,64 @@
+//SCSS para los componentes que componen a la session de la app
+
+//Contenedor principal de los componentes de session
+//Adopta el 100% del alto y ancho visible del navegador
+//Centra el contenido que posee
+.main-session-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: green;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+//Contenedor de los componentes Login, Register y Recover
+//distribuira los componentes en 3 columnas
+.session-container {
+
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    height: 50vh;
+    width: 85vw;
+    background-color: pink;
+    border: 1px solid black;
+
+    //Modificaciones en el lateral Izquierdo
+    .session-izq {
+        background-color: honeydew;
+        border: 1px solid black;
+    }
+
+    .session-cent {
+            display: grid;
+            align-items: center;
+            justify-items: center;
+
+        .base-container {
+            
+            display: grid;
+            align-items: center;
+            justify-items: center;
+            width: 90%;
+            background-color: indigo;
+    
+            .form-group {
+                display: grid;
+                align-items: center;
+                justify-items: center;
+                
+                input {
+                    display: grid;
+                    width: 90%;
+                }
+            }   
+        }
+    }
+    
+    //Modificaciones en el lateral Derecho
+    .session-der {
+        background-color: honeydew;
+        border: 1px solid black;
+    }
+
+}
