@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+//import axios from 'axios';
 
 export default class Register extends Component {
     
@@ -24,7 +25,7 @@ export default class Register extends Component {
         </div>
         <div className="footer">
           <button type="button" className="btn">
-            Send Number to Email
+            Send Email
           </button>
         </div>
       </div>
