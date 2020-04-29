@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import axios from 'axios';
 const md5 = require('md5');
 
+
+
 export default class Login extends Component {
 
+
   constructor(props) {
+
     super(props);
     this.state = { username: "" };
     this.state = { password: "" };
@@ -13,54 +17,71 @@ export default class Login extends Component {
 
   verificarUsuario = () => {
 
-    const {username} = this.state
-    axios.post('/api/check-user/',null, { params: {
-      user : username
-    }})
-    .then( res => console.log(res.data[0].Booleano))
+    const { username } = this.state
+    axios.post('/api/check-user/', null, {
+      params: {
+        user: username
+      }
+    })
+      
 
   }
 
   updateUsername = (e) => {
 
     const username = e.target.value;
-    this.setState({username: username})
+    this.setState({ username: username })
 
   }
 
   updatePassword = (e) => {
 
     const password = md5(e.target.value);
-    this.setState({password: password})
+    this.setState({ password: password })
 
   }
 
   loginUser = () => {
 
-    const {username, password} = this.state;
-    
-    axios.post('/api/generate-token/',null, { params: {
-      user : username,
-      password: password
-    }})
-    .then( res => (res.data))
+    const { username, password } = this.state;
 
+    return axios.post('/api/generate-token/', null, {
+      params: {
+        user: username,
+        password: password
+      }
+    }).then(function (res) {
+        // handle success
+        return res.data
+      })
   }
 
+
+  //
   checkLogin = () => {
-    axios.get('/api/checkToken')
-    .then(function (response) {
-      // handle success
-      console.log(response.data);
-    })
+
+    if (this.loginUser()) {
+      this.props.checkAuth()
+    }
   }
 
+
+  //Comprobar Token
+  checkToken = () => {
+    axios.get('/api/checkToken')
+      .then(function (response) {
+        // handle success
+        console.log(response.data);
+      })
+  }
+
+  //Liampia la cookie
   clearCookie = () => {
     axios.get('/api/clear')
-    .then(function (response) {
-      // handle success
-      console.log(response.data);
-    })
+      .then(function (response) {
+        // handle success
+        console.log(response.data);
+      })
   }
 
   render() {
@@ -80,14 +101,14 @@ export default class Login extends Component {
           </div>
         </div>
         <div className="footer">
-          <button type="button" onClick={() => this.loginUser()}  className="btn">
+          <button type="submit" onClick={() => this.checkLogin()} className="btn">
             Login
           </button>
-          <button type="button" onClick={() => this.checkLogin()}  className="btn">
+          <button type="button" onClick={() => this.checkToken()} className="btn">
             Comprobar Token
           </button>
-          <button type="button" onClick={() => this.clearCookie()}  className="btn">
-           Limpiar Cookie
+          <button type="button" onClick={() => this.clearCookie()} className="btn">
+            Limpiar Cookie
           </button>
         </div>
       </div>

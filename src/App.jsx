@@ -1,16 +1,16 @@
-import React from 'react';
-import Main from './components/sesion/Main.jsx';
+import React, { Component } from 'react';
+import Main from './components/authentication/Main.jsx'
+
 import "./App.scss";
 
-function App() {
-  
-  return (
+export default class App extends Component {
 
-    <div className="App">
-      <Main/>
-    </div>
+  render() {
+    return (
 
-  );
+      <div className="App">
+        <Main />
+      </div>
+    );
+  }
 }
-
-export default App;

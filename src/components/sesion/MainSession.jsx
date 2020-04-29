@@ -5,8 +5,7 @@ import Login from './Login';
 import Recover from './Recover';
 import Logo from './logo.png';
 
-
-export default class Main extends Component {
+export default class MainSession extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,8 +23,6 @@ export default class Main extends Component {
       derecha: derecha2,
       derecha2: centro
     });
-
-
   }
 
   render() {
@@ -46,7 +43,7 @@ export default class Main extends Component {
           <div className="session-container">
             <div className="session-cent" ref={ref => (this.container = ref)}>
               {centro === 0 && (
-                <Login containerRef={ref => (this.current = ref)} />
+                <Login checkAuth={this.props.checkAuth} containerRef={ref => (this.current = ref)} />
                
               )}
               {centro === 1 && (
