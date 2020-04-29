@@ -15,9 +15,11 @@ export default class MainApp extends Component {
       })
   }
 
-  logout = () => {
+  logout = async () => {
 
-    if (this.clearCookie()) {
+    const incognita = await this.clearCookie()
+
+    if (incognita) {
       
       this.props.checkAuth()
 

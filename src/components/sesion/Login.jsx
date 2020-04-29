@@ -58,10 +58,13 @@ export default class Login extends Component {
 
 
   //
-  checkLogin = () => {
+  checkLogin = async () => {
 
-    if (this.loginUser()) {
+    const incognita = await this.loginUser()
+    if (incognita) {
+      
       this.props.checkAuth()
+
     }
   }
 

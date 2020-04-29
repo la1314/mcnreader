@@ -8,48 +8,41 @@ export default class Main extends Component {
   constructor() {
     super();
     this.state = {
-      redirect: 0
+      redirect: false
     };
   }
 
   componentDidMount() {
 
     this.checkAuth()
-
   }
 
-  checkAuth = () => {
+  checkAuth = async () => {
 
-    axios.get('/api/checkToken')
-      .then(res => {
-        // handle success
-         this.updateRedirect(res.data)
-      })
-  }
+    const incognita = await axios.get('/api/checkToken')
 
-  updateRedirect = (value) => {
+    if (incognita.data) {
+      this.setState({redirect: true})
+    }else{
+      this.setState({redirect: false})
+    }
     
-    this.setState({
-      redirect: value
-    }, function () {
-      this.forceUpdate()
-    })
   }
+
 
   render() {
-    
+
     const { redirect } = this.state;
 
     return (
 
       <div className="App">
-        
-        {redirect === 0 && (
-          <Session checkAuth={this.checkAuth} />
-        )}
-        {redirect === 1 && (
+
+        {redirect ?
           <MainApp checkAuth={this.checkAuth} />
-        )}
+          :
+          <Session checkAuth={this.checkAuth} />
+        }
       </div>
 
     );
