@@ -17,14 +17,17 @@ export default class Main extends Component {
     this.checkAuth()
   }
 
+  /**
+   * Comprueba si existe un token válido, en caso de existir redirige a la app y guarda la ID del token como estado
+   * en caso contrario limpia el estado y redirige a session
+   */
   checkAuth = async () => {
 
     const incognita = await axios.get('/api/checkToken')
-
     if (incognita.data) {
-      this.setState({redirect: true})
+      this.setState({redirect: true, idUser: incognita.data})
     }else{
-      this.setState({redirect: false})
+      this.setState({redirect: false, idUser: ''})
     }
     
   }

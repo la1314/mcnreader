@@ -24,8 +24,13 @@ export default class MainApp extends Component {
       this.props.checkAuth()
 
     }
+  }
 
-    
+  checkUser = () => {
+   /* return axios.post('/api/check-user/')
+      .then(function (response) {
+        console.log( response.data);
+      })*/
   }
 
   render() {
@@ -35,6 +40,9 @@ export default class MainApp extends Component {
         <p>Holis perras</p>
         <button type="submit" onClick={() => this.logout()} className="btn">
           Limpiar Cookie
+       </button>
+        <button type="submit" onClick={() => this.checkUser()} className="btn">
+          Consultar Usuario
        </button>
 
       </div>
