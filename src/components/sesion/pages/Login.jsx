@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 const md5 = require('md5');
 
-
-
 export default class Login extends Component {
 
 
@@ -15,18 +13,20 @@ export default class Login extends Component {
 
   }
 
-  verificarUsuario = () => {
+  //Comprueba que el usuario actual exista
+  //Posiblemente se tenga que pasar al padre para que sea reutilizado por los otros hijos
+  verificarUsuario = async () => {
 
     const { username } = this.state
-    axios.post('/api/check-user/', null, {
-      params: {
-        user: username
-      }
-    })
-      
+
+    const incognita = await this.props.checkUser(username);
+    
+    console.log('Check user: ' + incognita);
+    
 
   }
 
+  //Actualiza el estado username con el value del target
   updateUsername = (e) => {
 
     const username = e.target.value;
@@ -34,6 +34,7 @@ export default class Login extends Component {
 
   }
 
+  //Actualiza el estado password con el value del target
   updatePassword = (e) => {
 
     const password = md5(e.target.value);
@@ -51,40 +52,23 @@ export default class Login extends Component {
         password: password
       }
     }).then(function (res) {
-        // handle success
-        return res.data
-      })
+      // handle success
+      console.log( 'Login: ' + res.data);
+      
+      return res.data
+    })
   }
 
 
-  //
+  //TODO
   checkLogin = async () => {
 
     const incognita = await this.loginUser()
     if (incognita) {
-      
+
       this.props.checkAuth()
 
     }
-  }
-
-
-  //Comprobar Token
-  checkToken = () => {
-    axios.get('/api/checkToken')
-      .then(function (response) {
-        // handle success
-        console.log(response.data);
-      })
-  }
-
-  //Liampia la cookie
-  clearCookie = () => {
-    axios.get('/api/clear')
-      .then(function (response) {
-        // handle success
-        console.log(response.data);
-      })
   }
 
   render() {
@@ -106,12 +90,6 @@ export default class Login extends Component {
         <div className="footer">
           <button type="submit" onClick={() => this.checkLogin()} className="btn">
             Login
-          </button>
-          <button type="button" onClick={() => this.checkToken()} className="btn">
-            Comprobar Token
-          </button>
-          <button type="button" onClick={() => this.clearCookie()} className="btn">
-            Limpiar Cookie
           </button>
         </div>
       </div>

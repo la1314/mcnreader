@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Session from '../sesion/MainSession.jsx';
-import MainApp from '../withAuth/MainApp.jsx'
+import MainApp from '../mainApp/MainApp.jsx'
 
 export default class Main extends Component {
 
   constructor() {
     super();
     this.state = {
-      redirect: false
+      redirect: null
     };
   }
 
@@ -36,7 +36,7 @@ export default class Main extends Component {
   render() {
 
     const { redirect } = this.state;
-
+    if (redirect === null) { return null }
     return (
 
       <div className="App">

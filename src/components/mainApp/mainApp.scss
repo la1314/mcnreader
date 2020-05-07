@@ -1,0 +1,20 @@
+.main-App div {
+    color: white;
+}
+
+.menu-item-container {
+
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    column-gap: 10px;
+
+    .menu-item {
+        height: 50px;
+        border: solid 1px pink;
+    }
+
+    .menu-item-logout {
+        height: 50px;
+        border: solid 2px red;
+    }
+}
