@@ -61,7 +61,7 @@ export default class MainSession extends Component {
 
               )}
               {centro === 1 && (
-                <Register containerRef={ref => (this.current = ref)} />
+                <Register checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
               )}
               {centro === 2 && (
 

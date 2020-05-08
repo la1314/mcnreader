@@ -14,7 +14,6 @@ export default class Login extends Component {
   }
 
   //Comprueba que el usuario actual exista
-  //Posiblemente se tenga que pasar al padre para que sea reutilizado por los otros hijos
   verificarUsuario = async () => {
 
     const { username } = this.state
@@ -29,6 +28,7 @@ export default class Login extends Component {
   //Actualiza el estado username con el value del target
   updateUsername = (e) => {
 
+    e.target.value = e.target.value.replace(' ', '')
     const username = e.target.value;
     this.setState({ username: username })
 
@@ -37,6 +37,7 @@ export default class Login extends Component {
   //Actualiza el estado password con el value del target
   updatePassword = (e) => {
 
+    e.target.value = e.target.value.replace(' ', '')
     const password = md5(e.target.value);
     this.setState({ password: password })
 
@@ -70,6 +71,7 @@ export default class Login extends Component {
 
     }
   }
+
 
   render() {
     return (
