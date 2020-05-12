@@ -19,38 +19,34 @@ export default class Register extends Component {
   }
 
   //carga los datos de la pagina actual
-  componentDidMount(){
-
+  componentDidMount() {
     this.recuperarStados()
   }
 
+  //Intenta recuperar datos 
   recuperarStados = () => {
 
-    if (localStorage.getItem('username')) {
-      this.setState({username: localStorage.getItem('username')})
-
-    } else {
-      this.setState({username: ""})
-    }
-
-    if (localStorage.getItem('email')) {
-      this.setState({email: localStorage.getItem('email')})
-    } else {
-      this.setState({email: ""})
-    }
-
+    if (localStorage.getItem('username')) {this.setState({ username: localStorage.getItem('username')}, () => {this.verificarUsuario('username')} )}
+    if (localStorage.getItem('email')) {this.setState({ email: localStorage.getItem('email')}, () => {this.verificarUsuario('email')})}
   }
 
   //Comprueba que el usuario actual exista
-  verificarUsuario = async (e) => {
+  verificarUsuario = async (name) => {
 
-    const nameInput = e.target.getAttribute('name');
-    const { username } = this.state
-    const incognita = await this.props.checkUser(username);
+    console.log(name);
+    
+
+    const nameInput = name;
+    const { username, email } = this.state
+    
 
     if (nameInput === 'username') {
-      incognita ?  this.setState({ usernameBool: false }) : this.setState({ usernameBool: true })
-    }else {
+
+      const incognita = await this.props.checkUser(username);
+      incognita ? this.setState({ usernameBool: false }) : this.setState({ usernameBool: true })
+    } else {
+
+      const incognita = await this.props.checkUser(email);
       incognita ? this.setState({ emailBool: false }) : this.setState({ emailBool: true })
     }
 
@@ -89,68 +85,64 @@ export default class Register extends Component {
 
     this.setState({ password: password })
 
+    //TODO aplicar patron para cambiar stado booleano
+    this.setState({ passBool: true, repassBool: false })
+
   }
 
   //Actualiza el estado password con el value del target
   updateRePassword = (e) => {
 
     e.target.value = e.target.value.replace(' ', '')
-    
+
     const repassword = md5(e.target.value);
 
     //Función flecha utilizada para esperar que el state sea reasignado para lanzar la función comparatePassword
-    this.setState({ repassword: repassword }, () => {this.comparatePassword()})
-    
+    this.setState({ repassword: repassword }, () => { this.comparatePassword() })
+
   }
 
   //Función que compara las contraseña para determinar si son iguales o no
   comparatePassword = () => {
 
-    const {password, repassword} = this.state
+    const { password, repassword } = this.state
     if (password === repassword) {
-      this.setState({repassBool: true})
-    }else {
-      this.setState({repassBool: false})
+      this.setState({ repassBool: true })
+    } else {
+      this.setState({ repassBool: false })
     }
 
-  } 
+  }
 
   //Crea un usuario con los datos del state actual
   //TODO Impedir que se el post si algun valor no es válido
   createUser = () => {
 
-    const { username, password, email } = this.state;
+    const { username, password, email, usernameBool, passBool, repassBool, emailBool } = this.state;
 
-    axios.post('/api/create-user/', null, {
-      params: {
-        email: email,
-        username: username,
-        password: password
-      }
-    })
-      .then(res => {
-
-        if (res.data) {
-
+    if (usernameBool & passBool & repassBool & emailBool) {
+      axios.post('/api/create-user/', null, {
+        params: {
+          email: email,
+          username: username,
+          password: password
+        }
+      }).then( () => {
           localStorage.removeItem('username');
           localStorage.removeItem('email');
-          this.props.resetPages();
+          this.props.resetPages(); 
+        })
+    } else {
 
-          console.log('Cuenta creada: se eliminan los datos guardados');
-          
-        }else {
+      console.log('Se mantienen los datos');
 
-          console.log('Se mantienen los datos');
-          
-        }
-
-      })
-
+    }
   }
 
   render() {
 
     const { username, email } = this.state;
+
 
     return (
       <div className="base-container" ref={this.props.containerRef}>
@@ -159,11 +151,11 @@ export default class Register extends Component {
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario</label>
-              <input type="text" onChange={this.updateUsername} value={username} onBlur={this.verificarUsuario} name="username" placeholder="username" />
+              <input type="text" onChange={this.updateUsername} value={username} onBlur={() => {this.verificarUsuario('username')}} name="username" placeholder="username" />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" onChange={this.updateEmail} value={email} onBlur={this.verificarUsuario} name="email" placeholder="email" />
+              <input type="email" onChange={this.updateEmail} value={email} onBlur={ () => {this.verificarUsuario('email')}} name="email" placeholder="email" />
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
