@@ -15,7 +15,8 @@ export default class MainApp extends Component {
     };
   }
 
-
+  //carga los datos de la pagina actual
+  //TODO guardar datos de la obra que se está viendos
   componentDidMount() {
     
     if (localStorage.getItem('page')) {
@@ -53,6 +54,7 @@ export default class MainApp extends Component {
       })
   }
 
+  //Función encargada de hacer el logout eliminando el Token de session y la cookie page
   logout = async () => {
 
     const incognita = await this.clearCookie()
@@ -61,8 +63,6 @@ export default class MainApp extends Component {
 
       localStorage.removeItem('page');
       this.props.checkAuth()
-      
-
     }
   }
 

@@ -10,15 +10,40 @@ export default class MainSession extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      centro: 0,
-      derecha: 1,
-      derecha2: 2
+      centro: null,
     };
+  }
+
+  componentDidMount(){
+    if (localStorage.getItem('page')) {
+      this.chargePage()
+    } else {
+      this.setState({centro: 0,derecha: 1,derecha2: 2})
+    }
+  }
+
+  //TODO Guardar página y datos del formulario de la misma
+  //TODO crear función para para cambiar estados en caso de recuperar la página desde el localStorage
+
+  chargePage = () => {
+
+    const page = parseInt(localStorage.getItem('page'));
+    const pageArray = [0,1,2]
+
+    for (let index = 0; index < page; index++) {
+      const element = pageArray.shift();
+      pageArray.push(element)
+    }
+
+    this.setState({centro: pageArray[0],derecha: pageArray[1],derecha2: pageArray[2]})
+
   }
 
   //Intercambia los estados de centro y derecha
   changeStateRight = () => {
     const { centro, derecha, derecha2 } = this.state;
+    localStorage.setItem("page", derecha);
+
     this.setState({
       centro: derecha,
       derecha: derecha2,
@@ -42,6 +67,8 @@ export default class MainSession extends Component {
   render() {
 
     const { centro, derecha } = this.state;
+    if (centro === null) { return null }
+
     const current = ['Login', 'Register', 'Recover',];
     //TODO por implementar el cambio de pestañas a la derecha
     return (
@@ -80,6 +107,7 @@ export default class MainSession extends Component {
   }
 }
 
+// Componente usado para mostrar el siguiente elemento a mostrar
 const Lateral = props => {
   return (
     <div

@@ -20,6 +20,7 @@ export default class Login extends Component {
 
     const incognita = await this.props.checkUser(username);
     
+    //TODO
     console.log('Check user: ' + incognita);
     
 
@@ -43,6 +44,7 @@ export default class Login extends Component {
 
   }
 
+  //Comprueba que el usuario con dicha contraseña exista en la base de datos
   loginUser = () => {
 
     const { username, password } = this.state;
@@ -55,13 +57,14 @@ export default class Login extends Component {
     }).then(function (res) {
       // handle success
       console.log( 'Login: ' + res.data);
-      
+      //TODO
+      localStorage.removeItem('page');
       return res.data
     })
   }
 
 
-  //TODO
+  //Si el usuario es valido para conectarse se rederige a la App en caso contrario permanece en Login
   checkLogin = async () => {
 
     const incognita = await this.loginUser()
