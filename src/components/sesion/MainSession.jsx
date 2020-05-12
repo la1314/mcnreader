@@ -14,17 +14,16 @@ export default class MainSession extends Component {
     };
   }
 
+  //carga los datos de la pagina actual
   componentDidMount(){
     if (localStorage.getItem('page')) {
       this.chargePage()
     } else {
-      this.setState({centro: 0,derecha: 1,derecha2: 2})
+      this.resetPages()
     }
   }
 
-  //TODO Guardar página y datos del formulario de la misma
-  //TODO crear función para para cambiar estados en caso de recuperar la página desde el localStorage
-
+  //TODO Guardar datos del formulario actual de la pagina
   chargePage = () => {
 
     const page = parseInt(localStorage.getItem('page'));
@@ -35,8 +34,12 @@ export default class MainSession extends Component {
       pageArray.push(element)
     }
 
-    this.setState({centro: pageArray[0],derecha: pageArray[1],derecha2: pageArray[2]})
+    this.setState({centro: pageArray[0], derecha: pageArray[1], derecha2: pageArray[2]})
 
+  }
+
+  resetPages = () => {
+    this.setState({centro: 0,derecha: 1,derecha2: 2})
   }
 
   //Intercambia los estados de centro y derecha
@@ -88,7 +91,7 @@ export default class MainSession extends Component {
 
               )}
               {centro === 1 && (
-                <Register checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
+                <Register checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
               )}
               {centro === 2 && (
 

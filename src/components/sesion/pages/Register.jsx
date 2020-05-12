@@ -16,6 +16,28 @@ export default class Register extends Component {
       repassBool: false,
       emailBool: false
     };
+  }
+
+  //carga los datos de la pagina actual
+  componentDidMount(){
+
+    this.recuperarStados()
+  }
+
+  recuperarStados = () => {
+
+    if (localStorage.getItem('username')) {
+      this.setState({username: localStorage.getItem('username')})
+
+    } else {
+      this.setState({username: ""})
+    }
+
+    if (localStorage.getItem('email')) {
+      this.setState({email: localStorage.getItem('email')})
+    } else {
+      this.setState({email: ""})
+    }
 
   }
 
@@ -23,13 +45,10 @@ export default class Register extends Component {
   verificarUsuario = async (e) => {
 
     const nameInput = e.target.getAttribute('name');
-
     const { username } = this.state
-
     const incognita = await this.props.checkUser(username);
 
     if (nameInput === 'username') {
-
       incognita ?  this.setState({ usernameBool: false }) : this.setState({ usernameBool: true })
     }else {
       incognita ? this.setState({ emailBool: false }) : this.setState({ emailBool: true })
@@ -43,6 +62,8 @@ export default class Register extends Component {
     e.target.value = e.target.value.replace(' ', '')
 
     const username = e.target.value;
+
+    localStorage.setItem('username', username);
     this.setState({ username: username })
 
   }
@@ -53,6 +74,8 @@ export default class Register extends Component {
     e.target.value = e.target.value.replace(' ', '')
 
     const email = e.target.value;
+
+    localStorage.setItem('email', email);
     this.setState({ email: email })
 
   }
@@ -63,6 +86,7 @@ export default class Register extends Component {
     e.target.value = e.target.value.replace(' ', '')
 
     const password = md5(e.target.value);
+
     this.setState({ password: password })
 
   }
@@ -79,6 +103,7 @@ export default class Register extends Component {
     
   }
 
+  //Función que compara las contraseña para determinar si son iguales o no
   comparatePassword = () => {
 
     const {password, repassword} = this.state
@@ -91,6 +116,7 @@ export default class Register extends Component {
   } 
 
   //Crea un usuario con los datos del state actual
+  //TODO Impedir que se el post si algun valor no es válido
   createUser = () => {
 
     const { username, password, email } = this.state;
@@ -102,11 +128,30 @@ export default class Register extends Component {
         password: password
       }
     })
-      .then(res => (res.data))
+      .then(res => {
+
+        if (res.data) {
+
+          localStorage.removeItem('username');
+          localStorage.removeItem('email');
+          this.props.resetPages();
+
+          console.log('Cuenta creada: se eliminan los datos guardados');
+          
+        }else {
+
+          console.log('Se mantienen los datos');
+          
+        }
+
+      })
 
   }
 
   render() {
+
+    const { username, email } = this.state;
+
     return (
       <div className="base-container" ref={this.props.containerRef}>
         <div className="header">Register</div>
@@ -114,11 +159,11 @@ export default class Register extends Component {
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario</label>
-              <input type="text" onChange={this.updateUsername} onBlur={this.verificarUsuario} name="username" placeholder="username" />
+              <input type="text" onChange={this.updateUsername} value={username} onBlur={this.verificarUsuario} name="username" placeholder="username" />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" onChange={this.updateEmail} onBlur={this.verificarUsuario} name="email" placeholder="email" />
+              <input type="email" onChange={this.updateEmail} value={email} onBlur={this.verificarUsuario} name="email" placeholder="email" />
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
