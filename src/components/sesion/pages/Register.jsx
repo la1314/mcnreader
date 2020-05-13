@@ -47,6 +47,7 @@ export default class Register extends Component {
     }
   }
 
+  //Devuelve el valor del input actual limpiando los carácteres no permitidos
   limpiarTargetValue = (e) => {
     e.target.value = e.target.value.replace(/[^a-z0-9$.\-@_]/gi, '')
     return e.target.value;
@@ -74,11 +75,16 @@ export default class Register extends Component {
   updatePassword = (e) => {
 
     const password = md5(this.limpiarTargetValue(e));
+    // Descomentar cuando se acabe la MainAPP
+    // const patron = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z$.\-@_]{8,}$/;
 
     this.setState({ password: password })
-
-    //TODO aplicar patron para cambiar stado booleano
     this.setState({ passBool: true, repassBool: false })
+   /* if (patron.test(this.limpiarTargetValue(e))) {
+      this.setState({ passBool: true, repassBool: false })
+    } else {
+      this.setState({ passBool: false, repassBool: false })
+    }*/
   }
 
   //Actualiza el estado password con el value del target
