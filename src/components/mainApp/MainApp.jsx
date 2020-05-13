@@ -48,7 +48,7 @@ export default class MainApp extends Component {
   }
 
   clearCookie = () => {
-    return axios.get('/api/clear')
+    return axios.post('/api/clear',{ withCredentials: true})
       .then(function (response) {
         return response.data
       })

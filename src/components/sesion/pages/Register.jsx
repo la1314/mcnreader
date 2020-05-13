@@ -26,19 +26,16 @@ export default class Register extends Component {
   //Intenta recuperar datos 
   recuperarStados = () => {
 
-    if (localStorage.getItem('username')) {this.setState({ username: localStorage.getItem('username')}, () => {this.verificarUsuario('username')} )}
-    if (localStorage.getItem('email')) {this.setState({ email: localStorage.getItem('email')}, () => {this.verificarUsuario('email')})}
+    if (localStorage.getItem('username')) { this.setState({ username: localStorage.getItem('username') }, () => { this.verificarUsuario('username') }) }
+    if (localStorage.getItem('email')) { this.setState({ email: localStorage.getItem('email') }, () => { this.verificarUsuario('email') }) }
   }
 
   //Comprueba que el usuario actual exista
   verificarUsuario = async (name) => {
 
-    console.log(name);
-    
-
     const nameInput = name;
     const { username, email } = this.state
-    
+
 
     if (nameInput === 'username') {
 
@@ -49,7 +46,6 @@ export default class Register extends Component {
       const incognita = await this.props.checkUser(email);
       incognita ? this.setState({ emailBool: false }) : this.setState({ emailBool: true })
     }
-
   }
 
   //Actualiza el estado username con el value del target
@@ -61,7 +57,6 @@ export default class Register extends Component {
 
     localStorage.setItem('username', username);
     this.setState({ username: username })
-
   }
 
   //Actualiza el estado email con el value del target
@@ -73,7 +68,6 @@ export default class Register extends Component {
 
     localStorage.setItem('email', email);
     this.setState({ email: email })
-
   }
 
   //Actualiza el estado password con el value del target
@@ -87,7 +81,6 @@ export default class Register extends Component {
 
     //TODO aplicar patron para cambiar stado booleano
     this.setState({ passBool: true, repassBool: false })
-
   }
 
   //Actualiza el estado password con el value del target
@@ -99,7 +92,6 @@ export default class Register extends Component {
 
     //Función flecha utilizada para esperar que el state sea reasignado para lanzar la función comparatePassword
     this.setState({ repassword: repassword }, () => { this.comparatePassword() })
-
   }
 
   //Función que compara las contraseña para determinar si son iguales o no
@@ -111,7 +103,6 @@ export default class Register extends Component {
     } else {
       this.setState({ repassBool: false })
     }
-
   }
 
   //Crea un usuario con los datos del state actual
@@ -127,11 +118,11 @@ export default class Register extends Component {
           username: username,
           password: password
         }
-      }).then( () => {
-          localStorage.removeItem('username');
-          localStorage.removeItem('email');
-          this.props.resetPages(); 
-        })
+      }).then(() => {
+        localStorage.removeItem('username');
+        localStorage.removeItem('email');
+        this.props.resetPages();
+      })
     } else {
 
       console.log('Se mantienen los datos');
@@ -143,7 +134,6 @@ export default class Register extends Component {
 
     const { username, email } = this.state;
 
-
     return (
       <div className="base-container" ref={this.props.containerRef}>
         <div className="header">Register</div>
@@ -151,19 +141,19 @@ export default class Register extends Component {
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario</label>
-              <input type="text" onChange={this.updateUsername} value={username} onBlur={() => {this.verificarUsuario('username')}} name="username" placeholder="username" />
+              <input type="text" onChange={this.updateUsername} value={username} onBlur={() => { this.verificarUsuario('username') }} name="username" placeholder="username" />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" onChange={this.updateEmail} value={email} onBlur={ () => {this.verificarUsuario('email')}} name="email" placeholder="email" />
+              <input type="email" onChange={this.updateEmail} value={email} onBlur={() => { this.verificarUsuario('email') }} name="email" placeholder="email" />
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
-              <input type="password" onChange={this.updatePassword} name="password" placeholder="password" />
+              <input type="password" onChange={this.updatePassword} name="password" placeholder="Insert password" required />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Repetir contraseña</label>
-              <input type="password" onChange={this.updateRePassword} name="repassword" placeholder="repassword" />
+              <label htmlFor="repassword">Repetir contraseña</label>
+              <input type="password" onChange={this.updateRePassword} name="repassword" placeholder="Insert repassword" required />
             </div>
           </div>
         </div>

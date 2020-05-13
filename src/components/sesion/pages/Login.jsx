@@ -4,26 +4,22 @@ const md5 = require('md5');
 
 export default class Login extends Component {
 
-
   constructor(props) {
-
     super(props);
-    this.state = { username: "" };
-    this.state = { password: "" };
-
+    this.state = { username: "", password: "", usernameBool: false, passBool: false };
   }
 
   //Comprueba que el usuario actual exista
   verificarUsuario = async () => {
 
     const { username } = this.state
-
     const incognita = await this.props.checkUser(username);
-    
-    //TODO
-    console.log('Check user: ' + incognita);
-    
 
+    if (incognita) {
+      this.setState({ usernameBool: true })
+    } else {
+      this.setState({ usernameBool: false })
+    }
   }
 
   //Actualiza el estado username con el value del target
@@ -32,16 +28,24 @@ export default class Login extends Component {
     e.target.value = e.target.value.replace(' ', '')
     const username = e.target.value;
     this.setState({ username: username })
-
   }
 
   //Actualiza el estado password con el value del target
   updatePassword = (e) => {
 
-    e.target.value = e.target.value.replace(' ', '')
-    const password = md5(e.target.value);
-    this.setState({ password: password })
+    e.target.value = e.target.value.replace(' ', '');
 
+    if (e.target.value === '') {
+
+      this.setState({ password: '', passBool: false });
+
+    } else {
+
+      const password = md5(e.target.value);
+      this.setState({ password: password }, () => {
+        this.setState({ passBool: true })
+      });
+    }
   }
 
   //Comprueba que el usuario con dicha contraseña exista en la base de datos
@@ -56,7 +60,7 @@ export default class Login extends Component {
       }
     }).then(function (res) {
       // handle success
-      console.log( 'Login: ' + res.data);
+      console.log('Login: ' + res.data);
       //TODO
       localStorage.removeItem('page');
       return res.data
@@ -67,14 +71,17 @@ export default class Login extends Component {
   //Si el usuario es valido para conectarse se rederige a la App en caso contrario permanece en Login
   checkLogin = async () => {
 
-    const incognita = await this.loginUser()
-    if (incognita) {
+    const { passBool, usernameBool } = this.state;
 
-      this.props.checkAuth()
+    if (passBool & usernameBool) {
+      const incognita = await this.loginUser()
+      if (incognita) {
 
+        this.props.checkAuth()
+
+      }
     }
   }
-
 
   render() {
     return (
