@@ -36,7 +36,6 @@ export default class Register extends Component {
     const nameInput = name;
     const { username, email } = this.state
 
-
     if (nameInput === 'username') {
 
       const incognita = await this.props.checkUser(username);
@@ -48,12 +47,15 @@ export default class Register extends Component {
     }
   }
 
+  limpiarTargetValue = (e) => {
+    e.target.value = e.target.value.replace(/[^a-z0-9$.\-@_]/gi, '')
+    return e.target.value;
+  }
+
   //Actualiza el estado username con el value del target
   updateUsername = (e) => {
 
-    e.target.value = e.target.value.replace(' ', '')
-
-    const username = e.target.value;
+    const username = this.limpiarTargetValue(e);
 
     localStorage.setItem('username', username);
     this.setState({ username: username })
@@ -62,9 +64,7 @@ export default class Register extends Component {
   //Actualiza el estado email con el value del target
   updateEmail = (e) => {
 
-    e.target.value = e.target.value.replace(' ', '')
-
-    const email = e.target.value;
+    const email = this.limpiarTargetValue(e);
 
     localStorage.setItem('email', email);
     this.setState({ email: email })
@@ -73,9 +73,7 @@ export default class Register extends Component {
   //Actualiza el estado password con el value del target
   updatePassword = (e) => {
 
-    e.target.value = e.target.value.replace(' ', '')
-
-    const password = md5(e.target.value);
+    const password = md5(this.limpiarTargetValue(e));
 
     this.setState({ password: password })
 
@@ -86,10 +84,7 @@ export default class Register extends Component {
   //Actualiza el estado password con el value del target
   updateRePassword = (e) => {
 
-    e.target.value = e.target.value.replace(' ', '')
-
-    const repassword = md5(e.target.value);
-
+    const repassword = md5(this.limpiarTargetValue(e));
     //Función flecha utilizada para esperar que el state sea reasignado para lanzar la función comparatePassword
     this.setState({ repassword: repassword }, () => { this.comparatePassword() })
   }
@@ -149,11 +144,11 @@ export default class Register extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
-              <input type="password" onChange={this.updatePassword} name="password" placeholder="Insert password" required />
+              <input type="password" onChange={this.updatePassword} name="password" placeholder="Insert password" />
             </div>
             <div className="form-group">
               <label htmlFor="repassword">Repetir contraseña</label>
-              <input type="password" onChange={this.updateRePassword} name="repassword" placeholder="Insert repassword" required />
+              <input type="password" onChange={this.updateRePassword} name="repassword" placeholder="Insert repassword" />
             </div>
           </div>
         </div>
