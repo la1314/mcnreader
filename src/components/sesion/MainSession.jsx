@@ -3,7 +3,10 @@ import "./session.scss";
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Recover from './pages/Recover';
+import Editor from './pages/LoginEditor';
+import RegisterEditor from './pages/RegisterEditor';
 import axios from 'axios';
+
 //import Logo from './logo.png';
 
 export default class MainSession extends Component {
@@ -11,6 +14,8 @@ export default class MainSession extends Component {
     super(props);
     this.state = {
       centro: null,
+      loginP: 0,
+      registerP: 0
     };
   }
 
@@ -38,8 +43,19 @@ export default class MainSession extends Component {
 
   }
 
+  //
   resetPages = () => {
     this.setState({centro: 0,derecha: 1,derecha2: 2})
+  }
+
+  //
+  cambiarLogin = (n) => {
+    this.setState({loginP:n});
+  }
+
+  //
+  cambiarRegistro = (n) => {
+    this.setState({registerP:n});
   }
 
   //Intercambia los estados de centro y derecha
@@ -55,11 +71,12 @@ export default class MainSession extends Component {
   }
 
   //Comprueba que el usuario actual exista 0/1
-  checkUser = async (username) => {
+  checkUser = async (username, type) => {
 
     return await axios.post('/api/check-user/', null, {
       params: {
-        user: username
+        user: username,
+        type: type
       }
     }).then( function (res) {
       // handle success
@@ -69,7 +86,7 @@ export default class MainSession extends Component {
 
   render() {
 
-    const { centro, derecha } = this.state;
+    const { centro, derecha, loginP, registerP } = this.state;
     if (centro === null) { return null }
 
     const current = ['Login', 'Register', 'Recover',];
@@ -86,12 +103,15 @@ export default class MainSession extends Component {
         <div className='main-session-container' >
           <div className="session-container">
             <div className="session-cent" ref={ref => (this.container = ref)}>
-              {centro === 0 && (
-                <Login checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
-
+              {centro === 0 &&  ( loginP ?
+              <Editor cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
+              :
+              <Login cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} /> 
               )}
-              {centro === 1 && (
-                <Register checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
+              {centro === 1 && ( registerP ? 
+                <RegisterEditor cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
+                :
+                <Register cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
               )}
               {centro === 2 && (
 

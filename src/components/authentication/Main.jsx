@@ -24,14 +24,16 @@ export default class Main extends Component {
   checkAuth = async () => {
 
     const incognita = await axios.get('/api/checkToken')
+
+    //TODO Puede que tenga que encryptar muy posiblemente
+
     if (incognita.data) {
-      this.setState({redirect: true, idUser: incognita.data})
+      this.setState({redirect: true, idUser: incognita.data.user, rol: incognita.data.rol})
     }else{
       this.setState({redirect: false, idUser: ''})
     }
     
   }
-
 
   render() {
 
@@ -51,13 +53,3 @@ export default class Main extends Component {
     );
   }
 }
-
-
-/**
- * {redirect === 0 && (
-          <Session check={this.checkLogin} />
-        )}
-        {redirect === 1 && (
-          <Main check={this.checkLogin} />
-        )}
-*/

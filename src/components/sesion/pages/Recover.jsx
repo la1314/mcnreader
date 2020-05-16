@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 //import axios from 'axios';
 
-export default class Register extends Component {
+export default class Recover extends Component {
     
   constructor(props) {
     super(props);
-    this.state = { Username: "" };
-    this.state = { Password: "" };
-    this.state = { Email: "" };
-
+    this.state = { email: "" };
   }
+
+  //TODO Implementar consultar al email y añadir stado booleano de este
 
   render() {
     return (

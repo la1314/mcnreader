@@ -2,19 +2,18 @@ import React, { Component } from 'react';
 import axios from 'axios';
 const md5 = require('md5');
 
-
-export default class Login extends Component {
+export default class LoginEditor extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { username: "", password: "", usernameBool: false, passBool: false };
+    this.state = { username: '', password: '', usernameBool: false, passBool: false };
   }
 
   //Comprueba que el usuario actual exista
   verificarUsuario = async () => {
 
     const { username } = this.state
-    const incognita = await this.props.checkUser(username, 0);
+    const incognita = await this.props.checkUser(username, 1);
 
     if (incognita) {
       this.setState({ usernameBool: true })
@@ -58,7 +57,7 @@ export default class Login extends Component {
       params: {
         user: username,
         password: password,
-        type: 0
+        type: 1
       }
     }).then(function (res) {
       // handle success
@@ -86,16 +85,16 @@ export default class Login extends Component {
   }
 
   cambiarLogin = () => {
-    this.props.cambiarLogin(1)
+    this.props.cambiarLogin(0)
   }
 
   render() {
     return (
       <div className="base-container" ref={this.props.containerRef}>
         <button type="button" onClick={() => this.cambiarLogin()} className="btn">
-            Editor
+          Lector
           </button>
-        <div className="header">Login</div>
+        <div className="header">Login Editores</div>
         <div className="content">
           <div className="form">
             <div className="form-group">

@@ -132,9 +132,8 @@ export default class Register extends Component {
     }
   }
 
-  //
   cambiarRegistro = () => {
-    this.props.cambiarRegistro(1)
+    this.props.cambiarRegistro(0)
   }
 
   render() {
@@ -143,10 +142,10 @@ export default class Register extends Component {
 
     return (
       <div className="base-container" ref={this.props.containerRef}>
-         <button type="button" onClick={() => this.cambiarRegistro()} className="btn">
-            Registar Editor
+           <button type="button" onClick={() => this.cambiarRegistro()} className="btn">
+            Registar Lector
           </button>
-        <div className="header">Register</div>
+        <div className="header">Register Editor</div>
         <div className="content">
           <div className="form">
             <div className="form-group">
