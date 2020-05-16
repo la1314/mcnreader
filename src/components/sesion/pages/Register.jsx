@@ -132,7 +132,7 @@ export default class Register extends Component {
     }
   }
 
-  //
+   //Cambia el componente actual por el registro de editores
   cambiarRegistro = () => {
     this.props.cambiarRegistro(1)
   }

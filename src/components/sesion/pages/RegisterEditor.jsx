@@ -11,10 +11,12 @@ export default class Register extends Component {
       password: "",
       repassword: "",
       email: "",
+      phone: "",
       usernameBool: false,
       passBool: false,
       repassBool: false,
-      emailBool: false
+      emailBool: false,
+      phoneBool:false
     };
   }
 
@@ -28,6 +30,7 @@ export default class Register extends Component {
 
     if (localStorage.getItem('username')) { this.setState({ username: localStorage.getItem('username') }, () => { this.verificarUsuario('username') }) }
     if (localStorage.getItem('email')) { this.setState({ email: localStorage.getItem('email') }, () => { this.verificarUsuario('email') }) }
+    if (localStorage.getItem('phone')) { this.setState({ phone: localStorage.getItem('phone'), phoneBool: true })}
   }
 
   //Comprueba que el usuario actual exista
@@ -71,6 +74,21 @@ export default class Register extends Component {
     this.setState({ email: email })
   }
 
+  updatePhone = (e) => {
+
+    const phone = this.limpiarTargetValue(e);
+    localStorage.setItem('phone', phone);
+
+    if (phone !== '') {
+      this.setState({ phoneBool: true })
+    }else {
+      this.setState({ phoneBool: false })
+    }
+
+    this.setState({ phone: phone })
+    
+  }
+
   //Actualiza el estado password con el value del target
   updatePassword = (e) => {
 
@@ -110,19 +128,21 @@ export default class Register extends Component {
   //TODO Impedir que se el post si algun valor no es válido
   createUser = () => {
 
-    const { username, password, email, usernameBool, passBool, repassBool, emailBool } = this.state;
+    const { username, password, email, phone, usernameBool, passBool, repassBool, emailBool, phoneBool } = this.state;
 
-    if (usernameBool & passBool & repassBool & emailBool) {
+    if (usernameBool & passBool & repassBool & emailBool & phoneBool) {
       axios.post('/api/create-user/', null, {
         params: {
           email: email,
           username: username,
           password: password,
-          type: 0
+          phone: phone,
+          type: 1
         }
       }).then(() => {
         localStorage.removeItem('username');
         localStorage.removeItem('email');
+        localStorage.removeItem('phone');
         this.props.resetPages();
       })
     } else {
@@ -132,13 +152,14 @@ export default class Register extends Component {
     }
   }
 
+  //Cambia el componente actual por el registro normal
   cambiarRegistro = () => {
     this.props.cambiarRegistro(0)
   }
 
   render() {
 
-    const { username, email } = this.state;
+    const { username, email, phone } = this.state;
 
     return (
       <div className="base-container" ref={this.props.containerRef}>
@@ -155,6 +176,10 @@ export default class Register extends Component {
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input type="email" onChange={this.updateEmail} value={email} onBlur={() => { this.verificarUsuario('email') }} name="email" placeholder="email" />
+            </div>
+            <div className="form-group">
+              <label htmlFor="phone">Teléfono</label>
+              <input type="number" onChange={this.updatePhone} value={phone} name="phone" placeholder="Insert your phone" />
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
