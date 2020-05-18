@@ -21,12 +21,12 @@ export default class MainApp extends Component {
       <div className='main-App-container'>
 
         {rol === 'READER' && (
-          <User checkAuth={this.props.checkAuth} />
+          <User user={this.props.user} checkAuth={this.props.checkAuth} />
         )}
 
         {rol === 'EDITOR' && (
 
-          <Editor checkAuth={this.props.checkAuth} />
+          <Editor user={this.props.user} checkAuth={this.props.checkAuth} />
         )}
 
       </div>

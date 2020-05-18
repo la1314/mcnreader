@@ -33,7 +33,7 @@ export default class Editor extends Component {
     switch (page) {
 
       case 0:
-        return <Gestor />;
+        return <Gestor user={this.props.user} />;
 
       case 1:
         return <Library />;
@@ -42,7 +42,7 @@ export default class Editor extends Component {
         return <Profile />;
 
       default:
-        return  <Gestor />;
+        return  <Gestor user={this.props.user} />;
     }
   }
 
