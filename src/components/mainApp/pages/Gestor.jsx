@@ -11,7 +11,6 @@ export default class Gestor extends Component {
       lanzamiento: '',
       tipos: [],
       estados: [],
-      cover: [],
       tipo: 1,
       estado: 1,
       visibilidad: 0
@@ -21,9 +20,9 @@ export default class Gestor extends Component {
   //Carga los datos del localStorage y asigna valores a los state tipos y estados
   async componentDidMount() {
 
-    if (localStorage.getItem('nombre')) { this.setState({ nombre: localStorage.getItem('nombre')})}
-    if (localStorage.getItem('autor')) { this.setState({ autor: localStorage.getItem('autor')})}
-    if (localStorage.getItem('lanzamiento')) { this.setState({ lanzamiento: localStorage.getItem('lanzamiento')})}
+    if (localStorage.getItem('nombre')) { this.setState({ nombre: localStorage.getItem('nombre') }) }
+    if (localStorage.getItem('autor')) { this.setState({ autor: localStorage.getItem('autor') }) }
+    if (localStorage.getItem('lanzamiento')) { this.setState({ lanzamiento: localStorage.getItem('lanzamiento') }) }
     this.setState({
       tipos: await this.obtenerValores('tipos'), estados: await this.obtenerValores('estados')
     })
@@ -36,15 +35,6 @@ export default class Gestor extends Component {
       // handle success
       return res.data
     })
-  }
-
-  // Guarda en el estado la imagen del cover
-  coverCharge = async (e) => {
-    
-    const cover = e.target.files
-
-    this.setState({cover: cover})
-  
   }
 
   //Actualiza el estado username con el value del target
@@ -68,65 +58,62 @@ export default class Gestor extends Component {
     this.setState({ lanzamiento: lanzamiento })
   }
 
-   //Actualiza el estado lanzamiento con el value del target
-   updateTipo = (e) => {
+  //Actualiza el estado lanzamiento con el value del target
+  updateTipo = (e) => {
     const tipo = e.target.value;
     this.setState({ tipo: tipo })
   }
 
-   //Actualiza el estado lanzamiento con el value del target
-   updateEstado = (e) => {
+  //Actualiza el estado lanzamiento con el value del target
+  updateEstado = (e) => {
     const estado = e.target.value;
     this.setState({ estado: estado })
   }
 
-   //Actualiza el estado lanzamiento con el value del target
-   updateVisibilidad = (e) => {
+  //Actualiza el estado lanzamiento con el value del target
+  updateVisibilidad = (e) => {
     const visibilidad = e.target.value;
     this.setState({ visibilidad: visibilidad })
   }
 
   //Hace una petición para crear una nueva obra
   newObra = () => {
-    
-    const { tipo, estado, nombre, autor, lanzamiento, cover, visibilidad } = this.state
-    
+
+    const { tipo, estado, nombre, autor, lanzamiento, visibilidad } = this.state
+
     axios.post('/api/new-obra/', null, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      },
       params: {
         editor: this.props.user,
         tipo: tipo,
         estado: estado,
         name: nombre,
         autor: autor,
-        cover: cover[0].name,
         lanzamiento: lanzamiento,
         visibilidad: visibilidad
       }
-    }).then(res => console.log(res.data))
+    }).then(() => {
 
-    //TODO IMPLEMENTAR LLAMADA A PHP, OCULTAR POSIBLEMENTE CON ENV
-
-   /* const url = '/api/new-obra/';
-    const formData = new FormData();
-    formData.append('cover',cover[0])
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        },
+      axios.post('/api/obra-id/', null, {
         params: {
           editor: this.props.user,
-          tipo: tipo,
-          estado: estado,
           name: nombre,
-          autor: autor,
-          lanzamiento: lanzamiento,
-          visibilidad: visibilidad
+          tipo: tipo,
+          autor: autor
         }
-    }
-    axios.post(url, formData, config)*/
+      }).then((res) => {
+
+        console.log(res);
+        
+        const editor = this.props.user
+        const obra = res.data.ID_OBRA
+        const formData = new FormData();
+        formData.append('editor', `${editor}`);
+        formData.append('work',  `${obra}`);
+        formData.append('action', 'newWordDirectory');
+        axios.post('https://tuinki.gupoe.com/media/options.php', formData)
+
+      })
+    })
 
   }
 
@@ -152,10 +139,6 @@ export default class Gestor extends Component {
               <input type="number" value={lanzamiento} onChange={this.updateLanzamiento} name="lanzamiento" placeholder="Año de lanzamiento" />
             </div>
             <div className="form-group">
-              <label htmlFor="cover">Cover: </label>
-              <input type="file" onChange={this.coverCharge} id="cover" name="cover" />
-            </div>
-            <div className="form-group">
               <label htmlFor="tipo">Tipo: </label>
               <select id="tipo" onChange={this.updateTipo}>
                 {tipos.map((item) => <option key={item.NOMBRE} value={item.ID_TIPO} >{item.NOMBRE}</option>)}
@@ -164,7 +147,7 @@ export default class Gestor extends Component {
             <div className="form-group">
               <label htmlFor="estado">Estado: </label>
               <select id="estado" onChange={this.updateEstado}>
-                 {estados.map((item) => <option key={item.NOMBRE} value={item.ID_ESTADO} >{item.NOMBRE}</option>)}
+                {estados.map((item) => <option key={item.NOMBRE} value={item.ID_ESTADO} >{item.NOMBRE}</option>)}
               </select>
             </div>
             <div className="form-group">
@@ -175,7 +158,7 @@ export default class Gestor extends Component {
               </select>
             </div>
             <button type="submit" onClick={() => this.newObra()} className="btn">
-            Crear Obra
+              Crear Obra
           </button>
           </div>
         </div>
@@ -183,3 +166,38 @@ export default class Gestor extends Component {
     );
   }
 }
+
+/*
+
+   // Guarda en el estado la imagen del cover
+  coverCharge = async (e) => {
+
+    const cover = e.target.files
+
+    this.setState({ cover: cover }, () => {
+      console.log(this.state.cover);
+    })
+
+  }
+
+const formData = new FormData();
+    const config = {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    }
+
+    formData.append('editor', this.props.user);
+    formData.append('work', '1');
+    formData.append('images[]', cover[0]);
+    formData.append('action', 'newCover');
+
+    axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then(res => console.log(res));
+
+ <div className="form-group">
+              <label htmlFor="cover">Cover: </label>
+              <input type="file" onChange={this.coverCharge} id="cover" name="cover" />
+            </div>
+
+
+*/

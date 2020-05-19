@@ -16,7 +16,7 @@ export default class Register extends Component {
       passBool: false,
       repassBool: false,
       emailBool: false,
-      phoneBool:false
+      phoneBool: false
     };
   }
 
@@ -30,7 +30,7 @@ export default class Register extends Component {
 
     if (localStorage.getItem('username')) { this.setState({ username: localStorage.getItem('username') }, () => { this.verificarUsuario('username') }) }
     if (localStorage.getItem('email')) { this.setState({ email: localStorage.getItem('email') }, () => { this.verificarUsuario('email') }) }
-    if (localStorage.getItem('phone')) { this.setState({ phone: localStorage.getItem('phone'), phoneBool: true })}
+    if (localStorage.getItem('phone')) { this.setState({ phone: localStorage.getItem('phone'), phoneBool: true }) }
   }
 
   //Comprueba que el usuario actual exista
@@ -74,6 +74,7 @@ export default class Register extends Component {
     this.setState({ email: email })
   }
 
+   //Actualiza el estado phone con el value del target
   updatePhone = (e) => {
 
     const phone = this.limpiarTargetValue(e);
@@ -81,12 +82,12 @@ export default class Register extends Component {
 
     if (phone !== '') {
       this.setState({ phoneBool: true })
-    }else {
+    } else {
       this.setState({ phoneBool: false })
     }
 
     this.setState({ phone: phone })
-    
+
   }
 
   //Actualiza el estado password con el value del target
@@ -98,11 +99,11 @@ export default class Register extends Component {
 
     this.setState({ password: password })
     this.setState({ passBool: true, repassBool: false })
-   /* if (patron.test(this.limpiarTargetValue(e))) {
-      this.setState({ passBool: true, repassBool: false })
-    } else {
-      this.setState({ passBool: false, repassBool: false })
-    }*/
+    /* if (patron.test(this.limpiarTargetValue(e))) {
+       this.setState({ passBool: true, repassBool: false })
+     } else {
+       this.setState({ passBool: false, repassBool: false })
+     }*/
   }
 
   //Actualiza el estado password con el value del target
@@ -140,10 +141,24 @@ export default class Register extends Component {
           type: 1
         }
       }).then(() => {
+
         localStorage.removeItem('username');
         localStorage.removeItem('email');
         localStorage.removeItem('phone');
-        this.props.resetPages();
+
+        axios.post('/api/editor-id/', null, {
+          params: {
+            editor: username
+          }
+        }).then((res) => {
+
+          const editor = res.data.ID_EDITOR
+          const formData = new FormData();
+          formData.append('editor', `${editor}`);
+          formData.append('action', 'newEditorDirectory');
+          axios.post('https://tuinki.gupoe.com/media/options.php', formData)
+
+        }).then(this.props.resetPages())
       })
     } else {
       //TODO por finalizar cuando se acabe la MainAPP
@@ -163,8 +178,8 @@ export default class Register extends Component {
 
     return (
       <div className="base-container" ref={this.props.containerRef}>
-           <button type="button" onClick={() => this.cambiarRegistro()} className="btn">
-            Registar Lector
+        <button type="button" onClick={() => this.cambiarRegistro()} className="btn">
+          Registar Lector
           </button>
         <div className="header">Register Editor</div>
         <div className="content">
