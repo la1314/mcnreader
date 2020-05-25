@@ -10,74 +10,73 @@ export default class Obra extends Component {
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         //TODO
     }
 
     /* Funciones que afectan a la Obra */
     //Edita el nombre de la obra
-    editName = () => {}
+    editName = () => { }
 
     //Modifica la descripción de la obra
-    editDescription = () => {}
+    editDescription = () => { }
 
     //Edita el Autor de la Obra
-    editAutor = () => {}
+    editAutor = () => { }
 
     //Edita el año de lanzamiento de la Obra
-    editLanzamiento = () => {}
+    editLanzamiento = () => { }
 
     //Añade/Reemplaza el cover actual
-    editCover = () => {}
+    editCover = () => { }
 
     //Edita el estado actual de la obra
-    editEstado = () => {}
+    editEstado = () => { }
 
     //Edita el tipo actual de la obra
-    editTipo = () => {}
+    editTipo = () => { }
 
     //Edita la visibilidad actual de la obra
-    editVisibilidad = () => {}
+    editVisibilidad = () => { }
 
 
     /* Funciones que afectan a los Capítulos de la obra */
-
     //Añade/Elimina un capítulo
-    editChapter = () => {}
+    editChapter = () => { }
 
     //Edita el número de un capítulo
-    editNumberChapter = () => {}
+    editNumberChapter = () => { }
 
     //Edita el nombre de un capítulo
-    editNameChapter = () => {}
+    editNameChapter = () => { }
 
     //Edita la fecha de un capítulo
-    editFechaChapter = () => {}
+    editFechaChapter = () => { }
 
     //Edita la visibilidad del capítulo de la obra
-    editVisibilidadChapter = () => {}
+    editVisibilidadChapter = () => { }
 
-    
+
     /* Funciones que afectan a las páginas de los capítulos */
 
-     //Añane las paginas a un capítulo
-     addChapterPages = () => {}
+    //Añane las paginas a un capítulo
+    addChapterPages = () => { }
 
-     //Elimina las paginas de un capítulo
-     deleteChapterPages = () => {}
+    //Elimina las paginas de un capítulo
+    deleteChapterPages = () => { }
 
-     //Edita el número de una pagina
-     editNumberPages = () => {}
+    //Edita el número de una pagina
+    editNumberPages = () => { }
 
     render() {
 
         return (
             <div className='edit-single-obra-container'>
 
-            <div className='edit-obra-cover'></div>
-            <div className='edit-obra-details'></div>
-            <div className='edit-obra-resume'></div>
-            <div className='edit-obra-chapters'></div>
+                <div className='edit-obra-cover'>{this.props.obraID}</div>
+                <div className='edit-obra-details'></div>
+                <div className='edit-obra-resume'></div>
+                <div className='edit-obra-chapters'></div>
             </div>
         );
     }

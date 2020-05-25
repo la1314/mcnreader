@@ -1,3 +1,9 @@
+.gestor-container {
+    display: grid;
+    grid-template-rows: auto;
+    row-gap: 20px;
+}
+
 .editor-container-obras {
 
     border: 1px solid yellow;
@@ -5,14 +11,24 @@
     grid-template-columns: repeat(6, 150px);
     column-gap: 20px;
 
-    .editor-cover-image{
-        height: 100%;
-        width: 100%;
+    .editor-cover-list{
+
         border: 1px solid gold;
+
+        .editor-cover-image{
+            height: 100%;
+            width: 100%;
+            
+        }
     }
+
 }
 
 .create-obra-container {
     border: 1px solid green;
  
+}
+
+.contact-admin {
+    border: 1px solid pink;
 }

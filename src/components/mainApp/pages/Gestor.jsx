@@ -84,7 +84,7 @@ export default class Gestor extends Component {
   }
 
   //Hace una petición para crear una nueva obra
-  newObra = () => {
+  newObra =  () => {
 
     const { tipo, estado, nombre, autor, lanzamiento, visibilidad } = this.state
 
@@ -107,7 +107,7 @@ export default class Gestor extends Component {
           tipo: tipo,
           autor: autor
         }
-      }).then((res) => {
+      }).then( async (res) => {
 
         const editor = this.props.user
         const obra = res.data.ID_OBRA
@@ -121,6 +121,8 @@ export default class Gestor extends Component {
         localStorage.removeItem('lanzamiento');
         localStorage.removeItem('autor');
         localStorage.removeItem('nombre');
+
+        this.setState({coverList: await this.findObras()})
       })
     })
   }
@@ -145,7 +147,7 @@ export default class Gestor extends Component {
       <div className='gestor-container'>
 
         <div className='editor-container-obras'>
-          {coverList.map((item) => <EOItem key={item.NOMBRE} image={item.COVER} name={item.NOMBRE} />)}
+          {coverList.map((item) => <EOItem changeToEditObra={this.props.changeToEditObra} key={item.NOMBRE} obra={item.ID_OBRA} image={item.COVER} name={item.NOMBRE} />)}
         </div>
 
         <div className='create-obra-container' >
@@ -186,6 +188,8 @@ export default class Gestor extends Component {
           </button>
           </div>
         </div>
+
+        <div className='contact-admin'>Contartar con el administrador</div>
       </div>
     );
   }
