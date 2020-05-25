@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import "./pages.scss";
+import EOItem from './gestor/EditorObraItem.jsx';
 
 export default class Gestor extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      coverList: [],
       nombre: '',
       autor: '',
       lanzamiento: '',
@@ -20,11 +23,15 @@ export default class Gestor extends Component {
   //Carga los datos del localStorage y asigna valores a los state tipos y estados
   async componentDidMount() {
 
+    this.findObras()
+
     if (localStorage.getItem('nombre')) { this.setState({ nombre: localStorage.getItem('nombre') }) }
     if (localStorage.getItem('autor')) { this.setState({ autor: localStorage.getItem('autor') }) }
     if (localStorage.getItem('lanzamiento')) { this.setState({ lanzamiento: localStorage.getItem('lanzamiento') }) }
     this.setState({
-      tipos: await this.obtenerValores('tipos'), estados: await this.obtenerValores('estados')
+      tipos: await this.obtenerValores('tipos'),
+      estados: await this.obtenerValores('estados'),
+      coverList: await this.findObras()
     })
   }
 
@@ -102,28 +109,45 @@ export default class Gestor extends Component {
         }
       }).then((res) => {
 
-        console.log(res);
-        
         const editor = this.props.user
         const obra = res.data.ID_OBRA
         const formData = new FormData();
         formData.append('editor', `${editor}`);
-        formData.append('work',  `${obra}`);
+        formData.append('work', `${obra}`);
         formData.append('action', 'newWordDirectory');
         axios.post('https://tuinki.gupoe.com/media/options.php', formData)
 
+        this.setState({ nombre: '', autor: '', lanzamiento: '' })
+        localStorage.removeItem('lanzamiento');
+        localStorage.removeItem('autor');
+        localStorage.removeItem('nombre');
       })
     })
+  }
+
+  //Recupera todas las obras del editor
+  findObras = () => {
+
+    return axios.post('/api/find-all-editor-obras/', null, {
+      params: {
+        editor: this.props.user,
+      }
+    }).then(res => { return res.data })
 
   }
 
   //TODO Crear interfaz y verificar la creación correcta en el servidor, modificar php para incluir el cover
   render() {
 
-    const { tipos, estados, nombre, autor, lanzamiento } = this.state
+    const { tipos, estados, nombre, autor, lanzamiento, coverList } = this.state
 
     return (
       <div className='gestor-container'>
+
+        <div className='editor-container-obras'>
+          {coverList.map((item) => <EOItem key={item.NOMBRE} image={item.COVER} name={item.NOMBRE} />)}
+        </div>
+
         <div className='create-obra-container' >
           <div className="form">
             <div className="form-group">

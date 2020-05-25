@@ -72,7 +72,13 @@ export default class Obra extends Component {
     render() {
 
         return (
-            <div>Obra div</div>
+            <div className='edit-single-obra-container'>
+
+            <div className='edit-obra-cover'></div>
+            <div className='edit-obra-details'></div>
+            <div className='edit-obra-resume'></div>
+            <div className='edit-obra-chapters'></div>
+            </div>
         );
     }
 }
