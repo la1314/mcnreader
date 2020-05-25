@@ -6,7 +6,7 @@ export default class EditorObraItem extends Component {
     
     editarObra = () => {
         
-        this.props.changeToEditObra(this.props.obra)
+        Promise.resolve(localStorage.setItem("obraEdit", this.props.obra)).then(this.props.changeToEditObra(this.props.obra))
 
     }
 
