@@ -11,7 +11,8 @@ export default class Editor extends Component {
   constructor() {
     super();
     this.state = {
-      page: 0
+      page: 0,
+      obraEditID: ''
     };
   }
 
@@ -81,7 +82,8 @@ export default class Editor extends Component {
 
   //TODO accede a la edición de una obra
   changeToEditObra = (obra) => {
-    this.setState({ obraEditID: obra }, () =>{this.changePage(3)})
+    
+    Promise.resolve(this.setState({ obraEditID: obra })).then(this.changePage(3))
   }
 
   render() {
