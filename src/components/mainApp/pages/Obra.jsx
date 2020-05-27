@@ -10,15 +10,18 @@ export default class Obra extends Component {
             nombre: '',
             autor: '',
             lanzamiento: '',
-            demografia: 'Añadir demografia',
-            media: '',
-            generos: [],
-            listaDemografias: [],
-            listaGeneros: [],
-            socialMedia: [],
+            ListDemografias: [],
+            listGeneros: [],
+            listEstados: [],
             listSocialMedia: [],
+            listTipos: [],
+            demografia: '',
+            generos: [],
+            estado: '',
+            socialMedia: [],
+            tipo: '',
             cover: '',
-            descripcion: ''
+            descripcion: ''  
         }
     }
 
@@ -29,10 +32,6 @@ export default class Obra extends Component {
             const n = parseInt(localStorage.getItem('obraEdit'));
             this.setState({ obra: n }, () => { this.findDetailtObra() })
         }
-
-        this.findDemografias()
-
-
     }
 
     /* Funciones que afectan a la Obra */
@@ -52,7 +51,24 @@ export default class Obra extends Component {
                 lanzamiento: datos.LANZAMIENTO,
                 descripcion: datos.DESCRIPCION,
                 cover: datos.COVER
-            })
+            }, async () => {
+                this.getDemografia();
+                this.setState({
+                    listEstados: await this.findCaracteristicaObra('estados'),
+                    listGeneros: await this.findCaracteristicaObra('generos'),
+                    ListDemografias: await this.findCaracteristicaObra('demografias'),
+                    listSocialMedia: await this.findCaracteristicaObra('socialMedia'),
+                    listTipos: await this.findCaracteristicaObra('tipos')
+                })
+            });
+        })
+    }
+
+    //Obtiene las distintas caracteristicas de una obra
+    findCaracteristicaObra = (option) => {
+        return axios.post(`/api/find-${option}/`).then(function (res) {
+            // handle success
+            return res.data
         })
     }
 
@@ -88,18 +104,6 @@ export default class Obra extends Component {
         }
     }
 
-    //TODO QUERY DEMOGRAFIAS Y GENEROS
-    //Obtiene los datos de las demografias
-    findDemografias = () => {
-        return axios.post('/api/find-all-demografias/', null).then(res => {
-
-            const demografias = res.data;
-
-            this.setState({ listaDemografias: demografias });
-
-        })
-    }
-
     //Modifica la descripción de la obra
     editDescription = () => { }
 
@@ -121,23 +125,29 @@ export default class Obra extends Component {
     //Edita la visibilidad actual de la obra
     editVisibilidad = () => { }
 
-    //Edita la demografia actual de la obra
-    editDemografia = (e) => {
+    //Obtiene la demografia de la obra actual
+    getDemografia = () => {
 
-        const value = e.target.value;
         const { obra } = this.state;
 
-        if (value) {
-            axios.post('/api/edit-demografia/', null, { params: { type: 0, obra: obra } }).then(
-                axios.post('/api/edit-demografia/', null, { params: { type: value, obra: obra, demo: value } })
-            )
-        } else {
-            axios.post('/api/edit-demografia/', null, {
-                params: { type: 0, obra: obra, demo: value }
-            })
-        }
+        axios.post('/api/get-demografia/', null, { params: { obra: obra } }).then((res) => {
 
+            this.setState({ demografia: res.data[0].NOMBRE })
+        })
     }
+
+
+    //Edita la demografia actual de la obra
+    editDemografia = async (e) => {
+
+        const value = e.target.value
+        const { obra } = this.state;
+
+        axios.post('/api/edit-demografia/', null, { params: { obra: obra, demo: value } }).then(
+            this.getDemografia()
+        )
+    }
+
 
 
     /* Funciones que afectan a los Capítulos de la obra */
@@ -170,7 +180,7 @@ export default class Obra extends Component {
 
     render() {
 
-        const { autor, nombre, lanzamiento, demografia, generos, listaDemografias, listaGeneros, cover, descripcion, socialMedia, listSocialMedia } = this.state
+        const { autor, nombre, lanzamiento, demografia, generos, ListDemografias, listGeneros, cover, descripcion, socialMedia, listSocialMedia, estado, listEstados, tipo, listTipos, visibilidad } = this.state
 
         return (
             <div className='edit-single-obra-container'>
@@ -194,17 +204,17 @@ export default class Obra extends Component {
                             <input type="number" value={lanzamiento} onChange={(e) => { this.editObra(e, 3) }} name="obra-lanzamiento" placeholder="Editar Lanzamiento" />
                         </div>
                         <div className='edit-obra-social-media' ></div>
+                        
                         <div className='edit-obra-demografias' >
                             <label htmlFor="obra-demografia">Demografia: </label>
-                            <input type="text" value={demografia} onChange={this.editDemografia} name="obra-demografia" placeholder="Editar Lanzamiento" />
+                            <input type="text" value={demografia} onChange={this.editDemografia} name="obra-demografia" placeholder="Editar demografia" />
                             <select id="edit-demografia" onChange={this.editDemografia} >
-                                <option value='0'>Clear</option>
-                                {listaDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
+                                {ListDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
                             </select>
                         </div>
                         <div className='edit-obra-generos' >
                             <div>Generos: </div>
-                            {generos.map((item) => <div>{item.NOMBRE}</div>)}
+                            {listGeneros.map((item, index) => <div key={item.NOMBRE+index} >{item.NOMBRE}</div>)}
                         </div>
 
                     </div>

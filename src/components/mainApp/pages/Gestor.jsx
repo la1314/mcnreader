@@ -123,6 +123,9 @@ export default class Gestor extends Component {
         localStorage.removeItem('nombre');
 
         this.setState({coverList: await this.findObras()})
+
+        axios.post('/api/default-demografia/', null, { params: {obra: obra}})
+
       })
     })
   }
