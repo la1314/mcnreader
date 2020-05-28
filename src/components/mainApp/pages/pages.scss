@@ -39,3 +39,16 @@
         width: 150px;
     }
 }
+
+.edit-obra-details {
+
+    display: grid;
+    grid-template-columns: 0.8fr;
+    column-gap: 20px;
+    row-gap: 20px;
+
+    div[class*='edit-'] {
+        border: solid red 1px;
+    }
+
+}
