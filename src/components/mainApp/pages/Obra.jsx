@@ -10,20 +10,22 @@ export default class Obra extends Component {
             nombre: '',
             autor: '',
             lanzamiento: '',
-            ListDemografias: [],
+            listDemografias: [],
             listGeneros: [],
             listEstados: [],
             listSocialMedia: [],
             listTipos: [],
             demografia: '',
             generos: [],
-            estado: '',
+            estadoValue: '',
             socialMedia: [],
             tipo: '',
             cover: '',
-            descripcion: ''
+            descripcion: '',
+            inputEstados: []
         }
         this.inputVisibilidadRef = React.createRef();
+        this.inputEstadoRef = React.createRef();
     }
 
     //Carga los datos del localStorage y asigna valores a los state
@@ -31,31 +33,30 @@ export default class Obra extends Component {
 
         if (localStorage.getItem('obraEdit')) {
             const n = parseInt(localStorage.getItem('obraEdit'));
-            this.setState({ obra: n }, () => { this.findDetailtObra()})
+            this.setState({ obra: n }, () => { this.findDetailtObra() })
         }
-
-        
-        
-        
     }
 
     /* Funciones que afectan a los formularios*/
     //TODO Esto da to el sidote
     //Se ejecuta cuando se monta el componente
     checkVisibilidadObra = () => {
-        
+
         let inputsV = this.inputVisibilidadRef.current.childNodes
-        const {visibilidad} = this.state
-        
+
+        const { visibilidad } = this.state
+
         inputsV.forEach(element => {
-            
+
             const value = parseInt(element.getAttribute('value'))
-            
+
             if (element.getAttribute('type') === 'radio' && value === visibilidad) {
                 element.checked = true;
             }
         });
     }
+
+   
 
     /* Funciones que afectan a la Obra */
 
@@ -74,20 +75,22 @@ export default class Obra extends Component {
                 lanzamiento: datos.LANZAMIENTO,
                 descripcion: datos.DESCRIPCION,
                 cover: datos.COVER,
-                visibilidad: datos.VISIBILIDAD
+                visibilidad: datos.VISIBILIDAD,
+                estadoValue: datos.ESTADOVALUE,
             }, async () => {
                 this.getDemografia();
                 this.setState({
                     listEstados: await this.findCaracteristicaObra('estados'),
                     listGeneros: await this.findCaracteristicaObra('generos'),
-                    ListDemografias: await this.findCaracteristicaObra('demografias'),
+                    listDemografias: await this.findCaracteristicaObra('demografias'),
                     listSocialMedia: await this.findCaracteristicaObra('socialMedia'),
-                    listTipos: await this.findCaracteristicaObra('tipos')
+                    listTipos: await this.findCaracteristicaObra('tipos'),
+                    estado: await this.getEstado()
                 })
             });
-        }).then(() => {
+        }).then(
             this.checkVisibilidadObra()
-        })
+        )
     }
 
     //Obtiene las distintas caracteristicas de una obra
@@ -124,6 +127,12 @@ export default class Obra extends Component {
             case 5:
                 this.setState({ name: value })
                 break;
+            case 6:
+                this.setState({ estadoValue: value })
+                break;
+            case 7:
+                this.setState({ visibilidad: value })
+                break;
 
             default:
                 break;
@@ -148,19 +157,6 @@ export default class Obra extends Component {
     //Edita el tipo actual de la obra
     editTipo = () => { }
 
-    //Edita la visibilidad actual de la obra
-    editVisibilidad = (e) => {
-
-
-        const value = e.target.value
-        const { obra } = this.state
-
-        axios.post('/api/edit-visibilidad/', null, { params: { id: obra, value:value } })
-
-        
-
-    }
-
     //Obtiene la demografia de la obra actual
     getDemografia = () => {
 
@@ -168,8 +164,19 @@ export default class Obra extends Component {
 
         axios.post('/api/get-demografia/', null, { params: { obra: obra } }).then((res) => {
 
-            this.setState({ demografia: res.data[0].NOMBRE, demografiaValue: res.data[0].ID  })
+            this.setState({ demografia: res.data[0].NOMBRE, demografiaValue: res.data[0].ID })
         })
+    }
+
+    getEstado = () => {
+
+        const { estadoValue } = this.state;
+
+        return axios.post('/api/get-estado/', null, { params: { id: estadoValue } }).then(function (res) {
+            // handle success
+            return res.data[0].NOMBRE
+        })
+
     }
 
     //Edita la demografia actual de la obra
@@ -215,8 +222,7 @@ export default class Obra extends Component {
 
     render() {
 
-        const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, ListDemografias, listGeneros, cover, descripcion, socialMedia, listSocialMedia, estado, listEstados, tipo, listTipos, visibilidad } = this.state
-
+        const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros, cover, descripcion, socialMedia, listSocialMedia, estado, listEstados, estadoValue, tipo, listTipos } = this.state;
         return (
             <div className='edit-single-obra-container'>
                 <div className='edit-obra-cover-details-container' >
@@ -240,19 +246,26 @@ export default class Obra extends Component {
                         </div>
                         <div className='edit-obra-tipo' >
                             <label htmlFor="obra-tipo">Tipo: </label>
-                            
+
                         </div>
                         <div className='edit-obra-estado' >
                             <label htmlFor="obra-estado">Estado: </label>
-                            
+                            <div>{estado}</div>
+                            <select id="edit-demografia" value={estadoValue} onChange={this.editDemografia} >
+                                {
+
+                                    listEstados.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)
+
+                                }
+                            </select>
                         </div>
                         <div className='edit-obra-visibilidad' ref={this.inputVisibilidadRef} >
                             <label htmlFor="obra-visibilidad">Visibilidad: </label>
-                            
+
                             <label htmlFor="obra-visibilidad">Oculto </label>
-                            <input type="radio" value='0'  onChange={this.editVisibilidad} name="input-visibilidad"></input>
+                            <input type="radio" value='0' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
                             <label htmlFor="obra-visibilidad">Visible </label>
-                            <input type="radio" value='1'  onChange={this.editVisibilidad} name="input-visibilidad"></input>
+                            <input type="radio" value='1' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
 
                         </div>
                         <div className='edit-obra-social-media' ></div>
@@ -261,7 +274,11 @@ export default class Obra extends Component {
                             <label htmlFor="obra-demografia">Demografia: </label>
                             <div>{demografia}</div>
                             <select id="edit-demografia" value={demografiaValue} onChange={this.editDemografia} >
-                                {ListDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
+                                {
+
+                                    listDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)
+
+                                }
                             </select>
                         </div>
                         <div className='edit-obra-generos' >
