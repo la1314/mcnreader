@@ -23,7 +23,7 @@ export default class Obra extends Component {
             cover: '',
             descripcion: ''
         }
-        this.myRef = React.createRef();
+        this.inputVisibilidadRef = React.createRef();
     }
 
     //Carga los datos del localStorage y asigna valores a los state
@@ -31,34 +31,30 @@ export default class Obra extends Component {
 
         if (localStorage.getItem('obraEdit')) {
             const n = parseInt(localStorage.getItem('obraEdit'));
-            this.setState({ obra: n }, () => { this.findDetailtObra() })
+            this.setState({ obra: n }, () => { this.findDetailtObra()})
         }
 
-        this.checkVisibilidadObra()
+        
+        
         
     }
 
     /* Funciones que afectan a los formularios*/
     //TODO Esto da to el sidote
+    //Se ejecuta cuando se monta el componente
     checkVisibilidadObra = () => {
         
-
-
-        let inputsV = this.myRef.current.childNodes
-
+        let inputsV = this.inputVisibilidadRef.current.childNodes
+        const {visibilidad} = this.state
+        
         inputsV.forEach(element => {
             
-            if (element.getAttribute('type') === 'radio' && element.getAttribute('value') === '1') {
+            const value = parseInt(element.getAttribute('value'))
+            
+            if (element.getAttribute('type') === 'radio' && value === visibilidad) {
                 element.checked = true;
             }
-
         });
-
-       // inputsV.filter(  )
-       // inputsV[0].checked = true;
-       
-        
-        
     }
 
     /* Funciones que afectan a la Obra */
@@ -89,6 +85,8 @@ export default class Obra extends Component {
                     listTipos: await this.findCaracteristicaObra('tipos')
                 })
             });
+        }).then(() => {
+            this.checkVisibilidadObra()
         })
     }
 
@@ -154,14 +152,12 @@ export default class Obra extends Component {
     editVisibilidad = (e) => {
 
 
-        const id = e.target.value
+        const value = e.target.value
         const { obra } = this.state
 
-        axios.post('/api/find-Visibilidad/', null, { params: { id: obra } }).then((res) => {
+        axios.post('/api/edit-visibilidad/', null, { params: { id: obra, value:value } })
 
-            console.log(res);
-
-        })
+        
 
     }
 
@@ -172,7 +168,7 @@ export default class Obra extends Component {
 
         axios.post('/api/get-demografia/', null, { params: { obra: obra } }).then((res) => {
 
-            this.setState({ demografia: res.data[0].NOMBRE })
+            this.setState({ demografia: res.data[0].NOMBRE, demografiaValue: res.data[0].ID  })
         })
     }
 
@@ -219,7 +215,7 @@ export default class Obra extends Component {
 
     render() {
 
-        const { autor, nombre, lanzamiento, demografia, generos, ListDemografias, listGeneros, cover, descripcion, socialMedia, listSocialMedia, estado, listEstados, tipo, listTipos, visibilidad } = this.state
+        const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, ListDemografias, listGeneros, cover, descripcion, socialMedia, listSocialMedia, estado, listEstados, tipo, listTipos, visibilidad } = this.state
 
         return (
             <div className='edit-single-obra-container'>
@@ -250,21 +246,21 @@ export default class Obra extends Component {
                             <label htmlFor="obra-estado">Estado: </label>
                             
                         </div>
-                        <div className='edit-obra-visibilidad' ref={this.myRef} >
+                        <div className='edit-obra-visibilidad' ref={this.inputVisibilidadRef} >
                             <label htmlFor="obra-visibilidad">Visibilidad: </label>
                             
                             <label htmlFor="obra-visibilidad">Oculto </label>
-                            <input type="radio" value='0'  onChange={(e) => { console.log(e) }} name="input-visibilidad"></input>
+                            <input type="radio" value='0'  onChange={this.editVisibilidad} name="input-visibilidad"></input>
                             <label htmlFor="obra-visibilidad">Visible </label>
-                            <input type="radio" value='1'  onChange={(e) => { console.log(e) }} name="input-visibilidad"></input>
+                            <input type="radio" value='1'  onChange={this.editVisibilidad} name="input-visibilidad"></input>
 
                         </div>
                         <div className='edit-obra-social-media' ></div>
 
-                        <div className='edit-obra-demografias' >
+                        <div className='edit-obra-demografias'>
                             <label htmlFor="obra-demografia">Demografia: </label>
                             <div>{demografia}</div>
-                            <select id="edit-demografia" onChange={this.editDemografia} >
+                            <select id="edit-demografia" value={demografiaValue} onChange={this.editDemografia} >
                                 {ListDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
                             </select>
                         </div>
