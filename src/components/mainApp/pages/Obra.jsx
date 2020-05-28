@@ -79,13 +79,13 @@ export default class Obra extends Component {
                 cover: datos.COVER,
                 visibilidad: datos.VISIBILIDAD,
                 estadoValue: datos.ESTADOVALUE,
-                tipoValue: datos.TIPO
+                tipoValue: datos.TIPO,
+                demografiaValue: datos.DEMOGRAFIA
 
             }, async () => {
 
                 this.checkVisibilidadObra();
-                this.getDemografia();
-                this.getTipo();
+
                 this.getEstado();
 
                 this.setState({
@@ -94,6 +94,13 @@ export default class Obra extends Component {
                     listDemografias: await this.findCaracteristicaObra('demografias'),
                     listSocialMedia: await this.findCaracteristicaObra('socialMedia'),
                     listTipos: await this.findCaracteristicaObra('tipos')
+                }, () => {
+
+                    const {listDemografias, demografiaValue, tipoValue, listTipos} = this.state
+                    this.setState({
+                        demografia: this.obtenerNombre(listDemografias, demografiaValue),
+                        tipo: this.obtenerNombre(listTipos, tipoValue)
+                    })
                 })
             });
         })
@@ -110,7 +117,8 @@ export default class Obra extends Component {
     //Edita los parametros de una obra
     editObra = async (e, type) => {
 
-        const { obra } = this.state
+        const { obra, listDemografias, listTipos } = this.state
+
         const value = e.target.value
 
         axios.post('/api/edit-obra/', null, {
@@ -141,12 +149,26 @@ export default class Obra extends Component {
                 this.setState({ visibilidad: value })
                 break;
             case 8:
-                this.setState({ tipoValue: value }, () => { this.getTipo() })
+                this.setState({ tipoValue: value, tipo: this.obtenerNombre(listTipos, value) })
                 break;
 
+            case 9:
+                this.setState({ demografiaValue: value, demografia: this.obtenerNombre(listDemografias, value) })
+                break;
+
+
+            //Al borrar cambiar la pagina a Gestor TODO
             default:
                 break;
         }
+    }
+
+    //TODO REFACTORIZAR GET ESTADO
+
+    //Devuelve el nombre cuyo ID de item coincida con el deseado
+    obtenerNombre = (lista, id) => {
+        const result = lista.filter(item => parseInt(item.ID) === parseInt(id))
+        return result[0].NOMBRE
     }
 
     //Modifica la descripción de la obra
@@ -161,28 +183,6 @@ export default class Obra extends Component {
     //Añade/Reemplaza el cover actual
     editCover = () => { }
 
-    //Obtiene la demografia de la obra actual
-    getDemografia = () => {
-
-        const { obra } = this.state;
-
-        axios.post('/api/get-demografia/', null, { params: { obra: obra } }).then((res) => {
-
-            this.setState({ demografia: res.data[0].NOMBRE, demografiaValue: res.data[0].ID })
-        })
-    }
-
-    //Obtiene el nombre del tipo de obra actual
-    getTipo = () => {
-
-        const { tipoValue } = this.state;
-
-        axios.post('/api/get-tipo/', null, { params: { id: tipoValue } }).then((res) => {
-            // handle success
-            this.setState({ tipo: res.data[0].NOMBRE })
-        })
-    }
-
     //Obtiene el nombre del estado actual de la obra
     getEstado = () => {
 
@@ -192,17 +192,6 @@ export default class Obra extends Component {
             // handle success
             this.setState({ estado: res.data[0].NOMBRE })
         })
-    }
-
-    //Edita la demografia actual de la obra
-    editDemografia = async (e) => {
-
-        const value = e.target.value
-        const { obra } = this.state;
-
-        axios.post('/api/edit-demografia/', null, { params: { obra: obra, demo: value } }).then(
-            this.getDemografia()
-        )
     }
 
     //Edita el estado actual de la obra
@@ -289,7 +278,7 @@ export default class Obra extends Component {
                         <div className='edit-obra-demografias'>
                             <label htmlFor="obra-demografia">Demografia: </label>
                             <div>{demografia}</div>
-                            <select id="edit-demografia" value={demografiaValue} onChange={this.editDemografia} >
+                            <select id="edit-demografia" value={demografiaValue} onChange={(e) => { this.editObra(e, 9) }} >
                                 {listDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
                             </select>
                         </div>
