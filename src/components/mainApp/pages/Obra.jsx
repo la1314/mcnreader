@@ -24,14 +24,17 @@ export default class Obra extends Component {
             tipoValue: '',
             visibilidad: '',
             cover: '',
+            coverFile: [],
             descripcion: '',
-            inputEstados: []
+            inputEstados: [],
+            coverHash: Date.now()
         }
         this.inputVisibilidadRef = React.createRef();
         this.checkboxes = []
     }
 
     //AÑADIR FUNCION PARA DEVOLVER TIPO
+    //TODO Añadir edicion de cover, Social media
 
     //Carga los datos del localStorage y asigna valores a los state
     componentDidMount() {
@@ -45,7 +48,6 @@ export default class Obra extends Component {
     }
 
     /* Funciones que afectan a los formularios*/
-    //TODO Esto da to el sidote
     //Se ejecuta cuando se monta el componente
     checkVisibilidadObra = () => {
 
@@ -61,25 +63,25 @@ export default class Obra extends Component {
         });
     }
 
+
+    //Marca los checkboxes de generos que la obra actualmente posee
     checkGeneroObra = () => {
 
         let boxes = this.checkboxes
-       
+
         const { generos } = this.state
-        
+
         boxes.forEach(element => {
 
             generos.forEach(gen => {
-                
-                if ( parseInt(element.value) === parseInt(gen.ID) ) {
+
+                if (parseInt(element.value) === parseInt(gen.ID)) {
                     element.checked = true
                     return
                 }
             })
-            
-        })
-        
 
+        })
     }
 
 
@@ -152,9 +154,9 @@ export default class Obra extends Component {
 
         axios.post('/api/edit-obra/', null, {
             params: { type: type, obra: obra, value: value }
-        }).then( async () => {
+        }).then(async () => {
             if (type === 11 || type === 10) {
-                this.setState({generos: await this.findCaracteristicaObra('generos-actuales')})
+                this.setState({ generos: await this.findCaracteristicaObra('generos-actuales') })
             }
         })
 
@@ -162,27 +164,28 @@ export default class Obra extends Component {
             case 1:
                 this.setState({ nombre: value })
                 break;
+
             case 2:
                 this.setState({ autor: value })
                 break;
+
             case 3:
                 this.setState({ lanzamiento: value })
                 break;
+
             case 4:
                 this.setState({ descripcion: value })
                 break;
-            case 5:
-                this.setState({ name: value })
-                break;
+
             case 6:
                 this.setState({ estadoValue: value }, () => { this.getEstado() })
-
                 break;
+
             case 7:
                 this.setState({ visibilidad: value })
                 break;
-            case 8:
 
+            case 8:
                 this.setState({ tipoValue: value, tipo: this.obtenerNombre(listTipos, value) })
                 break;
 
@@ -227,6 +230,35 @@ export default class Obra extends Component {
         }
     }
 
+    //Carga la imagen del cover al estado coverFile para ser subido posteriormente
+    chargeCover = (e) => {
+
+        const coverFile = e.target.files
+        this.setState({ coverFile: coverFile })
+    }
+
+    editCover = () => {
+
+        const { obra, coverFile } = this.state
+
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        const formData = new FormData();
+        formData.append('editor', this.props.user);
+        formData.append('work', obra);
+        formData.append('images[]', coverFile[0]);
+        formData.append('action', 'newCover');
+
+        axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
+            axios.post('/api/edit-obra/', null, {
+                params: { type: 5, obra: obra, value: res.data }
+            }).then( async () => {this.setState({  coverHash: Date.now(), cover: await this.findCaracteristicaObra('cover')})} )
+        });
+    }
+
 
     /* Funciones que afectan a los Capítulos de la obra */
     //Añade/Elimina un capítulo
@@ -258,13 +290,15 @@ export default class Obra extends Component {
 
     render() {
 
-        const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros, cover, descripcion, socialMedia, listSocialMedia, estado, listEstados, estadoValue, tipo, tipoValue, listTipos } = this.state;
+        const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros, cover, coverHash, descripcion, socialMedia, listSocialMedia, estado, listEstados, estadoValue, tipo, tipoValue, listTipos } = this.state;
 
         return (
             <div className='edit-single-obra-container'>
                 <div className='edit-obra-cover-details-container' >
                     <div className='edit-obra-cover'>
-                        <img alt={nombre} src={cover}></img>
+                        <img alt={nombre} src={`${cover}?${coverHash}`}></img>
+                        <input type="file" onChange={this.chargeCover} id="cover" name="cover" />
+                        <button onClick={() => { this.editCover() }} >Agregar Cover</button>
                     </div>
 
                     <div className='edit-obra-details'>

@@ -45,10 +45,10 @@ export default class Editor extends Component {
         return <Profile />;
 
       case 3:
-        return <Obra obraID={this.state.obraEditID} />;
+        return <Obra user={user} obraID={this.state.obraEditID} />;
 
       default:
-        return <Gestor user={this.props.user} changeToEditObra={this.changeToEditObra} />;
+        return <Gestor user={user} changeToEditObra={this.changeToEditObra} />;
     }
   }
 
