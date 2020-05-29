@@ -7,6 +7,7 @@ export default class Obra extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            obra: '',
             nombre: '',
             autor: '',
             lanzamiento: '',
@@ -27,18 +28,20 @@ export default class Obra extends Component {
             inputEstados: []
         }
         this.inputVisibilidadRef = React.createRef();
-        this.inputEstadoRef = React.createRef();
+        this.checkboxes = []
     }
 
     //AÑADIR FUNCION PARA DEVOLVER TIPO
 
     //Carga los datos del localStorage y asigna valores a los state
-    async componentDidMount() {
+    componentDidMount() {
 
         if (localStorage.getItem('obraEdit')) {
             const n = parseInt(localStorage.getItem('obraEdit'));
             this.setState({ obra: n }, () => { this.findDetailtObra() })
         }
+
+
     }
 
     /* Funciones que afectan a los formularios*/
@@ -56,6 +59,27 @@ export default class Obra extends Component {
 
             if (element.getAttribute('type') === 'radio' && value === visibilidad) { element.checked = true }
         });
+    }
+
+    checkGeneroObra = () => {
+
+        let boxes = this.checkboxes
+       
+        const { generos } = this.state
+        
+        boxes.forEach(element => {
+
+            generos.forEach(gen => {
+                
+                if ( parseInt(element.value) === parseInt(gen.ID) ) {
+                    element.checked = true
+                    return
+                }
+            })
+            
+        })
+        
+
     }
 
 
@@ -85,10 +109,10 @@ export default class Obra extends Component {
             }, async () => {
 
                 this.checkVisibilidadObra();
-
                 this.getEstado();
 
                 this.setState({
+                    generos: await this.findCaracteristicaObra('generos-actuales'),
                     listEstados: await this.findCaracteristicaObra('estados'),
                     listGeneros: await this.findCaracteristicaObra('generos'),
                     listDemografias: await this.findCaracteristicaObra('demografias'),
@@ -96,11 +120,13 @@ export default class Obra extends Component {
                     listTipos: await this.findCaracteristicaObra('tipos')
                 }, () => {
 
-                    const {listDemografias, demografiaValue, tipoValue, listTipos} = this.state
+                    const { listDemografias, demografiaValue, tipoValue, listTipos } = this.state
                     this.setState({
                         demografia: this.obtenerNombre(listDemografias, demografiaValue),
                         tipo: this.obtenerNombre(listTipos, tipoValue)
                     })
+
+                    this.checkGeneroObra()
                 })
             });
         })
@@ -108,7 +134,10 @@ export default class Obra extends Component {
 
     //Obtiene las distintas caracteristicas de una obra
     findCaracteristicaObra = (option) => {
-        return axios.post(`/api/find-${option}/`).then(function (res) {
+
+        const { obra } = this.state
+
+        return axios.post(`/api/find-${option}/`, null, { params: { obra: obra } }).then(function (res) {
             // handle success
             return res.data
         })
@@ -123,6 +152,10 @@ export default class Obra extends Component {
 
         axios.post('/api/edit-obra/', null, {
             params: { type: type, obra: obra, value: value }
+        }).then( async () => {
+            if (type === 11 || type === 10) {
+                this.setState({generos: await this.findCaracteristicaObra('generos-actuales')})
+            }
         })
 
         switch (type) {
@@ -149,6 +182,7 @@ export default class Obra extends Component {
                 this.setState({ visibilidad: value })
                 break;
             case 8:
+
                 this.setState({ tipoValue: value, tipo: this.obtenerNombre(listTipos, value) })
                 break;
 
@@ -171,17 +205,6 @@ export default class Obra extends Component {
         return result[0].NOMBRE
     }
 
-    //Modifica la descripción de la obra
-    editDescription = () => { }
-
-    //Edita el Autor de la Obra
-    editAutor = () => { }
-
-    //Edita el año de lanzamiento de la Obra
-    editLanzamiento = () => { }
-
-    //Añade/Reemplaza el cover actual
-    editCover = () => { }
 
     //Obtiene el nombre del estado actual de la obra
     getEstado = () => {
@@ -194,8 +217,15 @@ export default class Obra extends Component {
         })
     }
 
-    //Edita el estado actual de la obra
-    editEstado = () => { }
+    //Edita los generos de la obra actual
+    editGenero = (e) => {
+
+        if (e.target.checked) {
+            this.editObra(e, 10)
+        } else {
+            this.editObra(e, 11)
+        }
+    }
 
 
     /* Funciones que afectan a los Capítulos de la obra */
@@ -229,6 +259,7 @@ export default class Obra extends Component {
     render() {
 
         const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros, cover, descripcion, socialMedia, listSocialMedia, estado, listEstados, estadoValue, tipo, tipoValue, listTipos } = this.state;
+
         return (
             <div className='edit-single-obra-container'>
                 <div className='edit-obra-cover-details-container' >
@@ -284,9 +315,19 @@ export default class Obra extends Component {
                         </div>
                         <div className='edit-obra-generos' >
                             <label htmlFor="obra-generos">Generos: </label>
+                            <div className='obra-generos-actuales'>
+                                {generos.map((item, index) => <div key={item.NOMBRE + '-ga-' + index} className='obra-genero-texto' >{item.NOMBRE}</div>)}
+                            </div>
                             {
                                 //TODO CHECKBOXES
-                                listGeneros.map((item, index) => <div key={item.NOMBRE + index} >{item.NOMBRE}</div>)
+                                listGeneros.map((item, index) => {
+
+                                    return [
+                                        <label htmlFor="obra-generos" key={item.NOMBRE + 'label' + index} >{item.NOMBRE}</label>,
+                                        <input type='checkbox' ref={(input) => { this.checkboxes[index] = input }} onChange={this.editGenero} key={item.NOMBRE + index} value={item.ID} />
+                                    ]
+
+                                })
                             }
                         </div>
 

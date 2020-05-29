@@ -31,11 +31,12 @@ export default class Editor extends Component {
   renderSwitch = () => {
 
     const { page } = this.state
+    const {user} = this.props
 
     switch (page) {
 
       case 0:
-        return <Gestor user={this.props.user} changeToEditObra={this.changeToEditObra} />;
+        return <Gestor user={user} changeToEditObra={this.changeToEditObra} />;
 
       case 1:
         return <Library />;
@@ -47,7 +48,7 @@ export default class Editor extends Component {
         return <Obra obraID={this.state.obraEditID} />;
 
       default:
-        return <Gestor user={this.props.user} />;
+        return <Gestor user={this.props.user} changeToEditObra={this.changeToEditObra} />;
     }
   }
 

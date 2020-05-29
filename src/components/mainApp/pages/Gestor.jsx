@@ -28,6 +28,7 @@ export default class Gestor extends Component {
     if (localStorage.getItem('nombre')) { this.setState({ nombre: localStorage.getItem('nombre') }) }
     if (localStorage.getItem('autor')) { this.setState({ autor: localStorage.getItem('autor') }) }
     if (localStorage.getItem('lanzamiento')) { this.setState({ lanzamiento: localStorage.getItem('lanzamiento') }) }
+
     this.setState({
       tipos: await this.obtenerValores('tipos'),
       estados: await this.obtenerValores('estados'),
