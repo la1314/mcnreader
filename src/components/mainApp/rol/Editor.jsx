@@ -50,7 +50,7 @@ export default class Editor extends Component {
         return <Obra user={user} obraID={obraEditID} changeToEditChapter={this.changeToEditChapter} />;
 
       case 4:
-        return <EditChapter obraID={obraEditID} changeToEditObra={this.changeToEditObra} chapter={chapterEditID} />;
+        return <EditChapter user={user} obraID={obraEditID} changeToEditObra={this.changeToEditObra} chapter={chapterEditID} />;
 
       default:
         return <Gestor user={user} changeToEditObra={this.changeToEditObra} />;

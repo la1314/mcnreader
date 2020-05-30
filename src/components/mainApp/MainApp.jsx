@@ -12,6 +12,10 @@ export default class MainApp extends Component {
     };
   }
 
+  componentDidMount() {
+    localStorage.setItem("user", this.props.user)
+  }
+
   render() {
 
     const { rol } = this.state

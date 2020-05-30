@@ -11,9 +11,9 @@ export default class EditChapter extends Component {
             number: '',
             date: '',
             visibilidad: '',
-            listPages: []
+            listPages: [],
+            listFiles: []
         };
-        this.inputVisibilidadRef = React.createRef();
     }
 
     //Carga los datos del capítulo
@@ -22,10 +22,10 @@ export default class EditChapter extends Component {
         if (localStorage.getItem('chapter')) {
 
             const value = parseInt(localStorage.getItem('chapter'));
-            this.setState({ chapter: value }, () => { this.getChapterDetails() })
+            const obra = parseInt(localStorage.getItem('obraEdit'));
+            const editor = parseInt(localStorage.getItem('user'));
+            this.setState({ chapter: value, obra: obra, editor: editor }, () => { this.getChapterDetails() })
         }
-
-
     }
 
     getChapterDetails = () => {
@@ -34,7 +34,7 @@ export default class EditChapter extends Component {
 
         axios.post('/api/find-info-chapter/', null, {
             params: { chapter: parseInt(chapter) }
-        }).then( res => {
+        }).then(res => {
 
             const data = res.data
             this.setState({
@@ -70,6 +70,59 @@ export default class EditChapter extends Component {
     //Edita el número de una pagina
     editNumberPages = () => { }
 
+    //Actualiza el estado lisFiles
+    chargeImages = (e) => {
+
+        const files = e.target.files
+        this.setState({ listFiles: files })
+    }
+
+    //Carga las paginas en el servidor y la BD
+    uploadPages = () => {
+
+        const { chapter, listFiles, listPages, obra, editor } = this.state
+        let nombres = [];
+        let npages = listPages.length
+
+        for (let index = 0; index < listFiles.length; index++) {
+            nombres.push(npages + (index + 1))
+        }
+
+        if (listFiles.length !== 0) {
+
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+
+            const formData = new FormData();
+            formData.append('editor', editor);
+            formData.append('work', obra);
+            formData.append('rutas', nombres);
+            formData.append('chapter', chapter);
+
+            for (let index = 0; index < listFiles.length; index++) {
+                formData.append('images[]', listFiles[index]);
+            }
+
+            formData.append('action', 'newChapterFile');
+            axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
+
+                const rutas = res.data
+                axios.post('/api/add-chapter-pages/', null, {
+                    params: { chapter: parseInt(chapter), rutas: rutas, numeros: nombres }
+                }).then(res => {
+        
+                    console.log(res.data)
+                })
+            })
+
+        }
+
+    }
+
+
     //TODO
     render() {
 
@@ -96,6 +149,11 @@ export default class EditChapter extends Component {
                         <option value="0">OCULTO</option>
                         <option value="1">VISIBLE</option>
                     </select>
+                </div>
+
+                <div className='edit-chapter-upload-images' onDrag={this.chargeImages}>
+                    <input type="file" className="form-control" multiple onChange={this.chargeImages} />
+                    <button onClick={() => { this.uploadPages() }} >Subir paginas</button>
                 </div>
             </div>
         );

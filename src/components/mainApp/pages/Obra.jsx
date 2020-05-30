@@ -47,7 +47,8 @@ export default class Obra extends Component {
 
         if (localStorage.getItem('obraEdit')) {
             const n = parseInt(localStorage.getItem('obraEdit'));
-            this.setState({ obra: n }, () => { this.findDetailtObra() })
+            const editor = parseInt(localStorage.getItem('user'));
+            this.setState({ obra: n, editor: editor }, () => { this.findDetailtObra() })
         }
     }
 
@@ -248,7 +249,7 @@ export default class Obra extends Component {
         const { obra, coverFile } = this.state
 
         if (coverFile.length !== 0) {
-    
+
             const config = {
                 headers: {
                     'content-type': 'multipart/form-data'
@@ -256,16 +257,16 @@ export default class Obra extends Component {
             }
             let rutas = [];
             rutas.push('cover')
-    
+
             const formData = new FormData();
             formData.append('editor', this.props.user);
             formData.append('work', obra);
             formData.append('rutas', rutas);
             formData.append('images[]', coverFile[0]);
             formData.append('action', 'newCover');
-    
+
             axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
-    
+
                 axios.post('/api/edit-obra/', null, {
                     params: { type: 5, obra: obra, value: res.data[0].ruta }
                 }).then(async () => { this.setState({ coverHash: Date.now(), cover: await this.findCaracteristicaObra('cover') }) })
@@ -278,9 +279,10 @@ export default class Obra extends Component {
     //Añade/Elimina un capítulo
 
     //Añade un nuevo capítulo a la obra
+    //TODO SI EL NUMERO DEL CAPITULO YA EXISTE 
     newChapter = () => {
 
-        const { newChapterName, newChapterNumber, newChapterDate, newChapterVisibilidad, obra } = this.state
+        const { newChapterName, newChapterNumber, newChapterDate, newChapterVisibilidad, obra, editor } = this.state
 
         axios.post('/api/new-chapter/', null, {
             params: {
@@ -290,7 +292,25 @@ export default class Obra extends Component {
                 date: newChapterDate,
                 visibilidad: newChapterVisibilidad
             }
-        }).then( async () => this.setState({listChapters: await this.findCaracteristicaObra('chapters')}) )
+        }).then(async () => this.setState({ listChapters: await this.findCaracteristicaObra('chapters') }, () => {
+            
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+
+            const {listChapters} = this.state;
+            const last = listChapters.length - 1;
+
+            const formData = new FormData();
+            formData.append('editor', editor);
+            formData.append('work', obra);
+            formData.append('chapter', listChapters[last].ID);
+            formData.append('action', 'newChapterDirectory');
+            axios.post('https://tuinki.gupoe.com/media/options.php', formData, config)
+
+        }))
     }
 
     //Actualiza los estados para la creación de un nuevo capítulo
@@ -317,9 +337,6 @@ export default class Obra extends Component {
                 break;
         }
     }
-
-    editChapter = () => { }
-
 
     render() {
 
@@ -420,7 +437,7 @@ export default class Obra extends Component {
                     <div className='edit-obra-chapters'>
                         <label>Capitulos: </label>
                         <div className='edit-obra-chapters-list'>
-                            {listChapters.map( (item, index) => <ECItem key={'chapter-item'+index} chapter={item.ID} name={item.NOMBRE} number={item.NUMERO} changeToEditChapter={this.props.changeToEditChapter}  /> )}
+                            {listChapters.map((item, index) => <ECItem key={'chapter-item' + index} chapter={item.ID} name={item.NOMBRE} number={item.NUMERO} changeToEditChapter={this.props.changeToEditChapter} />)}
                         </div>
                     </div>
 
