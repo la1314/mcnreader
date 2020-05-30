@@ -277,7 +277,17 @@ export default class Obra extends Component {
     //Añade un nuevo capítulo a la obra
     newChapter = () => {
 
-        const {newChapterName, newChapterNumber, newChapterDate, newChapterVisibilidad} = this.state
+        const { newChapterName, newChapterNumber, newChapterDate, newChapterVisibilidad, obra } = this.state
+
+        axios.post('/api/new-chapter/', null, {
+            params: {
+                obra: obra,
+                number: newChapterNumber,
+                name: newChapterName,
+                date: newChapterDate,
+                visibilidad: newChapterVisibilidad
+            }
+        }).then(res => console.log(res.data))
 
     }
 
@@ -300,6 +310,8 @@ export default class Obra extends Component {
 
             case 4:
                 this.setState({ newChapterVisibilidad: value })
+                break;
+            default:
                 break;
         }
     }
@@ -333,9 +345,9 @@ export default class Obra extends Component {
     render() {
 
         const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros,
-             cover, coverHash, descripcion, estado, listEstados, estadoValue, tipo, tipoValue, listTipos,
+            cover, coverHash, descripcion, estado, listEstados, estadoValue, tipo, tipoValue, listTipos,
             newChapterNumber, newChapterName, newChapterDate
-            } = this.state;
+        } = this.state;
 
         return (
             <div className='edit-single-obra-container'>
@@ -417,8 +429,8 @@ export default class Obra extends Component {
 
 
                 <div className='edit-obra-resume'>
-                    <label htmlFor="obra-resume">Descripcion: </label>
-                    <textarea className='edit-obra-resume-textarea' >{descripcion}</textarea>
+                    <label htmlFor="obra-resume">Descripción: </label>
+                    <textarea placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={() => { }} value={descripcion} />
                 </div>
 
                 <div className='edit-obra-social-media' >
@@ -426,7 +438,12 @@ export default class Obra extends Component {
                 </div>
 
 
-                <div className='edit-obra-chapters'>
+                <div className='edit-obra-chapters-container'>
+
+                    <div className='edit-obra-chapters'>
+
+                    </div>
+
                     <div className='edit-obra-new-chapter'>
                         <div className='edit-chapter-number'>
                             <label htmlFor='label-new-chapter-number'>Numero: </label>

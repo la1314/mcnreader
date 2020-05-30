@@ -5,6 +5,7 @@ import Gestor from '../pages/Gestor.jsx';
 import Library from '../pages/Library.jsx';
 import Profile from '../pages/Profile.jsx';
 import Obra from '../pages/Obra.jsx';
+import EditChapter from '../pages/EditChapter.jsx';
 
 export default class Editor extends Component {
 
@@ -12,7 +13,8 @@ export default class Editor extends Component {
     super();
     this.state = {
       page: 0,
-      obraEditID: ''
+      obraEditID: '',
+      chapterEditID: ''
     };
   }
 
@@ -30,8 +32,8 @@ export default class Editor extends Component {
   //Renderiza un componente depediento al valor de page 
   renderSwitch = () => {
 
-    const { page } = this.state
-    const {user} = this.props
+    const { page, obraEditID, chapterEditID } = this.state
+    const { user } = this.props
 
     switch (page) {
 
@@ -45,7 +47,10 @@ export default class Editor extends Component {
         return <Profile />;
 
       case 3:
-        return <Obra user={user} obraID={this.state.obraEditID} />;
+        return <Obra user={user} obraID={obraEditID} changeToEditChapter={this.changeToEditChapter} />;
+
+      case 4:
+        return <EditChapter obraID={obraEditID} changeToEditObra={this.changeToEditObra} chapter={chapterEditID} />;
 
       default:
         return <Gestor user={user} changeToEditObra={this.changeToEditObra} />;
@@ -83,8 +88,14 @@ export default class Editor extends Component {
 
   //TODO accede a la edición de una obra
   changeToEditObra = (obra) => {
-    
-    Promise.resolve(this.setState({ obraEditID: obra })).then(this.changePage(3))
+
+    this.setState({ obraEditID: obra }, () => {this.changePage(3)} )
+  }
+
+  changeToEditChapter = (chapter) => {
+
+    this.setState({ chapterEditID: chapter }, () => {this.changePage(4)} )
+
   }
 
   render() {
