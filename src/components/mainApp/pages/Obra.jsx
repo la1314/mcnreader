@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './pages.scss';
+import ECItem from './gestor/EditorChapterItem.jsx';
 
 export default class Obra extends Component {
 
@@ -23,6 +24,7 @@ export default class Obra extends Component {
             tipo: '',
             tipoValue: '',
             visibilidad: '',
+            listChapters: [],
             cover: '',
             coverFile: [],
             descripcion: '',
@@ -47,8 +49,6 @@ export default class Obra extends Component {
             const n = parseInt(localStorage.getItem('obraEdit'));
             this.setState({ obra: n }, () => { this.findDetailtObra() })
         }
-
-
     }
 
     /* Funciones que afectan a los formularios*/
@@ -84,7 +84,6 @@ export default class Obra extends Component {
                     return
                 }
             })
-
         })
     }
 
@@ -123,7 +122,8 @@ export default class Obra extends Component {
                     listGeneros: await this.findCaracteristicaObra('generos'),
                     listDemografias: await this.findCaracteristicaObra('demografias'),
                     listSocialMedia: await this.findCaracteristicaObra('socialMedia'),
-                    listTipos: await this.findCaracteristicaObra('tipos')
+                    listTipos: await this.findCaracteristicaObra('tipos'),
+                    listChapters: await this.findCaracteristicaObra('chapters')
                 }, () => {
 
                     const { listDemografias, demografiaValue, tipoValue, listTipos } = this.state
@@ -247,27 +247,30 @@ export default class Obra extends Component {
 
         const { obra, coverFile } = this.state
 
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
+        if (coverFile.length !== 0) {
+    
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
             }
+            let rutas = [];
+            rutas.push('cover')
+    
+            const formData = new FormData();
+            formData.append('editor', this.props.user);
+            formData.append('work', obra);
+            formData.append('rutas', rutas);
+            formData.append('images[]', coverFile[0]);
+            formData.append('action', 'newCover');
+    
+            axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
+    
+                axios.post('/api/edit-obra/', null, {
+                    params: { type: 5, obra: obra, value: res.data[0].ruta }
+                }).then(async () => { this.setState({ coverHash: Date.now(), cover: await this.findCaracteristicaObra('cover') }) })
+            });
         }
-        let rutas = [];
-        rutas.push('cover')
-
-        const formData = new FormData();
-        formData.append('editor', this.props.user);
-        formData.append('work', obra);
-        formData.append('rutas', rutas);
-        formData.append('images[]', coverFile[0]);
-        formData.append('action', 'newCover');
-
-        axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
-
-            axios.post('/api/edit-obra/', null, {
-                params: { type: 5, obra: obra, value: res.data[0].ruta }
-            }).then(async () => { this.setState({ coverHash: Date.now(), cover: await this.findCaracteristicaObra('cover') }) })
-        });
     }
 
 
@@ -287,8 +290,7 @@ export default class Obra extends Component {
                 date: newChapterDate,
                 visibilidad: newChapterVisibilidad
             }
-        }).then(res => console.log(res.data))
-
+        }).then( async () => this.setState({listChapters: await this.findCaracteristicaObra('chapters')}) )
     }
 
     //Actualiza los estados para la creación de un nuevo capítulo
@@ -318,35 +320,12 @@ export default class Obra extends Component {
 
     editChapter = () => { }
 
-    //Edita el número de un capítulo
-    editNumberChapter = () => { }
-
-    //Edita el nombre de un capítulo
-    editNameChapter = () => { }
-
-    //Edita la fecha de un capítulo
-    editFechaChapter = () => { }
-
-    //Edita la visibilidad del capítulo de la obra
-    editVisibilidadChapter = () => { }
-
-
-    /* Funciones que afectan a las páginas de los capítulos */
-
-    //Añane las paginas a un capítulo
-    addChapterPages = () => { }
-
-    //Elimina las paginas de un capítulo
-    deleteChapterPages = () => { }
-
-    //Edita el número de una pagina
-    editNumberPages = () => { }
 
     render() {
 
         const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros,
             cover, coverHash, descripcion, estado, listEstados, estadoValue, tipo, tipoValue, listTipos,
-            newChapterNumber, newChapterName, newChapterDate
+            newChapterNumber, newChapterName, newChapterDate, listChapters
         } = this.state;
 
         return (
@@ -426,8 +405,6 @@ export default class Obra extends Component {
                     }
                 </div>
 
-
-
                 <div className='edit-obra-resume'>
                     <label htmlFor="obra-resume">Descripción: </label>
                     <textarea placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={() => { }} value={descripcion} />
@@ -441,7 +418,10 @@ export default class Obra extends Component {
                 <div className='edit-obra-chapters-container'>
 
                     <div className='edit-obra-chapters'>
-
+                        <label>Capitulos: </label>
+                        <div className='edit-obra-chapters-list'>
+                            {listChapters.map( (item, index) => <ECItem key={'chapter-item'+index} chapter={item.ID} name={item.NOMBRE} number={item.NUMERO} changeToEditChapter={this.props.changeToEditChapter}  /> )}
+                        </div>
                     </div>
 
                     <div className='edit-obra-new-chapter'>
