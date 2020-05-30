@@ -85,7 +85,7 @@ export default class Gestor extends Component {
   }
 
   //Hace una petición para crear una nueva obra
-  newObra =  () => {
+  newObra = () => {
 
     const { tipo, estado, nombre, autor, lanzamiento, visibilidad } = this.state
 
@@ -108,7 +108,7 @@ export default class Gestor extends Component {
           tipo: tipo,
           autor: autor
         }
-      }).then( async (res) => {
+      }).then(async (res) => {
 
         const editor = this.props.user
         const obra = res.data.ID_OBRA
@@ -123,9 +123,9 @@ export default class Gestor extends Component {
         localStorage.removeItem('autor');
         localStorage.removeItem('nombre');
 
-        this.setState({coverList: await this.findObras()})
+        this.setState({ coverList: await this.findObras() })
 
-        axios.post('/api/default-demografia/', null, { params: {obra: obra}})
+        axios.post('/api/default-demografia/', null, { params: { obra: obra } })
 
       })
     })
@@ -198,38 +198,3 @@ export default class Gestor extends Component {
     );
   }
 }
-
-/*
-
-   // Guarda en el estado la imagen del cover
-  coverCharge = async (e) => {
-
-    const cover = e.target.files
-
-    this.setState({ cover: cover }, () => {
-      console.log(this.state.cover);
-    })
-
-  }
-
-const formData = new FormData();
-    const config = {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    }
-
-    formData.append('editor', this.props.user);
-    formData.append('work', '1');
-    formData.append('images[]', cover[0]);
-    formData.append('action', 'newCover');
-
-    axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then(res => console.log(res));
-
- <div className="form-group">
-              <label htmlFor="cover">Cover: </label>
-              <input type="file" onChange={this.coverCharge} id="cover" name="cover" />
-            </div>
-
-
-*/

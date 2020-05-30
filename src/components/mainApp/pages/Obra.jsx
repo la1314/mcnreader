@@ -27,7 +27,11 @@ export default class Obra extends Component {
             coverFile: [],
             descripcion: '',
             inputEstados: [],
-            coverHash: Date.now()
+            coverHash: Date.now(),
+            newChapterNumber: '',
+            newChapterName: '',
+            newChapterDate: '',
+            newChapterVisibilidad: '0'
         }
         this.inputVisibilidadRef = React.createRef();
         this.checkboxes = []
@@ -237,6 +241,8 @@ export default class Obra extends Component {
         this.setState({ coverFile: coverFile })
     }
 
+
+    //Edita el cover actual de la obra
     editCover = () => {
 
         const { obra, coverFile } = this.state
@@ -246,22 +252,58 @@ export default class Obra extends Component {
                 'content-type': 'multipart/form-data'
             }
         }
+        let rutas = [];
+        rutas.push('cover')
+
         const formData = new FormData();
         formData.append('editor', this.props.user);
         formData.append('work', obra);
+        formData.append('rutas', rutas);
         formData.append('images[]', coverFile[0]);
         formData.append('action', 'newCover');
 
         axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
+
             axios.post('/api/edit-obra/', null, {
-                params: { type: 5, obra: obra, value: res.data }
-            }).then( async () => {this.setState({  coverHash: Date.now(), cover: await this.findCaracteristicaObra('cover')})} )
+                params: { type: 5, obra: obra, value: res.data[0].ruta }
+            }).then(async () => { this.setState({ coverHash: Date.now(), cover: await this.findCaracteristicaObra('cover') }) })
         });
     }
 
 
     /* Funciones que afectan a los Capítulos de la obra */
     //Añade/Elimina un capítulo
+
+    //Añade un nuevo capítulo a la obra
+    newChapter = () => {
+
+        const {newChapterName, newChapterNumber, newChapterDate, newChapterVisibilidad} = this.state
+
+    }
+
+    //Actualiza los estados para la creación de un nuevo capítulo
+    updateNewChapterState = (e, type) => {
+        const value = e.target.value;
+
+        switch (type) {
+            case 1:
+                this.setState({ newChapterNumber: value })
+                break;
+
+            case 2:
+                this.setState({ newChapterName: value })
+                break;
+
+            case 3:
+                this.setState({ newChapterDate: value })
+                break;
+
+            case 4:
+                this.setState({ newChapterVisibilidad: value })
+                break;
+        }
+    }
+
     editChapter = () => { }
 
     //Edita el número de un capítulo
@@ -290,87 +332,128 @@ export default class Obra extends Component {
 
     render() {
 
-        const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros, cover, coverHash, descripcion, socialMedia, listSocialMedia, estado, listEstados, estadoValue, tipo, tipoValue, listTipos } = this.state;
+        const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros,
+             cover, coverHash, descripcion, estado, listEstados, estadoValue, tipo, tipoValue, listTipos,
+            newChapterNumber, newChapterName, newChapterDate
+            } = this.state;
 
         return (
             <div className='edit-single-obra-container'>
                 <div className='edit-obra-cover-details-container' >
-                    <div className='edit-obra-cover'>
-                        <img alt={nombre} src={`${cover}?${coverHash}`}></img>
-                        <input type="file" onChange={this.chargeCover} id="cover" name="cover" />
-                        <button onClick={() => { this.editCover() }} >Agregar Cover</button>
-                    </div>
 
-                    <div className='edit-obra-details'>
+                    <div className='container-cover-details'>
+                        <div className='edit-obra-cover'>
+                            <img alt={nombre} src={`${cover}?${coverHash}`}></img>
+                            <input type="file" onChange={this.chargeCover} id="cover" name="cover" />
+                            <button onClick={() => { this.editCover() }} >Cambiar cover</button>
+                        </div>
 
-                        <div className='edit-obra-name'>
-                            <label htmlFor="obra-name">Nombre: </label>
-                            <input type="text" value={nombre} onChange={(e) => { this.editObra(e, 1) }} name="obra-name" placeholder="Editar nombre" />
-                        </div>
-                        <div className='edit-obra-autor'>
-                            <label htmlFor="obra-autor">Autor: </label>
-                            <input type="text" value={autor} onChange={(e) => { this.editObra(e, 2) }} name="obra-autor" placeholder="Editar Autor" />
-                        </div>
-                        <div className='edit-obra-lanzamiento' >
-                            <label htmlFor="obra-lanzamiento">Lanzamiento: </label>
-                            <input type="number" value={lanzamiento} onChange={(e) => { this.editObra(e, 3) }} name="obra-lanzamiento" placeholder="Editar Lanzamiento" />
-                        </div>
-                        <div className='edit-obra-tipo' >
-                            <label htmlFor="obra-tipo">Tipo: </label>
-                            <div>{tipo}</div>
-                            <select id="obra-tipo" value={tipoValue} onChange={(e) => { this.editObra(e, 8) }}>
-                                {listTipos.map((item) => <option key={item.NOMBRE} value={item.ID} >{item.NOMBRE}</option>)}
-                            </select>
-                        </div>
-                        <div className='edit-obra-estado' >
-                            <label htmlFor="obra-estado">Estado: </label>
-                            <div>{estado}</div>
-                            <select id="edit-estado" value={estadoValue} onChange={(e) => { this.editObra(e, 6) }} >
-                                {listEstados.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
-                            </select>
-                        </div>
-                        <div className='edit-obra-visibilidad' ref={this.inputVisibilidadRef} >
-                            <label htmlFor="obra-visibilidad">Visibilidad: </label>
+                        <div className='edit-obra-details'>
 
-                            <label htmlFor="obra-visibilidad">Oculto </label>
-                            <input type="radio" value='0' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
-                            <label htmlFor="obra-visibilidad">Visible </label>
-                            <input type="radio" value='1' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
-
-                        </div>
-                        <div className='edit-obra-social-media' ></div>
-
-                        <div className='edit-obra-demografias'>
-                            <label htmlFor="obra-demografia">Demografia: </label>
-                            <div>{demografia}</div>
-                            <select id="edit-demografia" value={demografiaValue} onChange={(e) => { this.editObra(e, 9) }} >
-                                {listDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
-                            </select>
-                        </div>
-                        <div className='edit-obra-generos' >
-                            <label htmlFor="obra-generos">Generos: </label>
-                            <div className='obra-generos-actuales'>
-                                {generos.map((item, index) => <div key={item.NOMBRE + '-ga-' + index} className='obra-genero-texto' >{item.NOMBRE}</div>)}
+                            <div className='edit-obra-name'>
+                                <label htmlFor="obra-name">Nombre: </label>
+                                <input type="text" value={nombre} onChange={(e) => { this.editObra(e, 1) }} name="obra-name" placeholder="Editar nombre" />
                             </div>
-                            {
-                                //TODO CHECKBOXES
-                                listGeneros.map((item, index) => {
+                            <div className='edit-obra-autor'>
+                                <label htmlFor="obra-autor">Autor: </label>
+                                <input type="text" value={autor} onChange={(e) => { this.editObra(e, 2) }} name="obra-autor" placeholder="Editar Autor" />
+                            </div>
+                            <div className='edit-obra-lanzamiento' >
+                                <label htmlFor="obra-lanzamiento">Lanzamiento: </label>
+                                <input type="number" value={lanzamiento} onChange={(e) => { this.editObra(e, 3) }} name="obra-lanzamiento" placeholder="Editar Lanzamiento" />
+                            </div>
+                            <div className='edit-obra-tipo' >
+                                <label htmlFor="obra-tipo">Tipo: {tipo}</label>
+                                <select id="obra-tipo" value={tipoValue} onChange={(e) => { this.editObra(e, 8) }}>
+                                    {listTipos.map((item) => <option key={item.NOMBRE} value={item.ID} >{item.NOMBRE}</option>)}
+                                </select>
+                            </div>
+                            <div className='edit-obra-estado' >
+                                <label htmlFor="obra-estado">Estado: {estado}</label>
 
-                                    return [
-                                        <label htmlFor="obra-generos" key={item.NOMBRE + 'label' + index} >{item.NOMBRE}</label>,
-                                        <input type='checkbox' ref={(input) => { this.checkboxes[index] = input }} onChange={this.editGenero} key={item.NOMBRE + index} value={item.ID} />
-                                    ]
+                                <select id="edit-estado" value={estadoValue} onChange={(e) => { this.editObra(e, 6) }} >
+                                    {listEstados.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
+                                </select>
+                            </div>
+                            <div className='edit-obra-visibilidad' ref={this.inputVisibilidadRef} >
+                                <label htmlFor="obra-visibilidad">Visibilidad: </label>
 
-                                })
-                            }
+                                <label htmlFor="obra-visibilidad">Oculto </label>
+                                <input type="radio" value='0' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
+                                <label htmlFor="obra-visibilidad">Visible </label>
+                                <input type="radio" value='1' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
+
+                            </div>
+
+                            <div className='edit-obra-demografias'>
+                                <label htmlFor="obra-demografia">Demografia: {demografia}</label>
+                                <select id="edit-demografia" value={demografiaValue} onChange={(e) => { this.editObra(e, 9) }} >
+                                    {listDemografias.map((item, index) => <option key={item.NOMBRE + index} value={item.ID}>{item.NOMBRE}</option>)}
+                                </select>
+                            </div>
+
                         </div>
-
                     </div>
                 </div>
 
+                <div className='edit-obra-generos' >
+                    <label htmlFor="obra-generos">Generos: </label>
+                    <div className='obra-generos-actuales'>
+                        {generos.map((item, index) => <div key={item.NOMBRE + '-ga-' + index} className='obra-genero-texto' >{item.NOMBRE}</div>)}
+                    </div>
+                    {
+                        //TODO CHECKBOXES
+                        listGeneros.map((item, index) => {
 
-                <div className='edit-obra-resume'>{descripcion}</div>
-                <div className='edit-obra-chapters'></div>
+                            return [
+                                <label htmlFor="obra-generos" key={item.NOMBRE + 'label' + index} >{item.NOMBRE}</label>,
+                                <input type='checkbox' ref={(input) => { this.checkboxes[index] = input }} onChange={this.editGenero} key={item.NOMBRE + index} value={item.ID} />
+                            ]
+
+                        })
+                    }
+                </div>
+
+
+
+                <div className='edit-obra-resume'>
+                    <label htmlFor="obra-resume">Descripcion: </label>
+                    <textarea className='edit-obra-resume-textarea' >{descripcion}</textarea>
+                </div>
+
+                <div className='edit-obra-social-media' >
+                    <label>Social Media:</label>
+                </div>
+
+
+                <div className='edit-obra-chapters'>
+                    <div className='edit-obra-new-chapter'>
+                        <div className='edit-chapter-number'>
+                            <label htmlFor='label-new-chapter-number'>Numero: </label>
+                            <input type='number' name="input-new-chapter-number" value={newChapterNumber} onChange={(e) => { this.updateNewChapterState(e, 1) }} placeholder="Número del capítulo" />
+                        </div>
+                        <div className='edit-chapter-name'>
+                            <label htmlFor='label-new-chapter-number'>Nombre: </label>
+                            <input type='text' name="input-new-chapter-name" value={newChapterName} onChange={(e) => { this.updateNewChapterState(e, 2) }} placeholder="Nombre del capítulo" />
+                        </div>
+
+                        <div className='edit-chapter-date'>
+                            <label htmlFor='label-new-chapter-number'>Fecha lanzamiento: </label>
+                            <input type='date' value={newChapterDate} onChange={(e) => { this.updateNewChapterState(e, 3) }} name="input-new-chapter-date" />
+                        </div>
+
+                        <div className='edit-chapter-visibilidad'>
+                            <label htmlFor="label-new-chapter-visibilidad">Visibilidad: </label>
+                            <select id="select-new-chapter-visibilidad" onChange={(e) => { this.updateNewChapterState(e, 4) }}  >
+                                <option value="0">OCULTO</option>
+                                <option value="1">VISIBLE</option>
+                            </select>
+                        </div>
+                        <button type="submit" onClick={() => this.newChapter()} className="btn">
+                            Añadir nuevo capitulo
+                        </button>
+                    </div>
+                </div>
             </div>
         );
     }

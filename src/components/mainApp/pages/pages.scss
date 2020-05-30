@@ -33,22 +33,43 @@
     border: 1px solid pink;
 }
 
-.edit-obra-cover {
-    img{
-        
-        width: 150px;
-    }
+
+
+
+.edit-obra-new-chapter {
+    border: solid yellowgreen 2px;
 }
 
-.edit-obra-details {
+.container-cover-details {
 
     display: grid;
-    grid-template-columns: 0.8fr;
+    grid-template-columns: 1fr 5fr;
     column-gap: 20px;
-    row-gap: 20px;
 
-    div[class*='edit-'] {
-        border: solid red 1px;
+    .edit-obra-cover {
+
+        display: grid;
+        
+
+        img{
+            
+            width: 100%;
+        }
     }
+    
 
+    .edit-obra-details {
+
+        display: grid;
+        grid-template-columns: 0.8fr;
+        column-gap: 20px;
+        row-gap: 20px;
+    
+        div[class*='edit-'] {
+            border: solid red 1px;
+        }
+
+        
+    
+    }
 }
