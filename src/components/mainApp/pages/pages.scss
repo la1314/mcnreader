@@ -84,8 +84,24 @@
     }
 }
 
-.drag-upload {
-    height: 350;
-    width: 600;
-    border: royalblue 1px solid;
+
+/** Edición de capitulo **/
+
+
+.edit-chapter-pages {
+
+    display: grid;
+    grid-template-columns: repeat(6, 200px);
+    column-gap: 20px;
+    row-gap: 20px;
+
+    .edit-page-item{
+
+        width: 100%;
+        
+        img {
+            width: 100%;
+        }
+    }
+
 }
