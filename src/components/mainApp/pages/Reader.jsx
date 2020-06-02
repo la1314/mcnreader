@@ -6,7 +6,8 @@ export default class Reader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            obra: '', chapter: '', listPages: []
+            obra: '', chapter: '', listPages: [], reader: 'manga', tipo: '', estilo: ['simple', 'doble'],
+            styleManga: []
         }
     }
 
@@ -18,7 +19,9 @@ export default class Reader extends Component {
             const obra = parseInt(localStorage.getItem('obra'));
             const chapter = parseInt(localStorage.getItem('chapter'));
             this.setState({ obra: obra, chapter: chapter }, async () => {
-                this.setState({listPages: await this.findPages()})
+                this.setState({ listPages: await this.findPages() }, () => {
+                    this.reordenarManga(this.state.listPages)
+                })
             })
         }
     }
@@ -31,12 +34,46 @@ export default class Reader extends Component {
         }).then(res => { return res.data })
     }
 
+
+    reordenarManga = (lista) => {
+
+        let union = [];
+
+        for (let index = 0; index < lista.length; index += 2) {
+
+            if (index !== lista.length-1) {union.push(lista[index + 1])}
+            union.push(lista[index])
+        }
+
+        this.setState({ styleManga: union })
+    }
+
+
+
+    //TODO AÑADIR LECTOR
     render() {
 
-        const { obra, chapter } = this.state
+        const { listPages, reader, estilo, styleManga } = this.state
 
         return (
-            <div>Obra: {obra}  Capitulo: {chapter}</div>
+            <div className={reader}>
+
+                {reader === 'manga' ?
+                    styleManga.map((item, index) => {
+                        return [
+                            <img className={'reader-page ' + estilo[item.ESTILO]} key={'img' + index} alt='imagen del capítulo' src={item.RUTA} />
+                        ]
+                    })
+                    :
+                    listPages.map((item, index) => {
+                        return [
+                            <img className={'reader-page ' + estilo[item.ESTILO]} key={'img' + index} alt='imagen del capítulo' src={item.RUTA} />
+                        ]
+                    })
+
+
+                }
+            </div>
         );
     }
 }

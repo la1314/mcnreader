@@ -111,10 +111,10 @@
 }
 
 /** Vista del lector **/
-.home-recientes{
+.home-recientes {
 
     border: 1px solid red;
-    
+
 
     .recientes-container {
 
@@ -122,9 +122,9 @@
         grid-template-columns: repeat(4, 220px);
         column-gap: 20px;
         row-gap: 20px;
-    
+
         .recientes {
-            
+
             border: solid 1px gold;
             height: 100%;
 
@@ -147,22 +147,22 @@
         grid-template-columns: 250px 5fr;
         column-gap: 20px;
 
-        .ol-cover{
+        .ol-cover {
 
             width: 100%;
 
-            img{
+            img {
                 width: 100%;
             }
 
         }
     }
 
-    .ol-details{
+    .ol-details {
 
-        .ol-detail-generos{
+        .ol-detail-generos {
             display: flex;
-            
+
             .ol-generos {
                 margin-left: 5px;
                 margin-right: 5px;
@@ -180,15 +180,70 @@
     }
 }
 
-.ol-chapters{
-    .ol-chapters-list{
+.ol-chapters {
+    .ol-chapters-list {
         display: grid;
         column-gap: 20px;
         row-gap: 20px;
         grid-template-columns: repeat(4, 250px);
-        
-        .ol-chapter-item{
+
+        .ol-chapter-item {
             border: yellow 1px solid;
         }
+    }
+}
+
+
+/** READER **/
+
+.cascade {
+
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+    justify-items: center;
+
+    .reader-page{
+        width: 65%;
+    }
+
+}
+
+
+.comic {
+
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    margin-top: 10px;
+
+    .simple {
+        height: 1100px;
+        width: 50%;
+        margin-top: 15px;
+    }
+
+    .doble {
+        width: 100%;
+    }
+
+}
+
+.manga {
+  margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    margin-top: 10px;
+    background-color: black;
+
+    .simple {
+        height: 1100px;
+        width: 50%;
+        margin-top: 15px;
+    }
+
+    .doble {
+        width: 100%;
     }
 }
