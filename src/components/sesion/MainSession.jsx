@@ -20,7 +20,7 @@ export default class MainSession extends Component {
   }
 
   //carga los datos de la pagina actual
-  componentDidMount(){
+  componentDidMount() {
     if (localStorage.getItem('page')) {
       this.chargePage()
     } else {
@@ -32,30 +32,30 @@ export default class MainSession extends Component {
   chargePage = () => {
 
     const page = parseInt(localStorage.getItem('page'));
-    const pageArray = [0,1,2]
+    const pageArray = [0, 1, 2]
 
     for (let index = 0; index < page; index++) {
       const element = pageArray.shift();
       pageArray.push(element)
     }
 
-    this.setState({centro: pageArray[0], derecha: pageArray[1], derecha2: pageArray[2]})
+    this.setState({ centro: pageArray[0], derecha: pageArray[1], derecha2: pageArray[2] })
 
   }
 
   //
   resetPages = () => {
-    this.setState({centro: 0,derecha: 1,derecha2: 2})
+    this.setState({ centro: 0, derecha: 1, derecha2: 2 })
   }
 
   //
   cambiarLogin = (n) => {
-    this.setState({loginP:n});
+    this.setState({ loginP: n });
   }
 
   //
   cambiarRegistro = (n) => {
-    this.setState({registerP:n});
+    this.setState({ registerP: n });
   }
 
   //Intercambia los estados de centro y derecha
@@ -78,7 +78,7 @@ export default class MainSession extends Component {
         user: username,
         type: type
       }
-    }).then( function (res) {
+    }).then(function (res) {
       // handle success
       return res.data.booleano
     })
@@ -103,12 +103,12 @@ export default class MainSession extends Component {
         <div className='main-session-container' >
           <div className="session-container">
             <div className="session-cent" ref={ref => (this.container = ref)}>
-              {centro === 0 &&  ( loginP ?
-              <Editor cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
-              :
-              <Login cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} /> 
+              {centro === 0 && (loginP ?
+                <Editor cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
+                :
+                <Login cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
               )}
-              {centro === 1 && ( registerP ? 
+              {centro === 1 && (registerP ?
                 <RegisterEditor cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
                 :
                 <Register cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />

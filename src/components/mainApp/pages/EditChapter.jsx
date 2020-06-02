@@ -28,6 +28,7 @@ export default class EditChapter extends Component {
         }
     }
 
+    //Carga los datos del capitulo actual
     getChapterDetails = () => {
 
         const { chapter } = this.state
@@ -54,33 +55,57 @@ export default class EditChapter extends Component {
         }).then(res => { return res.data })
     }
 
-    //Edita el número de un capítulo
-    editNumberChapter = () => { }
+    //Edita los parametros de una obra
+    editChapter = async (e, type) => {
 
-    //Edita el nombre de un capítulo
-    editNameChapter = () => { }
+        const { chapter } = this.state
+        const value = e.target.value
 
-    //Edita la fecha de un capítulo
-    editFechaChapter = () => { }
+        axios.post('/api/edit-chapter-pages/', null, { params: { type: type, id: chapter, value: value } })
 
-    //Edita la visibilidad del capítulo de la obra
-    editVisibilidadChapter = () => { }
+        switch (type) {
+            case 1:
+                this.setState({ number: value })
+                break;
 
+            case 2:
+                this.setState({ name: value })
+                break;
+
+            case 3:
+                this.setState({ date: value })
+                break;
+
+            case 4:
+                this.setState({ visibilidad: value })
+                break;
+
+            //Al borrar cambiar la pagina a Gestor TODO
+            default:
+                break;
+        }
+    }
+
+    //Función llamada para editar el numero de una pagina
+    editPageNumber = (e, page) => {
+        const value = e.target.value
+
+        if (value) {
+            axios.post('/api/edit-page-number/', null, { params: { page: page, value: value } }).then(async () => {
+                this.setState({ listPages: await this.findPages() })
+            })
+        }
+    }
 
     /* Funciones que afectan a las páginas de los capítulos */
     //Elimina las paginas de un capítulo
     deleteChapterPages = (page, name) => {
-        
-        const {editor, obra, chapter} = this.state
 
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
+        const { editor, obra, chapter } = this.state
+        const config = { headers: { 'content-type': 'multipart/form-data' } }
 
         let nombre = name.split('/')
-        nombre = nombre[nombre.length-1]
+        nombre = nombre[nombre.length - 1]
 
         const formData = new FormData();
         formData.append('editor', editor);
@@ -91,12 +116,11 @@ export default class EditChapter extends Component {
 
         axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then(
             axios.post('/api/delete-page/', null, {
-                params: {page: parseInt(page)}
+                params: { page: parseInt(page) }
             }).then(async () => {
-    
                 this.setState({ listPages: await this.findPages() })
             })
-        ) 
+        )
     }
 
     //Edita el número de una pagina
@@ -142,9 +166,7 @@ export default class EditChapter extends Component {
             axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
 
                 const rutas = res.data
-
-                console.log(rutas);
-
+                
                 axios.post('/api/add-chapter-pages/', null, {
                     params: { chapter: parseInt(chapter), rutas: rutas, numeros: nombres }
                 }).then(async () => {
@@ -155,11 +177,9 @@ export default class EditChapter extends Component {
         }
     }
 
-
-    //TODO
     render() {
 
-        const { name, number, date, listPages, visibilidad } = this.state
+        const { name, number, date, listPages, visibilidad, obra } = this.state
 
         return (
             <div className='edit-chapter'>
@@ -167,44 +187,52 @@ export default class EditChapter extends Component {
                 <div className='edit-chapter-details-contaienr' >
                     <div className='edit-chapter-name'>
                         <label htmlFor='label-new-chapter-number'>Nombre: </label>
-                        <input type='text' value={name} name="input-new-chapter-name" onChange={(e) => { }} placeholder="Nombre del capítulo" />
+                        <input type='text' value={name} name="input-new-chapter-name" onChange={(e) => { this.editChapter(e, 2) }} placeholder="Nombre del capítulo" />
                     </div>
                     <div className='edit-chapter-number'>
                         <label htmlFor='label-new-chapter-number'>Numero: </label>
-                        <input type='number' value={number} name="input-new-chapter-number" onChange={(e) => { }} placeholder="Número del capítulo" />
+                        <input type='number' value={number} name="input-new-chapter-number" onChange={(e) => { this.editChapter(e, 1) }} placeholder="Número del capítulo" />
                     </div>
                     <div className='edit-chapter-date'>
                         <label htmlFor='label-new-chapter-number'>Fecha lanzamiento: </label>
-                        <input type='date' value={date} onChange={(e) => { }} name="input-new-chapter-date" />
+                        <input type='date' value={date} onChange={(e) => { this.editChapter(e, 3) }} name="input-new-chapter-date" />
                     </div>
 
                     <div className='edit-chapter-visibilidad'>
                         <label htmlFor="label-new-chapter-visibilidad">Visibilidad: </label>
-                        <select value={visibilidad} id="select-new-chapter-visibilidad" onChange={(e) => { }}  >
+                        <select value={visibilidad} id="select-new-chapter-visibilidad" onChange={(e) => { this.editChapter(e, 4) }}  >
                             <option value="0">OCULTO</option>
                             <option value="1">VISIBLE</option>
                         </select>
                     </div>
+
+                    <div className='return-edit-obra'>
+                        <button onClick={()=>{this.props.changeToEditObra(obra)}}> Regrasar a edición </button>
+                    </div>
                 </div>
 
+                <div className='edit-chapter-upload-images' onDrag={this.chargeImages}>
+                    <input type="file" className="form-control" multiple onChange={this.chargeImages} />
+                    <button onClick={() => { this.uploadPages() }} >Subir paginas</button>
+                </div>
 
                 <div className='edit-chapter-pages'>
                     {listPages.map((item, index) => {
                         return [
                             <div className='edit-page-item' key={'imgPages' + index} >
                                 <img alt='pagina del capitulo' src={item.RUTA} />
-                                <div>Número de página: {item.NUMERO}</div>
+                                <div>
+                                    <div>Número de página: </div>
+                                    <input type='number' value={item.NUMERO} name="input-new-page-number" onChange={(e) => { this.editPageNumber(e, item.ID) }} placeholder="Número de la pagina" />
+                                </div>
+
                                 <button className='btn' onClick={() => { this.deleteChapterPages(item.ID, item.RUTA) }}>Eliminar</button>
                             </div>
                         ]
                     })}
                 </div>
 
-
-                <div className='edit-chapter-upload-images' onDrag={this.chargeImages}>
-                    <input type="file" className="form-control" multiple onChange={this.chargeImages} />
-                    <button onClick={() => { this.uploadPages() }} >Subir paginas</button>
-                </div>
+               
             </div>
         );
     }

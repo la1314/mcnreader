@@ -177,7 +177,7 @@ export default class Gestor extends Component {
             <div className="form-group">
               <label htmlFor="estado">Estado: </label>
               <select id="estado" onChange={this.updateEstado}>
-                {estados.map((item) => <option key={item.NOMBRE} value={item.ID_ESTADO} >{item.NOMBRE}</option>)}
+                {estados.map((item) => <option key={item.NOMBRE} value={item.ID} >{item.NOMBRE}</option>)}
               </select>
             </div>
             <div className="form-group">

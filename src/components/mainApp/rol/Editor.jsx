@@ -4,7 +4,7 @@ import Header from '../header/EditorHeader.jsx';
 import Gestor from '../pages/Gestor.jsx';
 import Library from '../pages/Library.jsx';
 import Profile from '../pages/Profile.jsx';
-import Obra from '../pages/Obra.jsx';
+import Obra from '../pages/ObraEditor.jsx';
 import EditChapter from '../pages/EditChapter.jsx';
 
 export default class Editor extends Component {
@@ -74,6 +74,9 @@ export default class Editor extends Component {
     if (incognita) {
 
       localStorage.removeItem('page');
+      localStorage.removeItem('chapter');
+      localStorage.removeItem('obraEdit');
+      localStorage.removeItem('user');
       this.props.checkAuth()
     }
   }

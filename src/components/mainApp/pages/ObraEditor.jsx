@@ -3,7 +3,7 @@ import axios from 'axios';
 import './pages.scss';
 import ECItem from './gestor/EditorChapterItem.jsx';
 
-export default class Obra extends Component {
+export default class ObraEditor extends Component {
 
     constructor(props) {
         super(props);
@@ -424,7 +424,7 @@ export default class Obra extends Component {
 
                 <div className='edit-obra-resume'>
                     <label htmlFor="obra-resume">Descripción: </label>
-                    <textarea placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={() => { }} value={descripcion} />
+                    <textarea placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
                 </div>
 
                 <div className='edit-obra-social-media' >

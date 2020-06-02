@@ -11,14 +11,14 @@
     grid-template-columns: repeat(6, 200px);
     column-gap: 20px;
 
-    .editor-cover-list{
+    .editor-cover-list {
 
         border: 1px solid gold;
 
-        .editor-cover-image{
+        .editor-cover-image {
             height: 100%;
             width: 100%;
-            
+
         }
     }
 
@@ -26,7 +26,7 @@
 
 .create-obra-container {
     border: 1px solid green;
- 
+
 }
 
 .contact-admin {
@@ -40,12 +40,14 @@
     border: solid yellowgreen 2px;
 }
 
-.edit-obra-chapters-list{
+.edit-obra-chapters-list {
     border: solid palegreen 2px;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     column-gap: 20px;
-    .edit-obra-chapters-list-item{
+    row-gap: 20px;
+
+    .edit-obra-chapters-list-item {
         border: 1px solid royalblue;
     }
 }
@@ -59,14 +61,14 @@
     .edit-obra-cover {
 
         display: grid;
-        
 
-        img{
-            
+
+        img {
+
             width: 100%;
         }
     }
-    
+
 
     .edit-obra-details {
 
@@ -74,34 +76,68 @@
         grid-template-columns: 0.8fr;
         column-gap: 20px;
         row-gap: 20px;
-    
+
         div[class*='edit-'] {
             border: solid red 1px;
         }
 
-        
-    
+
+
     }
 }
 
 
-/** Edición de capitulo **/
+/** Edición de capitulo y paginas **/
 
-
-.edit-chapter-pages {
+.edit-chapter {
 
     display: grid;
-    grid-template-columns: repeat(6, 200px);
-    column-gap: 20px;
-    row-gap: 20px;
+    row-gap: 40px;
 
-    .edit-page-item{
+    .edit-chapter-pages {
 
-        width: 100%;
-        
-        img {
+        display: grid;
+        grid-template-columns: repeat(6, 200px);
+        column-gap: 20px;
+        row-gap: 20px;
+
+        .edit-page-item {
+
             width: 100%;
+
+            img {
+                width: 100%;
+            }
+        }
+
+    }
+}
+
+/** Vista del lector **/
+.home-recientes{
+
+    border: 1px solid red;
+    
+
+    .recientes-container {
+
+        display: grid;
+        grid-template-columns: repeat(4, 220px);
+        column-gap: 20px;
+        row-gap: 20px;
+    
+        .recientes {
+            
+            border: solid 1px gold;
+            height: 100%;
+
+            //If an image is 100% wide and height:auto and you think it's too tall, that is specifically 
+            // because the aspect ratio is preserved.
+            img {
+                width: 100%;
+                height: 300px;
+            }
         }
     }
-
 }
+
