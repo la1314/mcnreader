@@ -24,8 +24,8 @@ export default class Home extends Component {
 
   }
 
+  // Rederidige a la página de la obra seleccionada
   verObra = (obra) => {
-
     Promise.resolve(localStorage.setItem("obra", obra)).then(this.props.changeToObra(obra))
   }
 

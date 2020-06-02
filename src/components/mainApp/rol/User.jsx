@@ -4,7 +4,8 @@ import Header from '../header/UserHeader.jsx';
 import Home from '../pages/Home.jsx';
 import Library from '../pages/Library.jsx';
 import Profile from '../pages/Profile.jsx';
-import Obra from '../pages/ObraLector.jsx'
+import Obra from '../pages/ObraLector.jsx';
+import Reader from '../pages/Reader.jsx';
 
 export default class User extends Component {
 
@@ -31,7 +32,7 @@ export default class User extends Component {
   //Renderiza un componente depediento al valor de page 
   renderSwitch = () => {
 
-    const { page, obra } = this.state
+    const { page, obra, chapter } = this.state
 
     switch (page) {
 
@@ -45,13 +46,17 @@ export default class User extends Component {
         return <Profile />;
 
       case 3:
-        return <Obra obra={obra} />;
+        return <Obra obra={obra} changeToChapter={this.changeToChapter} />;
+
+      case 4:
+        return <Reader chapter={chapter} />;
 
       default:
         return <Home changeToObra={this.changeToObra} />;
     }
   }
 
+  //Limpia el token se session para hacer el logout
   clearCookie = () => {
     return axios.post('/api/clear', { withCredentials: true })
       .then(function (response) {
@@ -80,8 +85,14 @@ export default class User extends Component {
     this.setState({ page: n })
   }
 
+  //Accede a una obra
   changeToObra = (obra) => {
-    this.setState({ obra: obra }, () => {this.changePage(3)} )
+    this.setState({ obra: obra }, () => { this.changePage(3) })
+  }
+
+  //Accede a un capítulo
+  changeToChapter = (chapter) => {
+    this.setState({ chapter: chapter }, () => { this.changePage(4) })
   }
 
   render() {

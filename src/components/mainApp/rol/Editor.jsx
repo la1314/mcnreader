@@ -89,16 +89,14 @@ export default class Editor extends Component {
   }
 
 
-  //TODO accede a la edición de una obra
+  //Accede a la edición de una obra
   changeToEditObra = (obra) => {
-
-    this.setState({ obraEditID: obra }, () => {this.changePage(3)} )
+    this.setState({ obraEditID: obra }, () => { this.changePage(3) })
   }
 
+  //Accede a la edición de un capitulo
   changeToEditChapter = (chapter) => {
-
-    this.setState({ chapterEditID: chapter }, () => {this.changePage(4)} )
-
+    this.setState({ chapterEditID: chapter }, () => { this.changePage(4) })
   }
 
   render() {

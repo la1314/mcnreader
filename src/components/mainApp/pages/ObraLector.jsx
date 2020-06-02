@@ -10,7 +10,7 @@ export default class ObraEditor extends Component {
             obra: '', user: '', nombre: '', autor: '', lanzamiento: '',
             listSocialMedia: [], demografia: '',
             generos: [], socialMedia: [], tipo: '',
-            visibilidad: '', listChapters: [], cover: '',
+            listChapters: [], cover: '',
             descripcion: '', coverHash: Date.now(),
         }
     }
@@ -24,7 +24,6 @@ export default class ObraEditor extends Component {
             const user = parseInt(localStorage.getItem('user'));
             this.setState({ obra: n, user: user }, () => { this.findDetailtObra() })
         }
-
     }
 
     //TODO IMPLEMENTAR SOCIAL MEDIA EN OBRA TAMBIEN
@@ -45,7 +44,6 @@ export default class ObraEditor extends Component {
                 lanzamiento: datos.LANZAMIENTO,
                 descripcion: datos.DESCRIPCION,
                 cover: datos.COVER,
-                visibilidad: datos.VISIBILIDAD,
                 estado: datos.NESTADO,
                 tipo: datos.NTIPO,
                 demografia: datos.NDEMOGRAFIA
@@ -72,12 +70,65 @@ export default class ObraEditor extends Component {
         })
     }
 
+    // Rederidige al capítulo seleccionado
+    verChapter = (chapter) => {
+        Promise.resolve(localStorage.setItem("chapter", chapter)).then(this.props.changeToChapter(chapter))
+    }
+
+
     render() {
 
-        const { obra, user } = this.state
+        const { nombre, autor, lanzamiento, descripcion, cover, estado, tipo, demografia, generos, listChapters } = this.state
 
         return (
-            <div>Obra: {obra} Lector: {user}</div>
+            <div className='obra-lector'>
+
+                <div className='ol-cover-details'>
+                    <div className='ol-cover' >
+                        <img alt='cover de la obra' src={cover} />
+                    </div>
+                    <div className='ol-details' >
+                        <div className='ol-detail'>{nombre}</div>
+                        <div className='ol-detail'>{autor}</div>
+                        <div className='ol-detail'>Lanzamiento: {lanzamiento}</div>
+                        <div className='ol-detail'>Tipo: {tipo}</div>
+                        <div className='ol-detail-generos'>
+                            <div>Generos: </div>
+                            {generos.map((item, index) => {
+                                return [
+                                    <div className='ol-generos' key={'olg' + index} >{item.NOMBRE}</div>
+                                ]
+                            })}
+                        </div>
+
+                        <div className='ol-detail'>Demografia: {demografia}</div>
+                        <div className='ol-detail'>Estado: {estado}</div>
+                    </div>
+
+                </div>
+                <div className='ol-descripcion'>
+                    <div>Descipción:</div>
+                    <div>{descripcion}</div>
+                </div>
+                <div className='ol-chapters'>
+                    <div>Capítulos: </div>
+                    <div className='ol-chapters-list'>
+
+                        {listChapters.map((item, index) => {
+                            return [
+
+                                <div className='ol-chapter-item' onClick={() => { this.verChapter(item.ID) }} key={'ol-lc' + index} >
+                                    <div>{item.NUMERO}</div>
+                                    <div>{item.NOMBRE}  ID:{item.ID}</div>
+                                </div>
+
+                            ]
+                        })}
+
+                    </div>
+                </div>
+
+            </div>
         );
     }
 

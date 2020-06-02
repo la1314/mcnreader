@@ -69,7 +69,6 @@
         }
     }
 
-
     .edit-obra-details {
 
         display: grid;
@@ -80,8 +79,6 @@
         div[class*='edit-'] {
             border: solid red 1px;
         }
-
-
 
     }
 }
@@ -141,3 +138,57 @@
     }
 }
 
+/** Obra-Lector **/
+
+.obra-lector {
+
+    .ol-cover-details {
+        display: grid;
+        grid-template-columns: 250px 5fr;
+        column-gap: 20px;
+
+        .ol-cover{
+
+            width: 100%;
+
+            img{
+                width: 100%;
+            }
+
+        }
+    }
+
+    .ol-details{
+
+        .ol-detail-generos{
+            display: flex;
+            
+            .ol-generos {
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+        }
+    }
+
+    .ol-descripcion {
+
+        div {
+            width: 60%;
+        }
+
+    }
+}
+
+.ol-chapters{
+    .ol-chapters-list{
+        display: grid;
+        column-gap: 20px;
+        row-gap: 20px;
+        grid-template-columns: repeat(4, 250px);
+        
+        .ol-chapter-item{
+            border: yellow 1px solid;
+        }
+    }
+}

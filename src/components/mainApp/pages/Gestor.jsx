@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import "./pages.scss";
-import EOItem from './gestor/EditorObraItem.jsx';
+import EOItem from './items/EditorObraItem.jsx';
 
 export default class Gestor extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      coverList: [],
-      nombre: '',
-      autor: '',
-      lanzamiento: '',
-      tipos: [],
-      estados: [],
-      tipo: 1,
-      estado: 1,
-      visibilidad: 0
+      coverList: [], nombre: '', autor: '',
+      lanzamiento: '', tipos: [], estados: [],
+      tipo: 1, estado: 1, visibilidad: 0
     };
   }
 

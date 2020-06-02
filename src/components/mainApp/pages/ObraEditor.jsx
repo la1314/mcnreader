@@ -1,38 +1,22 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './pages.scss';
-import ECItem from './gestor/EditorChapterItem.jsx';
+import ECItem from './items/EditorChapterItem.jsx';
 
 export default class ObraEditor extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            obra: '',
-            nombre: '',
-            autor: '',
-            lanzamiento: '',
-            listDemografias: [],
-            listGeneros: [],
-            listEstados: [],
-            listSocialMedia: [],
-            listTipos: [],
-            demografia: '',
-            generos: [],
-            estadoValue: '',
-            socialMedia: [],
-            tipo: '',
-            tipoValue: '',
-            visibilidad: '',
-            listChapters: [],
-            cover: '',
-            coverFile: [],
-            descripcion: '',
-            inputEstados: [],
-            coverHash: Date.now(),
-            newChapterNumber: '',
-            newChapterName: '',
-            newChapterDate: '',
+            obra: '', nombre: '', autor: '', lanzamiento: '',
+            listDemografias: [], listGeneros: [], listEstados: [],
+            listSocialMedia: [], listTipos: [],
+            demografia: '', generos: [], estadoValue: '',
+            socialMedia: [], tipo: '', tipoValue: '',
+            visibilidad: '', listChapters: [], cover: '',
+            coverFile: [], descripcion: '', inputEstados: [],
+            coverHash: Date.now(), newChapterNumber: '',
+            newChapterName: '', newChapterDate: '',
             newChapterVisibilidad: '0'
         }
         this.inputVisibilidadRef = React.createRef();
