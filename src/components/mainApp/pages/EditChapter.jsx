@@ -7,12 +7,12 @@ export default class EditChapter extends Component {
         super(props);
         this.state = {
             chapter: this.props.chapter,
-            name: '',
-            number: '',
+            name: '', number: '',
             date: '',
             visibilidad: '',
             listPages: [],
-            listFiles: []
+            listFiles: [],
+            estilos: ['Simple', 'Doble']
         };
     }
 
@@ -42,7 +42,8 @@ export default class EditChapter extends Component {
                 name: data.NOMBRE,
                 number: data.NUMERO,
                 date: data.FECHA,
-                visibilidad: data.VISIBILIDAD
+                visibilidad: data.VISIBILIDAD,
+                estilo: data.ESTILO
             })
         }).then(async () => { this.setState({ listPages: await this.findPages() }) })
     }
@@ -86,17 +87,6 @@ export default class EditChapter extends Component {
         }
     }
 
-    //Función llamada para editar el numero de una pagina
-    editPageNumber = (e, page) => {
-        const value = e.target.value
-
-        if (value) {
-            axios.post('/api/edit-page-number/', null, { params: { page: page, value: value } }).then(async () => {
-                this.setState({ listPages: await this.findPages() })
-            })
-        }
-    }
-
     /* Funciones que afectan a las páginas de los capítulos */
     //Elimina las paginas de un capítulo
     deleteChapterPages = (page, name) => {
@@ -123,8 +113,27 @@ export default class EditChapter extends Component {
         )
     }
 
-    //Edita el número de una pagina
-    editNumberPages = (e) => { }
+    //Función llamada para editar el numero de una pagina
+    editPageNumber = (e, page) => {
+        const value = e.target.value
+
+        if (value) {
+            axios.post('/api/edit-page-number/', null, { params: { page: page, value: value } }).then(async () => {
+                this.setState({ listPages: await this.findPages() })
+            })
+        }
+    }
+
+    //Función llamada para editar el estilo de una pagina
+    editPageStyle = (e, page) => {
+        const value = e.target.value
+
+        if (value) {
+            axios.post('/api/edit-page-style/', null, { params: { page: page, value: value } }).then(async () => {
+                this.setState({ listPages: await this.findPages() })
+            })
+        }
+    }
 
     //Actualiza el estado lisFiles
     chargeImages = (e) => {
@@ -166,7 +175,7 @@ export default class EditChapter extends Component {
             axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
 
                 const rutas = res.data
-                
+
                 axios.post('/api/add-chapter-pages/', null, {
                     params: { chapter: parseInt(chapter), rutas: rutas, numeros: nombres }
                 }).then(async () => {
@@ -179,7 +188,7 @@ export default class EditChapter extends Component {
 
     render() {
 
-        const { name, number, date, listPages, visibilidad, obra } = this.state
+        const { name, number, date, listPages, visibilidad, obra, estilos } = this.state
 
         return (
             <div className='edit-chapter'>
@@ -207,7 +216,7 @@ export default class EditChapter extends Component {
                     </div>
 
                     <div className='return-edit-obra'>
-                        <button onClick={()=>{this.props.changeToEditObra(obra)}}> Regrasar a edición </button>
+                        <button onClick={() => { this.props.changeToEditObra(obra) }}> Regrasar a edición </button>
                     </div>
                 </div>
 
@@ -225,14 +234,20 @@ export default class EditChapter extends Component {
                                     <div>Número de página: </div>
                                     <input type='number' value={item.NUMERO} name="input-new-page-number" onChange={(e) => { this.editPageNumber(e, item.ID) }} placeholder="Número de la pagina" />
                                 </div>
-
+                                <div>
+                                    <label htmlFor="pagina-estilo">Estilo: {estilos[item.ESTILO]}</label>
+                                    <select id="edit-estilo-page" value={item.ESTILO} onChange={(e) => { this.editPageStyle(e, item.ID) }} >
+                                        <option key={'ep-0'} value='0'>Simple</option>
+                                        <option key={'ep-1'} value='1'>Doble</option>
+                                    </select>
+                                </div>
                                 <button className='btn' onClick={() => { this.deleteChapterPages(item.ID, item.RUTA) }}>Eliminar</button>
                             </div>
                         ]
                     })}
                 </div>
 
-               
+
             </div>
         );
     }

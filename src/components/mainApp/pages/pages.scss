@@ -196,23 +196,24 @@
 
 /** READER **/
 
-.cascade {
-
+.paginada {
     margin-top: 10px;
     display: grid;
     grid-template-columns: 1fr;
     row-gap: 15px;
     justify-items: center;
 
-    .reader-page{
+    .simple {
         width: 65%;
     }
 
+    .doble {
+        width: 100%;
+    }
 }
 
-
-.comic {
-
+.paginada-occidental,
+.paginada-oriental {
     margin-left: auto;
     margin-right: auto;
     width: 90%;
@@ -230,12 +231,33 @@
 
 }
 
-.manga {
-  margin-left: auto;
+.cascada {
+
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+    justify-items: center;
+
+    .simple {
+        width: 65%;
+    }
+
+    .doble {
+        width: 100%;
+    }
+
+}
+
+
+
+.cascada-oriental,
+.cascada-occidental {
+
+    margin-left: auto;
     margin-right: auto;
     width: 90%;
     margin-top: 10px;
-    background-color: black;
 
     .simple {
         height: 1100px;
@@ -246,4 +268,5 @@
     .doble {
         width: 100%;
     }
+
 }
