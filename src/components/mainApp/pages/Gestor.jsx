@@ -5,6 +5,7 @@ import EOItem from './items/EditorObraItem.jsx';
 
 export default class Gestor extends Component {
 
+  _isMounted2 = false;
   constructor(props) {
     super(props);
     this.state = {
@@ -15,19 +16,51 @@ export default class Gestor extends Component {
   }
 
   //Carga los datos del localStorage y asigna valores a los state tipos y estados
-  async componentDidMount() {
+  componentDidMount() {
+    this._isMounted2 = true;
+    this.cargarItems();
+    this.cargarDatos();
 
-    this.findObras()
+  }
 
-    if (localStorage.getItem('nombre')) { this.setState({ nombre: localStorage.getItem('nombre') }) }
-    if (localStorage.getItem('autor')) { this.setState({ autor: localStorage.getItem('autor') }) }
-    if (localStorage.getItem('lanzamiento')) { this.setState({ lanzamiento: localStorage.getItem('lanzamiento') }) }
+  componentWillUnmount() {
+    this._isMounted2 = false;
+  }
 
-    this.setState({
-      tipos: await this.obtenerValores('tipos'),
-      estados: await this.obtenerValores('estados'),
-      coverList: await this.findObras()
+  cargarDatos = () => {
+
+    this.findObras().then(res => {
+      if (this._isMounted2) { this.setState({ coverList: res }) }
     })
+
+    this.obtenerValores('tipos').then(res => {
+      if (this._isMounted2) { this.setState({ tipos: res }) }
+    })
+
+    this.obtenerValores('estados').then(res => {
+      if (this._isMounted2) { this.setState({ estados: res }) }
+    })
+
+  }
+
+
+  //Carga los valores del localStorage en los state
+  cargarItems = () => {
+    if (localStorage.getItem('nombre')) {
+      if (this._isMounted) {
+        this.setState({ nombre: localStorage.getItem('nombre') })
+      }
+    }
+    if (localStorage.getItem('autor')) {
+      if (this._isMounted) {
+        this.setState({ autor: localStorage.getItem('autor') })
+      }
+    }
+    if (localStorage.getItem('lanzamiento')) {
+      if (this._isMounted) {
+        this.setState({ lanzamiento: localStorage.getItem('lanzamiento') })
+      }
+    }
   }
 
   //Recupera datos para los options
@@ -140,6 +173,10 @@ export default class Gestor extends Component {
   render() {
 
     const { tipos, estados, nombre, autor, lanzamiento, coverList } = this.state
+
+    /*if (coverList === null) { return null }
+    if (tipos === null) { return null }
+    if (estados === null) { return null }*/
 
     return (
       <div className='gestor-container'>

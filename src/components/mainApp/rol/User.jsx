@@ -20,6 +20,7 @@ export default class User extends Component {
   //TODO guardar datos de la obra que se está viendos
   componentDidMount() {
 
+  
     localStorage.setItem('user', this.props.user)
 
     if (localStorage.getItem('page')) {

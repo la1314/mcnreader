@@ -3,24 +3,36 @@ import axios from 'axios';
 
 export default class Home extends Component {
 
+  _isMounted = false;
   constructor(props) {
     super(props);
     this.state = {
-      recientes: []
+      recientes: null
     };
   }
 
   //Carga los datos al montarse el componente
-  async componentDidMount() {
+  componentDidMount() {
 
-    this.setState({ recientes: await this.findRecientes() })
+    this._isMounted = true;
+
+    this.findRecientes();
 
   }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
 
   // Devuelve los capítulos recientemente publicados
   findRecientes = () => {
 
-    return axios.post('/api/find-recientes/').then(res => { return res.data })
+    axios.post('/api/find-recientes/').then((res) => {
+      if (this._isMounted) {
+        this.setState({ recientes: res.data })
+      }
+    })
 
   }
 
@@ -32,6 +44,8 @@ export default class Home extends Component {
   render() {
 
     const { recientes } = this.state
+
+    if (recientes === null) { return null }
 
     return (
       <div className='home-container'>
