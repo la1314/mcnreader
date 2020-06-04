@@ -3,7 +3,7 @@ import axios from 'axios';
 import Header from '../header/UserHeader.jsx';
 import Home from '../pages/Home.jsx';
 import Library from '../pages/Library.jsx';
-import Profile from '../pages/Profile.jsx';
+import ProfileU from '../pages/ProfileUser.jsx';
 import Obra from '../pages/ObraLector.jsx';
 import Reader from '../pages/Reader.jsx';
 
@@ -43,7 +43,7 @@ export default class User extends Component {
         return <Library />;
 
       case 2:
-        return <Profile />;
+        return <ProfileU />;
 
       case 3:
         return <Obra obra={obra} changeToChapter={this.changeToChapter} />;
@@ -74,6 +74,7 @@ export default class User extends Component {
       localStorage.removeItem('page');
       localStorage.removeItem('user');
       localStorage.removeItem('obra');
+      localStorage.removeItem('obraEdit');
       this.props.checkAuth()
     }
   }

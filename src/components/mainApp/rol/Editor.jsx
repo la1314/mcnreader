@@ -3,7 +3,7 @@ import axios from 'axios';
 import Header from '../header/EditorHeader.jsx';
 import Gestor from '../pages/Gestor.jsx';
 import Library from '../pages/Library.jsx';
-import Profile from '../pages/Profile.jsx';
+import Profile from '../pages/ProfileEditor.jsx';
 import Obra from '../pages/ObraEditor.jsx';
 import EditChapter from '../pages/EditChapter.jsx';
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
-export default class Profile extends Component {
+export default class ProfileEditor extends Component {
 
   constructor(props) {
     super(props);
