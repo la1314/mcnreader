@@ -62,7 +62,7 @@ export default class Login extends Component {
       }
     }).then(function (res) {
       // handle success
-      console.log('Login: ' + res.data);
+      //console.log('Login: ' + res.data);
       //TODO
       localStorage.removeItem('page');
       return res.data
@@ -85,6 +85,7 @@ export default class Login extends Component {
     }
   }
 
+  //Función utilizada para cambiar al login del editor
   cambiarLogin = () => {
     this.props.cambiarLogin(1)
   }

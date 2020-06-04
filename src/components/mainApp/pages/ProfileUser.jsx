@@ -30,7 +30,8 @@ export default class ProfileUser extends Component {
   }
 
   componentDidMount() {
-    this.findDetailts()
+    this.findDetailts();
+
   }
 
   findDetailts = () => {
@@ -45,6 +46,46 @@ export default class ProfileUser extends Component {
         })
 
       })
+  }
+
+  //1:EXISTS 0:NOT EXISTS
+  checkUsername = () => {
+
+    const { newName } = this.state
+
+    if (newName.length > 4) {
+      axios.post('/api/check-username/', null, {
+        params: { username: newName }
+      }).then(res => {
+        if (parseInt(res.data[0].booleano) === 0) {
+          this.setState({ disabledUser: true })
+        } else {
+          this.setState({ disabledUser: false })
+        }
+      })
+    }
+
+
+
+    //
+  }
+
+  //1:EXISTS 0:NOT EXISTS
+  checkEmail = () => {
+
+    const { newEmail } = this.state
+    if (newEmail.length > 8) {
+      axios.post('/api/check-email/', null, {
+        params: { email: newEmail }
+      }).then(res => {
+        if (parseInt(res.data[0].booleano) === 0) {
+          this.setState({ disabledEmail: true })
+        } else {
+          this.setState({ disabledEmail: false })
+        }
+      })
+    }
+
   }
 
   //carga los datos de la pagina actual
@@ -81,7 +122,7 @@ export default class ProfileUser extends Component {
         axios.post('/api/edit-user-password/', null, {
           params: { password: md5(newPassword) }
         }).then(res => console.log(res.data))
-        
+
       } else {
         console.log('No iguales');
       }
@@ -96,11 +137,11 @@ export default class ProfileUser extends Component {
 
     switch (type) {
       case 1:
-        this.setState({ newName: value })
+        this.setState({ newName: value }, () => { this.checkUsername() })
         break;
 
       case 2:
-        this.setState({ newEmail: value })
+        this.setState({ newEmail: value }, () => { this.checkEmail() })
         break;
 
       case 3:
@@ -128,7 +169,7 @@ export default class ProfileUser extends Component {
     if (!disabledUser) {
 
       this.refEditUser.current.disabled = false;
-      this.setState({ disabledUser: true })
+
     } else {
       this.refEditUser.current.disabled = true;
       this.setState({ disabledUser: false })
@@ -144,7 +185,7 @@ export default class ProfileUser extends Component {
     if (!disabledEmail) {
 
       this.refEditEmail.current.disabled = false;
-      this.setState({ disabledEmail: true })
+
     } else {
       this.refEditEmail.current.disabled = true;
       this.setState({ disabledEmail: false })
@@ -211,7 +252,7 @@ export default class ProfileUser extends Component {
           <button onClick={() => { this.activarEditUser() }} >editar</button>
 
           <label>Email: </label>
-          <input type='text' ref={this.refEditEmail} onChange={(e) => { this.updateState(e, 2) }} value={newEmail} disabled />
+          <input type='email' ref={this.refEditEmail} onChange={(e) => { this.updateState(e, 2) }} value={newEmail} disabled />
           <button disabled={!disabledEmail} >actualizar</button>
           <button onClick={() => { this.activarEditEmail() }}>editar</button>
 
