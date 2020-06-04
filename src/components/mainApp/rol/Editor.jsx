@@ -3,7 +3,7 @@ import axios from 'axios';
 import Header from '../header/EditorHeader.jsx';
 import Gestor from '../pages/Gestor.jsx';
 import Library from '../pages/Library.jsx';
-import Profile from '../pages/ProfileEditor.jsx';
+import ProfileE from '../pages/ProfileEditor.jsx';
 import Obra from '../pages/ObraEditor.jsx';
 import EditChapter from '../pages/EditChapter.jsx';
 
@@ -44,7 +44,7 @@ export default class Editor extends Component {
         return <Library />;
 
       case 2:
-        return <Profile />;
+        return <ProfileE />;
 
       case 3:
         return <Obra user={user} obraID={obraEditID} changeToEditChapter={this.changeToEditChapter} />;
