@@ -203,11 +203,11 @@
     row-gap: 15px;
     justify-items: center;
 
-    .simple {
+    div div .simple {
         width: 65%;
     }
 
-    .doble {
+    div div .doble {
         width: 100%;
     }
 }
@@ -219,13 +219,13 @@
     width: 90%;
     margin-top: 10px;
 
-    .simple {
+    div div .simple {
         height: 1100px;
         width: 50%;
         margin-top: 15px;
     }
 
-    .doble {
+    div div .doble {
         width: 100%;
     }
 
@@ -297,5 +297,5 @@
         } 
     }
 
-    
 }
+

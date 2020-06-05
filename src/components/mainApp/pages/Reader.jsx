@@ -34,6 +34,52 @@ export default class Reader extends Component {
         document.removeEventListener("keydown", this.eventosKey, false);
     }
 
+
+
+    //Captura las flechas <- y ->
+    eventosKey = (e) => {
+
+        console.log(e);
+
+
+        if (e.keyCode === 37) {
+            this.modificarPuntero(0);
+        }
+
+        if (e.keyCode === 39) {
+            this.modificarPuntero(1);
+        }
+    }
+
+    //Modifica los estados puntero y dobles
+    modificarPuntero = (tipe) => {
+
+        const { puntero, listPages, dobles, } = this.state
+        const pagTotales = listPages.length - 1
+
+        if (puntero === 0 && tipe === 0) return
+        if (puntero === pagTotales && tipe === 1) return
+
+        if (tipe) {
+
+            this.setState({ puntero: (puntero + 1) })
+        } else {
+
+            this.setState({ puntero: (puntero - 1) })
+        }
+
+        if ((dobles === 0 || dobles === 1) && tipe === 0) return
+        if ((dobles === pagTotales || dobles === (pagTotales - 1)) && tipe === 1) return
+
+        if (tipe) {
+
+            this.setState({ dobles: (dobles + 2) })
+        } else {
+
+            this.setState({ dobles: (dobles - 2) })
+        }
+    }
+
     // Obtiene la configuración del lector del usuario
     findTipoLector = () => {
 
@@ -83,49 +129,9 @@ export default class Reader extends Component {
         ]
 
         let filtrado = formas.filter(item => (item.c === c) && (item.p === p) && (item.oc === oc) && (item.or === or))
-        this.setState({reader: filtrado[0].estilo})
+        this.setState({ reader: filtrado[0].estilo })
     }
 
-    //Captura las flechas <- y ->
-    eventosKey = (e) => {
-
-        if (e.keyCode === 37) {
-            this.modificarPuntero(0);
-        }
-
-        if (e.keyCode === 39) {
-            this.modificarPuntero(1);
-        }
-    }
-
-    //Modifica los estados puntero y dobles
-    modificarPuntero = (tipe) => {
-
-        const { puntero, listPages, dobles, } = this.state
-        const pagTotales = listPages.length - 1
-
-        if (puntero === 0 && tipe === 0) return
-        if (puntero === pagTotales && tipe === 1) return
-
-        if (tipe) {
-
-            this.setState({ puntero: (puntero + 1) }, () => { window.scrollTo(0, 0) })
-        } else {
-
-            this.setState({ puntero: (puntero - 1) }, () => { window.scrollTo(0, 0) })
-        }
-
-        if ((dobles === 0 || dobles === 1) && tipe === 0) return
-        if ((dobles === pagTotales || dobles === (pagTotales - 1)) && tipe === 1) return
-
-        if (tipe) {
-
-            this.setState({ dobles: (dobles + 2) }, () => { window.scrollTo(0, 0) })
-        } else {
-
-            this.setState({ dobles: (dobles - 2) }, () => { window.scrollTo(0, 0) })
-        }
-    }
 
     //Utilizada en caso de vista de dos páginas
     devolverPaginadoDoble = (lista, puntero, estilo) => {
@@ -144,13 +150,44 @@ export default class Reader extends Component {
         if ((est1 === 0 && est2 === 0)) {
 
             return [
-                <img className={'reader-page ' + estilo[lista[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={lista[puntero].RUTA} />,
-                <img className={'reader-page ' + estilo[lista[puntero + 1].ESTILO]} key={'img-paginada2'} alt='imagen del capítulo' src={lista[puntero + 1].RUTA} />
+                <div>
+                    <div>
+                        <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
+                        <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
+                    </div>
+                    <div>
+                        <img onClick={() => { this.modificarPuntero(0) }} className={'reader-page ' + estilo[lista[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={lista[puntero].RUTA} />
+                        <img onClick={() => { this.modificarPuntero(1) }} className={'reader-page ' + estilo[lista[puntero + 1].ESTILO]} key={'img-paginada2'} alt='imagen del capítulo' src={lista[puntero + 1].RUTA} />
+                    </div>
+
+                    <div>
+                        <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
+                        <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
+                    </div>
+                </div>
+
             ]
 
         } else {
 
-            return <img className={'reader-page ' + estilo[lista[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={lista[puntero].RUTA} />
+            return [
+                <div>
+                    <div>
+                        <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
+                        <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
+                    </div>
+                    <div>
+                        <img onClick={() => { this.modificarPuntero(1) }} className={'reader-page ' + estilo[lista[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={lista[puntero].RUTA} />
+                    </div>
+
+
+                    <div>
+                        <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
+                        <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
+                    </div>
+                </div>
+
+            ]
         }
 
     }
@@ -184,12 +221,41 @@ export default class Reader extends Component {
                     ]
                 }))}
 
-                {reader === 'paginada' && (<img className={'reader-page ' + estilo[listPages[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={listPages[puntero].RUTA} />)}
+                {reader === 'paginada' && (
+                    <div>
+                        <div>
+                            <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
+                            <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
+                        </div>
+                        <div>
+                            <img onClick={() => { this.modificarPuntero(1) }} className={'reader-page ' + estilo[listPages[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={listPages[puntero].RUTA} />
+                        </div>
+                        <div>
+                            <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
+                            <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
+                        </div>
+                    </div>
+
+                )}
                 {reader === 'paginada-occidental' && (this.devolverPaginadoDoble(listPages, dobles, estilo))}
                 {reader === 'paginada-oriental' && (this.devolverPaginadoDoble(styleManga, dobles, estilo))}
 
-
             </div>
+
         );
     }
 }
+
+// Componente usado para mostrar el siguiente elemento a mostrar
+const ReaderButton = props => {
+    return (
+        <div
+            className={props.className}
+            onClick={props.onClick}
+        >
+            <div className="inner-container">
+                {props.current}
+            </div>
+        </div>
+    );
+};

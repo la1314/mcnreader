@@ -28,9 +28,8 @@ export default class ProfileUser extends Component {
   }
 
   //TODO
-  // Agregar y editar Reader
   // Modificar Editor, no posee reader
-  // Acabar de adaptar READER los readers del usuario y añadir botones entre otras cosas más
+  //añadir botones entre otras cosas más
 
   //Carga los datos al state
   componentDidMount() {
