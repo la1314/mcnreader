@@ -16,8 +16,7 @@ export default class ProfileUser extends Component {
       disabledUser: false, disabledEmail: false,
       disabledPasswordCheck: false,
       disabledPasswordUpdate: false,
-      tipos: [], activarC: false, activarMN: false,
-      activarNO: false, activarNL: false, lectores: []
+      tipos: [], lectores: []
     }
 
     this.refEditUser = React.createRef();
@@ -70,8 +69,7 @@ export default class ProfileUser extends Component {
       .then(res => {
         this.setState({
           lectores: res.data
-        }, () => console.log(this.state.lectores)
-        )
+        })
       })
   }
 
@@ -124,7 +122,7 @@ export default class ProfileUser extends Component {
     if (!incognita) {
       axios.post('/api/create-reader/', null, {
         params: { tipo: id }
-      }).then(()=>{this.findLectores()})
+      }).then(() => { this.findLectores() })
     }
 
   }
@@ -259,29 +257,38 @@ export default class ProfileUser extends Component {
   updateLector = (e, id) => {
 
     console.log(e.target.value);
-    console.log(id);
     
 
     switch (e.target.value) {
 
       case 'PAGINADA':
-
+        axios.post('/api/update-reader-pc/', null, {
+          params: { tipo: id, cascada: 0, paginada: 1 }
+        }).then(()=>{this.findLectores()})
         break;
 
       case 'CASCADA':
-
+        axios.post('/api/update-reader-pc/', null, {
+          params: { tipo: id, cascada: 1, paginada: 0 }
+        }).then(()=>{this.findLectores()})
         break;
 
       case 'OCCIDENTAL':
-
+        axios.post('/api/update-reader-oroc/', null, {
+          params: { tipo: id, occidental: 1, oriental: 0 }
+        }).then(()=>{this.findLectores()})
         break;
 
       case 'ORIENTAL':
-
+        axios.post('/api/update-reader-oroc/', null, {
+          params: { tipo: id, occidental: 0, oriental: 1 }
+        }).then(()=>{this.findLectores()})
         break;
 
       case 'SIMPLE':
-
+        axios.post('/api/update-reader-oroc/', null, {
+          params: { tipo: id, occidental: 0, oriental: 0 }
+        }).then(()=>{this.findLectores()})
         break;
 
       default:
@@ -357,18 +364,19 @@ export default class ProfileUser extends Component {
                     <label>{item.NOMBRE}: </label>
                     <div className='profile-lector-edit-pc'>
                       <label htmlFor={'lector' + index}>PAGINADA</label>
-                      <input type="radio" value='PAGINADA' checked={item.PAGINADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector"+item.NOMBRE} />
+                      <input type="radio" value='PAGINADA' checked={item.PAGINADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE} />
                       <label htmlFor={'lector' + index}>CASCADA</label>
-                      <input type="radio" value='CASCADA' checked={item.CASCADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector"+item.NOMBRE}></input>
+                      <input type="radio" value='CASCADA' checked={item.CASCADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE}/>
                     </div>
 
                     <div className='profile-lector-edit-ocors'>
-                      <label htmlFor={'lector' + index}>OCCIDENTAL</label>
-                      <input type="radio" value='OCCIDENTAL' checked={item.OCCIDENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds"+item.NOMBRE} />
-                      <label htmlFor={'lector' + index}>ORIENTAL</label>
-                      <input type="radio" value='ORIENTAL' checked={item.ORIENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds"+item.NOMBRE}></input>
+                      
                       <label htmlFor={'lector' + index}>SIMPLE</label>
-                      <input type="radio" value='SIMPLE' checked onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds"+item.NOMBRE} />
+                      <input type="radio" value='SIMPLE' checked={(!item.OCCIDENTAL && !item.ORIENTAL ) ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
+                      <label htmlFor={'lector' + index}>OCCIDENTAL</label>
+                      <input type="radio" value='OCCIDENTAL' checked={item.OCCIDENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
+                      <label htmlFor={'lector' + index}>ORIENTAL</label>
+                      <input type="radio" value='ORIENTAL' checked={item.ORIENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
                     </div>
                   </div>
                 ]
