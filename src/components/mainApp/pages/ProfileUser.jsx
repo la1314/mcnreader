@@ -11,14 +11,13 @@ export default class ProfileUser extends Component {
       newName: '', newEmail: '',
       oldPassword: '',
       newPassword: '', reNewPassword: '',
-      usernameBool: false,
-      repassBool: false,
-      emailBool: false,
-      passBool: false,
-      disabledUser: false,
-      disabledEmail: false,
+      usernameBool: false, repassBool: false,
+      emailBool: false, passBool: false,
+      disabledUser: false, disabledEmail: false,
       disabledPasswordCheck: false,
       disabledPasswordUpdate: false,
+      tipos: [], activarC: false, activarMN: false,
+      activarNO: false, activarNL: false, lectores: []
     }
 
     this.refEditUser = React.createRef();
@@ -29,11 +28,20 @@ export default class ProfileUser extends Component {
 
   }
 
-  componentDidMount() {
-    this.findDetailts();
+  //TODO
+  // Agregar y editar Reader
+  // Modificar Editor, no posee reader
+  // Acabar de adaptar READER los readers del usuario y añadir botones entre otras cosas más
 
+  //Carga los datos al state
+  componentDidMount() {
+
+    this.findDetailts();
+    this.findTipos();
+    this.findLectores();
   }
 
+  // Carga los datos del usuario al state
   findDetailts = () => {
     axios.post('/api/find-user-details/')
       .then(res => {
@@ -44,7 +52,26 @@ export default class ProfileUser extends Component {
           newName: res.data.USERNAME,
           newEmail: res.data.EMAIL
         })
+      })
+  }
 
+  // Carga los diferentes tipos de obras al state
+  findTipos = () => {
+    axios.post('/api/find-tipos/')
+      .then(res => {
+        this.setState({
+          tipos: res.data,
+        })
+      })
+  }
+
+  findLectores = () => {
+    axios.post('/api/find-lectores/')
+      .then(res => {
+        this.setState({
+          lectores: res.data
+        }, () => console.log(this.state.lectores)
+        )
       })
   }
 
@@ -65,9 +92,6 @@ export default class ProfileUser extends Component {
       })
     }
 
-
-
-    //
   }
 
   //1:EXISTS 0:NOT EXISTS
@@ -88,17 +112,31 @@ export default class ProfileUser extends Component {
 
   }
 
+  //Comprueba si la preferencia existe, en caso contrario la crea
+  activarPreferencia = async (id) => {
+
+    const incognita = await axios.post('/api/check-reader/', null, {
+      params: { tipo: id }
+    }).then(res => {
+      return res.data[0].booleano;
+    })
+
+    if (!incognita) {
+      axios.post('/api/create-reader/', null, {
+        params: { tipo: id }
+      }).then(()=>{this.findLectores()})
+    }
+
+  }
+
   //carga los datos de la pagina actual
   comprobarPassword = (valor) => {
 
     if (valor !== '') {
-
       this.setState({ passBool: true, repassBool: false })
-
     } else {
       this.setState({ passBool: false, repassBool: false })
     }
-
   }
 
   //Función que compara las contraseña para determinar si son iguales o no
@@ -127,7 +165,6 @@ export default class ProfileUser extends Component {
         console.log('No iguales');
       }
     })
-
   }
 
   //Actualiza los estados del usuario
@@ -167,14 +204,11 @@ export default class ProfileUser extends Component {
     const { disabledUser } = this.state
 
     if (!disabledUser) {
-
       this.refEditUser.current.disabled = false;
-
     } else {
       this.refEditUser.current.disabled = true;
       this.setState({ disabledUser: false })
     }
-
   }
 
   //Activa/Desactiva el input y el boton para editar el email
@@ -183,9 +217,7 @@ export default class ProfileUser extends Component {
     const { disabledEmail } = this.state
 
     if (!disabledEmail) {
-
       this.refEditEmail.current.disabled = false;
-
     } else {
       this.refEditEmail.current.disabled = true;
       this.setState({ disabledEmail: false })
@@ -197,16 +229,13 @@ export default class ProfileUser extends Component {
 
 
     if (this.refOldPassword.current.disabled) {
-
       this.setState({ disabledPasswordCheck: true })
       this.refOldPassword.current.disabled = false;
     } else {
-
       this.setState({ disabledPasswordCheck: false, disabledPasswordUpdate: false })
       this.refOldPassword.current.disabled = true;
       this.refNewPassword.current.disabled = true;
       this.refRNewPassword.current.disabled = true;
-
     }
   }
 
@@ -219,31 +248,67 @@ export default class ProfileUser extends Component {
     }).then(res => { return parseInt(res.data[0].booleano) })
 
     if (comprobacion) {
-
       this.refOldPassword.current.disabled = true;
       this.refNewPassword.current.disabled = false;
       this.refRNewPassword.current.disabled = false;
       this.setState({ disabledPasswordUpdate: true, disabledPasswordCheck: false })
     }
+  }
+
+  //Updatea el radio del lector
+  updateLector = (e, id) => {
+
+    console.log(e.target.value);
+    console.log(id);
+    
+
+    switch (e.target.value) {
+
+      case 'PAGINADA':
+
+        break;
+
+      case 'CASCADA':
+
+        break;
+
+      case 'OCCIDENTAL':
+
+        break;
+
+      case 'ORIENTAL':
+
+        break;
+
+      case 'SIMPLE':
+
+        break;
+
+      default:
+        break;
+    }
 
   }
+
 
   render() {
 
     const { user, email, disabledPasswordCheck, disabledPasswordUpdate, disabledUser, disabledEmail,
-      newEmail, newName, oldPassword, newPassword, reNewPassword
+      newEmail, newName, oldPassword, newPassword, reNewPassword, tipos, lectores
     } = this.state
+
+    //if (tipos === null) { return null }
 
     return (
       <div className='profile-container'>
 
-        <div>
+        <div className='profile-details' >
           <div>Información de la cuenta:</div>
           <div>Tu usuario: {user}</div>
           <div>Email registrado: {email}</div>
         </div>
 
-        <div>
+        <div className='profile-update'>
           <div>Actualizar información</div>
 
           <label>Usuario: </label>
@@ -265,6 +330,52 @@ export default class ProfileUser extends Component {
           <input type='password' ref={this.refNewPassword} onChange={(e) => { this.updateState(e, 4) }} value={newPassword} placeholder='Nueva contraseña' disabled />
           <input type='password' ref={this.refRNewPassword} onChange={(e) => { this.updateState(e, 5) }} value={reNewPassword} placeholder='Repetir contraseña' disabled />
           <button disabled={!disabledPasswordUpdate} onClick={() => { this.updatePassword() }} >actualizar</button>
+        </div>
+
+        <div className='profile-lector'>
+
+          <div>
+            Preferencias de lectura
+          </div>
+
+          <div className='profile-lector-tipos'>
+            <div className='profile-lector-create'>
+              {tipos.map((item, index) => {
+                return [
+                  <div key={'pl' + index}>
+                    <label>{item.NOMBRE}</label>
+                    <button onClick={() => { this.activarPreferencia(item.ID) }} >Activar</button>
+                  </div>
+                ]
+              })}
+            </div>
+
+            <div className='profile-lector-edit'>
+              {lectores.map((item, index) => {
+                return [
+                  <div key={'ple' + index}>
+                    <label>{item.NOMBRE}: </label>
+                    <div className='profile-lector-edit-pc'>
+                      <label htmlFor={'lector' + index}>PAGINADA</label>
+                      <input type="radio" value='PAGINADA' checked={item.PAGINADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector"+item.NOMBRE} />
+                      <label htmlFor={'lector' + index}>CASCADA</label>
+                      <input type="radio" value='CASCADA' checked={item.CASCADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector"+item.NOMBRE}></input>
+                    </div>
+
+                    <div className='profile-lector-edit-ocors'>
+                      <label htmlFor={'lector' + index}>OCCIDENTAL</label>
+                      <input type="radio" value='OCCIDENTAL' checked={item.OCCIDENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds"+item.NOMBRE} />
+                      <label htmlFor={'lector' + index}>ORIENTAL</label>
+                      <input type="radio" value='ORIENTAL' checked={item.ORIENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds"+item.NOMBRE}></input>
+                      <label htmlFor={'lector' + index}>SIMPLE</label>
+                      <input type="radio" value='SIMPLE' checked onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds"+item.NOMBRE} />
+                    </div>
+                  </div>
+                ]
+              })}
+            </div>
+          </div>
+
         </div>
 
       </div>

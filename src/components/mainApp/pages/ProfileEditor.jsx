@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-const md5 = require('md5');
+//import axios from 'axios';
+//const md5 = require('md5');
 
 export default class ProfileEditor extends Component {
 

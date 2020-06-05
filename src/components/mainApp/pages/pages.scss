@@ -268,3 +268,28 @@
     }
 
 }
+
+/** Profile **/
+
+.profile-container {
+
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+
+    .profile-details {
+        border: solid 1px green;
+    }
+
+    .profile-update {
+        border: solid 1px yellow;
+    }
+
+    .profile-lector {
+        border: solid 1px khaki;
+    }
+
+    .profile-lector-edit{
+        border: solid 1px powderblue;
+    }
+}

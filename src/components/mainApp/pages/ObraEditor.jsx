@@ -394,14 +394,11 @@ export default class ObraEditor extends Component {
                         {generos.map((item, index) => <div key={item.NOMBRE + '-ga-' + index} className='obra-genero-texto' >{item.NOMBRE}</div>)}
                     </div>
                     {
-                        //TODO CHECKBOXES
                         listGeneros.map((item, index) => {
-
                             return [
                                 <label htmlFor="obra-generos" key={item.NOMBRE + 'label' + index} >{item.NOMBRE}</label>,
                                 <input type='checkbox' ref={(input) => { this.checkboxes[index] = input }} onChange={this.editGenero} key={item.NOMBRE + index} value={item.ID} />
                             ]
-
                         })
                     }
                 </div>
