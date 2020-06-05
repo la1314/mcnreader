@@ -4,7 +4,7 @@ import Header from '../header/UserHeader.jsx';
 import Home from '../pages/Home.jsx';
 import Library from '../pages/Library.jsx';
 import ProfileU from '../pages/ProfileUser.jsx';
-import Obra from '../pages/ObraLector.jsx';
+import ObraL from '../pages/ObraLector.jsx';
 import Reader from '../pages/Reader.jsx';
 
 export default class User extends Component {
@@ -47,7 +47,7 @@ export default class User extends Component {
         return <ProfileU />;
 
       case 3:
-        return <Obra obra={obra} changeToChapter={this.changeToChapter} />;
+        return <ObraL obra={obra} changeToChapter={this.changeToChapter} />;
 
       case 4:
         return <Reader chapter={chapter} />;
@@ -75,6 +75,7 @@ export default class User extends Component {
       localStorage.removeItem('page');
       localStorage.removeItem('user');
       localStorage.removeItem('obra');
+      localStorage.removeItem('tipo');
       localStorage.removeItem('obraEdit');
       this.props.checkAuth()
     }

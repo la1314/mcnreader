@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './pages.scss';
 
-export default class ObraEditor extends Component {
+export default class ObraLector extends Component {
 
     constructor(props) {
         super(props);
@@ -14,7 +14,6 @@ export default class ObraEditor extends Component {
             descripcion: '', coverHash: Date.now(),
         }
     }
-
 
     //Carga los datos al montarse el componente
     componentDidMount() {
@@ -45,6 +44,7 @@ export default class ObraEditor extends Component {
                 descripcion: datos.DESCRIPCION,
                 cover: datos.COVER,
                 estado: datos.NESTADO,
+                tipoID: datos.TIPO,
                 tipo: datos.NTIPO,
                 demografia: datos.NDEMOGRAFIA
 
@@ -72,7 +72,8 @@ export default class ObraEditor extends Component {
 
     // Rederidige al capítulo seleccionado
     verChapter = (chapter) => {
-        Promise.resolve(localStorage.setItem("chapter", chapter)).then(this.props.changeToChapter(chapter))
+        const {tipoID} = this.state
+        Promise.resolve(localStorage.setItem("chapter", chapter), localStorage.setItem("tipo", tipoID)).then(this.props.changeToChapter(chapter))
     }
 
 

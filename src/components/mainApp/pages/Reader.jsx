@@ -6,8 +6,8 @@ export default class Reader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            obra: '', chapter: '', listPages: null, reader: 'paginada-oriental', tipo: '', estilo: ['simple', 'doble'],
-            styleManga: null, puntero: 0, dobles: 0
+            obra: '', chapter: '', listPages: null, reader: 'paginada', tipo: '', estilo: ['simple', 'doble'],
+            styleManga: null, puntero: 0, dobles: 0, opciones: []
         }
     }
 
@@ -24,12 +24,29 @@ export default class Reader extends Component {
                 })
             })
         }
+
+        this.findTipoLector();
     }
 
     //Remueve los eventos asignados
     componentWillUnmount() {
 
         document.removeEventListener("keydown", this.eventosKey, false);
+    }
+
+    // Obtiene la configuración del lector del usuario
+    findTipoLector = () => {
+
+        const tipo = parseInt(localStorage.getItem('tipo'));
+
+        axios.post('/api/find-lector-tipo/', null, {
+            params: { tipo: tipo }
+        }).then(res => {
+            if (res.data.length !== 0) {
+                const datos = res.data[0]
+                this.devolverReader(datos.CASCADA, datos.PAGINADA, datos.OCCIDENTAL, datos.ORIENTAL)
+            }
+        })
     }
 
     //Devuelve las paginas de un capítulo
@@ -66,8 +83,7 @@ export default class Reader extends Component {
         ]
 
         let filtrado = formas.filter(item => (item.c === c) && (item.p === p) && (item.oc === oc) && (item.or === or))
-
-        return filtrado[0].estilo;
+        this.setState({reader: filtrado[0].estilo})
     }
 
     //Captura las flechas <- y ->

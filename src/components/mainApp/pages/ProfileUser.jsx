@@ -157,8 +157,7 @@ export default class ProfileUser extends Component {
       if (passBool && repassBool) {
         axios.post('/api/edit-user-password/', null, {
           params: { password: md5(newPassword) }
-        }).then(res => console.log(res.data))
-
+        })
       } else {
         console.log('No iguales');
       }
@@ -360,7 +359,7 @@ export default class ProfileUser extends Component {
             <div className='profile-lector-edit'>
               {lectores.map((item, index) => {
                 return [
-                  <div key={'ple' + index}>
+                  <div className='profile-lector-options' key={'ple' + index}>
                     <label>{item.NOMBRE}: </label>
                     <div className='profile-lector-edit-pc'>
                       <label htmlFor={'lector' + index}>PAGINADA</label>
