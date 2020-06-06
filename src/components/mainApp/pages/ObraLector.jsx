@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import './pages.scss';
-
+import PI from './items/PuntuacionItem.jsx';
 export default class ObraLector extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            obra: '', user: '', nombre: '', autor: '', lanzamiento: '',
-            listSocialMedia: [], demografia: '',
-            generos: [], socialMedia: [], tipo: '',
+            obra: null, user: '', nombre: '', autor: '', lanzamiento: '',
+            demografia: '', generos: [], socialMedia: [], tipo: '',
             listChapters: [], cover: '',
             descripcion: '', coverHash: Date.now(), follow: 0,
         }
@@ -25,7 +24,7 @@ export default class ObraLector extends Component {
         }
     }
 
-    //TODO IMPLEMENTAR SOCIAL MEDIA EN OBRA TAMBIEN
+    //TODO IMPLEMENTAR BOTONES PARA CAMBIO DE VISTA
 
     //Obtiene información de la obra
     findDetailtObra = () => {
@@ -53,7 +52,7 @@ export default class ObraLector extends Component {
                 this.setState({
                     follow: await this.checkFollow(this.state.obra),
                     generos: await this.findCaracteristicaObra('generos-actuales'),
-                    listSocialMedia: await this.findCaracteristicaObra('socialMedia'),
+                    socialMedia: await this.findCaracteristicaObra('social-media'),
                     listChapters: await this.findCaracteristicaObra('chapters')
                 })
             });
@@ -80,7 +79,7 @@ export default class ObraLector extends Component {
     // compruba que el usuario sigue una obra
 
     checkFollow = (obra) => {
-        return axios.post(`/api/find-follow/`, null, { params: { obra: obra } }).then((res)=>{return res.data.Booleano})
+        return axios.post(`/api/find-follow/`, null, { params: { obra: obra } }).then((res) => { return res.data.Booleano })
     }
 
     // follow obra
@@ -89,7 +88,7 @@ export default class ObraLector extends Component {
         const incognita = await this.checkFollow(obra);
 
         if (!incognita) {
-            axios.post(`/api/follow-obra/`, null, { params: { obra: obra } }).then(this.setState({follow:1}))
+            axios.post(`/api/follow-obra/`, null, { params: { obra: obra } }).then(this.setState({ follow: 1 }))
         }
 
     }
@@ -99,13 +98,17 @@ export default class ObraLector extends Component {
         const { obra } = this.state
         const incognita = await this.checkFollow(obra);
         if (incognita) {
-            axios.post(`/api/unfollow-obra/`, null, { params: { obra: obra } }).then(this.setState({follow:0}))
+            axios.post(`/api/unfollow-obra/`, null, { params: { obra: obra } }).then(this.setState({ follow: 0 }))
         }
     }
 
     render() {
 
-        const { nombre, autor, lanzamiento, descripcion, cover, estado, tipo, demografia, generos, listChapters, follow } = this.state
+        const { obra, nombre, autor, lanzamiento, descripcion, cover, estado, tipo, demografia, generos, listChapters, follow, socialMedia } = this.state
+
+        if (obra === null) {
+            return null;
+        }
 
         return (
             <div className='obra-lector'>
@@ -131,12 +134,26 @@ export default class ObraLector extends Component {
                         <div className='ol-detail'>Demografia: {demografia}</div>
                         <div className='ol-detail'>Estado: {estado}</div>
                     </div>
-
+                    <div className='ol-social'>
+                        {socialMedia.map((item, index) => {
+                            return [
+                                <div key={'ol-sm' + index} >
+                                    <a href={item.LINK} rel={'author'}  ><img className='logo-sm' alt={''} src={item.LOGO} /></a>
+                                </div>
+                            ]
+                        })}
+                    </div>
                 </div>
+
+
                 <div className='ol-rating-follow'>
-                { follow ? <button onClick={()=>{this.unfollowObra()}} >Dejar de seguir</button> : <button onClick={()=>{this.followObra()}} >Seguir</button> }
-                    
-                    
+                    <div className='rating'>
+                        <PI obra={obra} />
+                    </div>
+                    <div className='follow'>
+                        {follow ? <button onClick={() => { this.unfollowObra() }} >Dejar de seguir</button> : <button onClick={() => { this.followObra() }} >Seguir</button>}
+                    </div>
+
                 </div>
 
                 <div className='ol-descripcion'>

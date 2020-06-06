@@ -411,7 +411,7 @@ export default class ObraEditor extends Component {
 
                 <div className='edit-obra-resume'>
                     <label htmlFor="obra-resume">Descripción: </label>
-                    <textarea placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
+                    <textarea rows={20} cols={70} placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
                 </div>
 
                 <div className='edit-obra-social-media-container' >
@@ -430,7 +430,7 @@ export default class ObraEditor extends Component {
                         {
                             socialMedia.map((item, index) => {
                                 return [
-                                    <ESMI key={'smi' + index} name={item.NOMBRE} media={item.ID} obra={obra} link={item.LINK} />
+                                    <ESMI key={'smi' + index} logo={item.LOGO} name={item.NOMBRE} media={item.ID} obra={obra} link={item.LINK} />
                                 ]
                             })
                         }
@@ -443,7 +443,9 @@ export default class ObraEditor extends Component {
                     <div className='edit-obra-chapters'>
                         <label>Capitulos: </label>
                         <div className='edit-obra-chapters-list'>
-                            {listChapters.map((item, index) => <ECItem key={'chapter-item' + index} chapter={item.ID} name={item.NOMBRE} number={item.NUMERO} changeToEditChapter={this.props.changeToEditChapter} />)}
+                            {listChapters.map((item, index) =>
+                                <ECItem key={'chapter-item' + index} chapter={item.ID} name={item.NOMBRE} number={item.NUMERO} changeToEditChapter={this.props.changeToEditChapter} />)
+                            }
                         </div>
                     </div>
 
