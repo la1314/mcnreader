@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './pages.scss';
 import ECItem from './items/EditorChapterItem.jsx';
+import ESM from './items/EditorSM.jsx';
+import ESMI from './items/EditorSMItem.jsx';
 
 export default class ObraEditor extends Component {
 
@@ -22,9 +24,6 @@ export default class ObraEditor extends Component {
         this.inputVisibilidadRef = React.createRef();
         this.checkboxes = []
     }
-
-    //AÑADIR FUNCION PARA DEVOLVER TIPO
-    //TODO Añadir edicion de cover, Social media
 
     //Carga los datos del localStorage y asigna valores a los state
     componentDidMount() {
@@ -108,7 +107,8 @@ export default class ObraEditor extends Component {
                     listDemografias: await this.findCaracteristicaObra('demografias'),
                     listSocialMedia: await this.findCaracteristicaObra('socialMedia'),
                     listTipos: await this.findCaracteristicaObra('tipos'),
-                    listChapters: await this.findCaracteristicaObra('chapters')
+                    listChapters: await this.findCaracteristicaObra('chapters'),
+                    socialMedia: await this.findCaracteristicaObra('social-media')
                 }, () => {
 
                     const { listDemografias, demografiaValue, tipoValue, listTipos } = this.state
@@ -189,7 +189,12 @@ export default class ObraEditor extends Component {
         }
     }
 
-    //TODO REFACTORIZAR GET ESTADO
+
+    //Función pasada como prop para actualizar el state socialMedia en la creación o eliminación de una media
+    updateSocialMediaState = async () => {
+        this.setState({ socialMedia: await this.findCaracteristicaObra('social-media') })
+    }
+
 
     //Devuelve el nombre cuyo ID de item coincida con el deseado
     obtenerNombre = (lista, id) => {
@@ -277,14 +282,14 @@ export default class ObraEditor extends Component {
                 visibilidad: newChapterVisibilidad
             }
         }).then(async () => this.setState({ listChapters: await this.findCaracteristicaObra('chapters') }, () => {
-            
+
             const config = {
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
             }
 
-            const {listChapters} = this.state;
+            const { listChapters } = this.state;
             const last = listChapters.length - 1;
 
             const formData = new FormData();
@@ -303,6 +308,7 @@ export default class ObraEditor extends Component {
 
         switch (type) {
             case 1:
+
                 this.setState({ newChapterNumber: value })
                 break;
 
@@ -326,7 +332,7 @@ export default class ObraEditor extends Component {
 
         const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros,
             cover, coverHash, descripcion, estado, listEstados, estadoValue, tipo, tipoValue, listTipos,
-            newChapterNumber, newChapterName, newChapterDate, listChapters
+            newChapterNumber, newChapterName, newChapterDate, listChapters, listSocialMedia, obra, socialMedia
         } = this.state;
 
         return (
@@ -408,8 +414,27 @@ export default class ObraEditor extends Component {
                     <textarea placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
                 </div>
 
-                <div className='edit-obra-social-media' >
-                    <label>Social Media:</label>
+                <div className='edit-obra-social-media-container' >
+                    <div>Social media</div>
+                    <div className='edit-obra-social-new-media'>
+
+                        {
+                            listSocialMedia.map((item, index) => {
+                                return [
+                                    <ESM updateSocialMediaState={this.updateSocialMediaState} key={'sm' + index} name={item.NOMBRE} media={item.ID} obra={obra} />
+                                ]
+                            })
+                        }
+                    </div>
+                    <div className='edit-obra-social-media-item'>
+                        {
+                            socialMedia.map((item, index) => {
+                                return [
+                                    <ESMI key={'smi' + index} name={item.NOMBRE} media={item.ID} obra={obra} link={item.LINK} />
+                                ]
+                            })
+                        }
+                    </div>
                 </div>
 
 
@@ -453,3 +478,4 @@ export default class ObraEditor extends Component {
         );
     }
 }
+
