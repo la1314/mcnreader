@@ -11,7 +11,7 @@ export default class ObraLector extends Component {
             listSocialMedia: [], demografia: '',
             generos: [], socialMedia: [], tipo: '',
             listChapters: [], cover: '',
-            descripcion: '', coverHash: Date.now(),
+            descripcion: '', coverHash: Date.now(), follow: 0,
         }
     }
 
@@ -51,6 +51,7 @@ export default class ObraLector extends Component {
             }, async () => {
 
                 this.setState({
+                    follow: await this.checkFollow(this.state.obra),
                     generos: await this.findCaracteristicaObra('generos-actuales'),
                     listSocialMedia: await this.findCaracteristicaObra('socialMedia'),
                     listChapters: await this.findCaracteristicaObra('chapters')
@@ -72,14 +73,39 @@ export default class ObraLector extends Component {
 
     // Rederidige al capítulo seleccionado
     verChapter = (chapter) => {
-        const {tipoID} = this.state
+        const { tipoID } = this.state
         Promise.resolve(localStorage.setItem("chapter", chapter), localStorage.setItem("tipo", tipoID)).then(this.props.changeToChapter(chapter))
     }
 
+    // compruba que el usuario sigue una obra
+
+    checkFollow = (obra) => {
+        return axios.post(`/api/find-follow/`, null, { params: { obra: obra } }).then((res)=>{return res.data.Booleano})
+    }
+
+    // follow obra
+    followObra = async () => {
+        const { obra } = this.state
+        const incognita = await this.checkFollow(obra);
+
+        if (!incognita) {
+            axios.post(`/api/follow-obra/`, null, { params: { obra: obra } }).then(this.setState({follow:1}))
+        }
+
+    }
+
+    // unfollow obra
+    unfollowObra = async () => {
+        const { obra } = this.state
+        const incognita = await this.checkFollow(obra);
+        if (incognita) {
+            axios.post(`/api/unfollow-obra/`, null, { params: { obra: obra } }).then(this.setState({follow:0}))
+        }
+    }
 
     render() {
 
-        const { nombre, autor, lanzamiento, descripcion, cover, estado, tipo, demografia, generos, listChapters } = this.state
+        const { nombre, autor, lanzamiento, descripcion, cover, estado, tipo, demografia, generos, listChapters, follow } = this.state
 
         return (
             <div className='obra-lector'>
@@ -107,6 +133,12 @@ export default class ObraLector extends Component {
                     </div>
 
                 </div>
+                <div className='ol-rating-follow'>
+                { follow ? <button onClick={()=>{this.unfollowObra()}} >Dejar de seguir</button> : <button onClick={()=>{this.followObra()}} >Seguir</button> }
+                    
+                    
+                </div>
+
                 <div className='ol-descripcion'>
                     <div>Descipción:</div>
                     <div>{descripcion}</div>

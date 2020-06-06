@@ -34,13 +34,8 @@ export default class Reader extends Component {
         document.removeEventListener("keydown", this.eventosKey, false);
     }
 
-
-
     //Captura las flechas <- y ->
     eventosKey = (e) => {
-
-        console.log(e);
-
 
         if (e.keyCode === 37) {
             this.modificarPuntero(0);

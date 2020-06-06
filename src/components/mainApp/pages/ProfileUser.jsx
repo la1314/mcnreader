@@ -63,6 +63,7 @@ export default class ProfileUser extends Component {
       })
   }
 
+  //Carga los tipos de lectores del usuario al state lectores
   findLectores = () => {
     axios.post('/api/find-lectores/')
       .then(res => {
@@ -72,7 +73,7 @@ export default class ProfileUser extends Component {
       })
   }
 
-  //1:EXISTS 0:NOT EXISTS
+  //Verifica que el username sea nuevo 1:EXISTS 0:NOT EXISTS
   checkUsername = () => {
 
     const { newName } = this.state
@@ -82,16 +83,30 @@ export default class ProfileUser extends Component {
         params: { username: newName }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
+          axios.post('/api/edit-username/', null, {
+            params: { username: newName }
+          })
+          this.refEditUser.current.disabled = true;
           this.setState({ disabledUser: true })
         } else {
           this.setState({ disabledUser: false })
         }
       })
     }
+  }
+
+  //Actualiza el nombre del Usuario
+  updateUserName = () => {
+    const { newName } = this.state
+    axios.post('/api/edit-username/', null, {
+      params: { username: newName }
+    }).then(() => { this.findDetailts() })
+    this.setState({ disabledUserE: false })
+    this.refEditUserE.current.disabled = true;
 
   }
 
-  //1:EXISTS 0:NOT EXISTS
+  //Verifica que el correo sea nuevo 1:EXISTS 0:NOT EXISTS
   checkEmail = () => {
 
     const { newEmail } = this.state
@@ -100,13 +115,26 @@ export default class ProfileUser extends Component {
         params: { email: newEmail }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
+          axios.post('/api/edit-email/', null, {
+            params: { email: newEmail }
+          })
           this.setState({ disabledEmail: true })
         } else {
           this.setState({ disabledEmail: false })
         }
       })
     }
+  }
 
+  //actualiza el email del Usuario
+  updateEmail = () => {
+
+    const { newEmail } = this.state
+    axios.post('/api/edit-email/', null, {
+      params: { email: newEmail }
+    }).then(() => { this.findDetailts() })
+    this.refEditEmailE.current.disabled = true;
+    this.setState({ disabledEmailE: false })
   }
 
   //Comprueba si la preferencia existe, en caso contrario la crea
@@ -235,6 +263,7 @@ export default class ProfileUser extends Component {
     }
   }
 
+  //Activa/Desactiva el input los input para la nueva contraseña
   activarInputsNewPassword = async () => {
 
     const { oldPassword } = this.state
@@ -255,38 +284,38 @@ export default class ProfileUser extends Component {
   updateLector = (e, id) => {
 
     console.log(e.target.value);
-    
+
 
     switch (e.target.value) {
 
       case 'PAGINADA':
         axios.post('/api/update-reader-pc/', null, {
           params: { tipo: id, cascada: 0, paginada: 1 }
-        }).then(()=>{this.findLectores()})
+        }).then(() => { this.findLectores() })
         break;
 
       case 'CASCADA':
         axios.post('/api/update-reader-pc/', null, {
           params: { tipo: id, cascada: 1, paginada: 0 }
-        }).then(()=>{this.findLectores()})
+        }).then(() => { this.findLectores() })
         break;
 
       case 'OCCIDENTAL':
         axios.post('/api/update-reader-oroc/', null, {
           params: { tipo: id, occidental: 1, oriental: 0 }
-        }).then(()=>{this.findLectores()})
+        }).then(() => { this.findLectores() })
         break;
 
       case 'ORIENTAL':
         axios.post('/api/update-reader-oroc/', null, {
           params: { tipo: id, occidental: 0, oriental: 1 }
-        }).then(()=>{this.findLectores()})
+        }).then(() => { this.findLectores() })
         break;
 
       case 'SIMPLE':
         axios.post('/api/update-reader-oroc/', null, {
           params: { tipo: id, occidental: 0, oriental: 0 }
-        }).then(()=>{this.findLectores()})
+        }).then(() => { this.findLectores() })
         break;
 
       default:
@@ -318,12 +347,12 @@ export default class ProfileUser extends Component {
 
           <label>Usuario: </label>
           <input type='text' ref={this.refEditUser} onChange={(e) => { this.updateState(e, 1) }} value={newName} disabled />
-          <button disabled={!disabledUser} onClick={() => { console.log('Holis') }} >actualizar</button>
+          <button disabled={!disabledUser} onClick={() => { this.updateUserName() }} >actualizar</button>
           <button onClick={() => { this.activarEditUser() }} >editar</button>
 
           <label>Email: </label>
           <input type='email' ref={this.refEditEmail} onChange={(e) => { this.updateState(e, 2) }} value={newEmail} disabled />
-          <button disabled={!disabledEmail} >actualizar</button>
+          <button disabled={!disabledEmail} onClick={() => { this.updateEmail() }} >actualizar</button>
           <button onClick={() => { this.activarEditEmail() }}>editar</button>
 
 
@@ -364,13 +393,13 @@ export default class ProfileUser extends Component {
                       <label htmlFor={'lector' + index}>PAGINADA</label>
                       <input type="radio" value='PAGINADA' checked={item.PAGINADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE} />
                       <label htmlFor={'lector' + index}>CASCADA</label>
-                      <input type="radio" value='CASCADA' checked={item.CASCADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE}/>
+                      <input type="radio" value='CASCADA' checked={item.CASCADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE} />
                     </div>
 
                     <div className='profile-lector-edit-ocors'>
-                      
+
                       <label htmlFor={'lector' + index}>SIMPLE</label>
-                      <input type="radio" value='SIMPLE' checked={(!item.OCCIDENTAL && !item.ORIENTAL ) ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
+                      <input type="radio" value='SIMPLE' checked={(!item.OCCIDENTAL && !item.ORIENTAL) ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
                       <label htmlFor={'lector' + index}>OCCIDENTAL</label>
                       <input type="radio" value='OCCIDENTAL' checked={item.OCCIDENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
                       <label htmlFor={'lector' + index}>ORIENTAL</label>
