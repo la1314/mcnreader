@@ -28,11 +28,10 @@ export default class HomePL extends Component {
 
 
     // Crear Leido
-    createLeido = () => {
+    createLeido = async () => {
         const { chapter, leido } = this.state
-
-        if (!leido) {
-            axios.post(`/api/new-leido/`, null, { params: { chapter: chapter } })
+        if ( !parseInt(leido)) {
+            axios.post(`/api/new-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({leido:1}) })
         }
     }
 
@@ -47,7 +46,7 @@ export default class HomePL extends Component {
     // Delete Leido
     deleteLeido = () => {
         const { chapter } = this.state
-        axios.post(`/api/delete-leido/`, null, { params: { chapter: chapter } })
+        axios.post(`/api/delete-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({leido:0}) })
 
     }
 
@@ -57,10 +56,10 @@ export default class HomePL extends Component {
 
         const { leido } = this.state
 
-        if (leido) {
-            Promise.resolve(this.deleteLeido()).then(() => { this.checkLeido() })
+        if (parseInt(leido)) {
+            this.deleteLeido()
         } else {
-            Promise.resolve(this.createLeido()).then(() => { this.checkLeido() })
+            this.createLeido()
         }
     }
 
