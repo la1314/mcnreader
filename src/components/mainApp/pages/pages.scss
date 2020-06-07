@@ -114,8 +114,57 @@
 
 /** Vista del lector **/
 
+
+.home-top-10 {
+    border: 1px solid forestgreen;
+
+    .home-top-container {
+        display: grid;
+        grid-template-columns: repeat(4, 220px);
+
+        .top-10 {
+            width: 100%;
+
+            img {
+
+                height: 300px;
+                width: 100%;
+            }
+        }
+    }
+}
+
 .home-pendientes {
     border: 1px solid floralwhite;
+
+    .home-pl-container {
+        .home-pl-list {
+            display: grid;
+            grid-template-columns: repeat(4, 220px);
+
+            .pendientes {
+
+                width: 100%;
+
+                img {
+
+                    height: 300px;
+                    width: 100%;
+                }
+            }
+
+            .seguidos {
+
+                width: 100%;
+
+                img {
+
+                    height: 300px;
+                    width: 100%;
+                }
+            }
+        }
+    }
 }
 
 .home-recientes {
@@ -189,8 +238,6 @@
 
 .ol-chapters {
 
-    
-
     .ol-chapters-list {
         display: grid;
         column-gap: 20px;
@@ -205,6 +252,7 @@
                 align-items: center;
                 justify-items: center;
                 border: gainsboro 1px solid;
+
                 img {
                     width: 35px;
                 }
@@ -343,6 +391,42 @@
 
         .profile-lector-options {
             border: solid 1px powderblue;
+        }
+    }
+
+}
+
+/** Library **/
+
+.library-container {
+
+    .library-abcedario {
+
+        display: grid;
+        grid-template-columns: repeat(12, 80px);
+
+
+        .library-letra {
+            display: grid;
+            justify-items: center;
+            border: solid 1px powderblue;
+            width: 100%;
+        }
+    }
+
+    .library-lista {
+        display: grid;
+        column-gap: 20px;
+        row-gap: 20px;
+        grid-template-columns: repeat(4, 250px);
+
+        .library-obra {
+            width: 100%;
+
+            img {
+                height: 350px;
+                width: 100%;
+            }
         }
     }
 

@@ -23,7 +23,7 @@ export default class HomePL extends Component {
     // compruba que el usuario ha leido el capítulo
     checkLeido = () => {
         const { chapter } = this.state
-        return axios.post(`/api/check-leido/`, null, { params: { chapter: chapter } }).then((res) => { this.setState({ leido: res.data.Booleano }) })
+        axios.post(`/api/check-leido/`, null, { params: { chapter: chapter } }).then((res) => { this.setState({ leido: res.data.Booleano }) })
     }
 
 

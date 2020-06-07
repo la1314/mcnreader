@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import HomePL from './items/HomePL.jsx'
+import HomePL from './items/HomePL.jsx';
+import HomeTop from './items/HomeTop.jsx'
 
 export default class Home extends Component {
 
@@ -50,7 +51,10 @@ export default class Home extends Component {
 
     return (
       <div className='home-container'>
-        <div className='home-top-10'>TOP 10</div>
+        <div className='home-top-10'>
+          <HomeTop verObra={this.verObra} />
+        </div>
+
         <div className='home-pendientes' >
           <HomePL verObra={this.verObra} />
         </div>

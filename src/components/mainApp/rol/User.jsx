@@ -41,7 +41,7 @@ export default class User extends Component {
         return <Home changeToObra={this.changeToObra} />;
 
       case 1:
-        return <Library />;
+        return <Library changeToObra={this.changeToObra} />;
 
       case 2:
         return <ProfileU />;
@@ -76,6 +76,7 @@ export default class User extends Component {
       localStorage.removeItem('user');
       localStorage.removeItem('obra');
       localStorage.removeItem('tipo');
+      localStorage.removeItem('chapter');
       localStorage.removeItem('obraEdit');
       this.props.checkAuth()
     }

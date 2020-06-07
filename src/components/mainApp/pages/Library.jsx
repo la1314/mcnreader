@@ -1,16 +1,78 @@
 import React, { Component } from 'react';
-//import axios from 'axios';
+import axios from 'axios';
 
 export default class Library extends Component {
-    
-  //TODO 
-  //Implementar lista en Lector
-  //Acabar el home del lector
-  //Implementar Libreria
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      letras: [],
+      lista: []
+    }
+  }
+
+
+  componentDidMount() {
+    this.findLetras()
+  }
+
+  //Obtiene las distintas caracteristicas de una obra
+  findLetras = () => {
+
+    axios.post(`/api/find-first-letra/`).then(res => { this.setState({ letras: res.data }) }).then(() => {
+
+      const { letras } = this.state
+      this.findLista(letras[0].LETRA)
+
+    })
+  }
+
+  //Obtiene las distintas caracteristicas de una obra
+  findLista = (letra) => {
+    axios.post(`/api/find-by-letra/`, null, { params: { letra: letra } }).then(res => {
+      this.setState({ lista: res.data })
+    })
+  }
+
+  // Rederidige a la página de la obra seleccionada
+  verObra = (obra) => {
+    Promise.resolve(localStorage.setItem("obra", obra)).then(this.props.changeToObra(obra))
+  }
 
   render() {
+
+    const { letras, lista } = this.state
+
     return (
-     <div>Library</div>
+      <div className='library-container'>
+
+        <div className='library-abcedario'>
+          {
+            letras.map((item, index) => {
+              return [
+                <div onClick={() => { this.findLista(item.LETRA)}} className='library-letra' key={'l-l' + index}>
+                  <div>{item.LETRA}</div>
+                </div>
+              ]
+            })
+          }
+        </div>
+
+        <div className='library-lista'>
+          {
+            lista.map((item, index) => {
+              return [
+                <div className='library-obra' onClick={() => { this.verObra(item.ID) }} key={'l-o' + index}>
+                  <div>{item.TIPO}</div>
+                  <div>{item.NOMBRE}</div>
+                  <img alt='cover de la obra' src={item.COVER}></img>
+                </div>
+              ]
+            })
+          }
+        </div>
+
+      </div>
     );
   }
 }
