@@ -113,6 +113,11 @@
 }
 
 /** Vista del lector **/
+
+.home-pendientes {
+    border: 1px solid floralwhite;
+}
+
 .home-recientes {
 
     border: 1px solid red;
@@ -183,6 +188,9 @@
 }
 
 .ol-chapters {
+
+    
+
     .ol-chapters-list {
         display: grid;
         column-gap: 20px;
@@ -191,9 +199,48 @@
 
         .ol-chapter-item {
             border: yellow 1px solid;
+
+            .ol-chapter-vl {
+                display: grid;
+                align-items: center;
+                justify-items: center;
+                border: gainsboro 1px solid;
+                img {
+                    width: 35px;
+                }
+            }
         }
     }
 }
+
+//Clases para la puntiación y AVG de la obra
+.puntuacion-container {
+
+    display: flex;
+
+    .puntos-item {
+        display: grid;
+        grid-template-columns: repeat(6, 55px);
+
+        .puntos-img img {
+            width: 100%;
+        }
+
+        .avg-obra {
+            background-color: rosybrown;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+
+            div {
+                font-size: 25px;
+            }
+        }
+    }
+
+
+}
+
 
 
 /** READER **/
@@ -291,13 +338,12 @@
         border: solid 1px khaki;
     }
 
-    .profile-lector-edit{
+    .profile-lector-edit {
         border: solid 1px powderblue;
 
-        .profile-lector-options{
+        .profile-lector-options {
             border: solid 1px powderblue;
-        } 
+        }
     }
 
 }
-

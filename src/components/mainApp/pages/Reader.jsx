@@ -145,7 +145,7 @@ export default class Reader extends Component {
         if ((est1 === 0 && est2 === 0)) {
 
             return [
-                <div>
+                <div key='pd' >
                     <div>
                         <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                         <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
@@ -166,7 +166,7 @@ export default class Reader extends Component {
         } else {
 
             return [
-                <div>
+                <div key='pd'>
                     <div>
                         <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                         <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
@@ -187,7 +187,7 @@ export default class Reader extends Component {
 
     }
 
-    //TODO AÑADIR LECTOR
+    //TODO Cambio de vista ha de ser un nuevo componente
     render() {
 
         const { listPages, reader, estilo, styleManga, puntero, dobles } = this.state

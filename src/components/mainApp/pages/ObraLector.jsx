@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './pages.scss';
 import PI from './items/PuntuacionItem.jsx';
+import CI from './items/ChapterItem.jsx';
 export default class ObraLector extends Component {
 
     constructor(props) {
@@ -77,7 +78,6 @@ export default class ObraLector extends Component {
     }
 
     // compruba que el usuario sigue una obra
-
     checkFollow = (obra) => {
         return axios.post(`/api/find-follow/`, null, { params: { obra: obra } }).then((res) => { return res.data.Booleano })
     }
@@ -164,16 +164,7 @@ export default class ObraLector extends Component {
                     <div>Capítulos: </div>
                     <div className='ol-chapters-list'>
 
-                        {listChapters.map((item, index) => {
-                            return [
-
-                                <div className='ol-chapter-item' onClick={() => { this.verChapter(item.ID) }} key={'ol-lc' + index} >
-                                    <div>{item.NUMERO}</div>
-                                    <div>{item.NOMBRE}  ID:{item.ID}</div>
-                                </div>
-
-                            ]
-                        })}
+                        {listChapters.map((item, index) => <CI number={item.NUMERO} chapter={item.ID} name={item.NOMBRE} key={'ol-lc' + index} verChapter={this.verChapter} />)}
 
                     </div>
                 </div>

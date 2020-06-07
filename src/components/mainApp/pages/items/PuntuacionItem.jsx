@@ -11,7 +11,8 @@ export default class PuntuacionItem extends Component {
             obra: props.obra,
             puntos: 0,
             votos: [1, 2, 3, 4, 5],
-            avg: 'N/P'
+            avg: 'N/P',
+            imgSrc: ['https://tuinki.gupoe.com/media/app-images/p0.png', 'https://tuinki.gupoe.com/media/app-images/p1.png']
         }
     }
 
@@ -50,7 +51,7 @@ export default class PuntuacionItem extends Component {
             this.newPuntuacion(puntos)
 
         } else {
-            axios.post(`/api/update-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then( () => {this.getAVG()} )
+            axios.post(`/api/update-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then(() => { this.getAVG() })
         }
 
     }
@@ -58,7 +59,7 @@ export default class PuntuacionItem extends Component {
     //Crea una puntuación
     newPuntuacion = (puntos) => {
         const { obra } = this.state
-        axios.post(`/api/new-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then( () => {this.getAVG()} )
+        axios.post(`/api/new-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then(() => { this.getAVG() })
     }
 
     //Recupera la puntuación del lector
@@ -70,34 +71,38 @@ export default class PuntuacionItem extends Component {
     //Obtiene la media de puntuaciones de la obra
     getAVG = () => {
         const { obra } = this.state
-        axios.post(`/api/find-avg-obra/`, null, { params: { obra: obra } }).then((res) => { this.setState({ avg: (Math.round(res.data.MEDIA * 100) / 100)  || 'N/P' }) })
+        axios.post(`/api/find-avg-obra/`, null, { params: { obra: obra } }).then((res) => { this.setState({ avg: (Math.round(res.data.MEDIA * 100) / 100) || 'N/P' }) })
     }
 
     //Función llamada al hacer click
     marcarPuntuacion = (puntos) => {
 
-        
+
         this.setState({ puntos: puntos }, () => { this.updatePuntuacion() })
     }
 
     render() {
 
-        const { avg, puntos, votos } = this.state
+        const { avg, puntos, votos, imgSrc } = this.state
 
         return (
             <div className='puntuacion-container'>
                 <div className='puntos-item'>
                     {votos.map((value, index) => {
+
                         return [
-                            <div key={'vo'+index} className='puntos-img' onClick={()=>{ this.marcarPuntuacion(value) }} >
-                                {value}
+                            <div key={'vo' + index} className='puntos-img' >
+                                <img onClick={() => { this.marcarPuntuacion(value) }} alt='' src={(value <= puntos) ? imgSrc[1] : imgSrc[0]} ></img>
                             </div>
                         ]
                     })}
+
+                    <div className='avg-obra'>
+                        <div>{avg}</div>
+                        
+                    </div>
                 </div>
-                <div className='avg-obra'>
-                    {avg}
-                </div>
+
             </div>
         );
     }
