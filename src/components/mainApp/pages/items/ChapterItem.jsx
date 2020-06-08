@@ -71,7 +71,7 @@ export default class HomePL extends Component {
         return (
             <div className='ol-chapter-item'>
                 <div className='ol-chapter-description' onClick={() => { this.verChapter() }}  >
-                    <div>{number}</div>
+                    <div>Número: {number}</div>
                     <div>{name}</div>
                 </div>
 

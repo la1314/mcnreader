@@ -116,9 +116,18 @@ export default class ObraLector extends Component {
                 <div className='ol-cover-details'>
                     <div className='ol-cover' >
                         <img alt='cover de la obra' src={cover} />
+                        <div className='ol-rating-follow'>
+                            <div className='rating'>
+                                <PI obra={obra} />
+                            </div>
+                            <div className='follow'>
+                                {follow ? <button onClick={() => { this.unfollowObra() }} >Dejar de seguir</button> : <button onClick={() => { this.followObra() }} >Seguir</button>}
+                            </div>
+                        </div>
                     </div>
+
                     <div className='ol-details' >
-                        <div className='ol-detail'>{nombre}</div>
+                        <div className='ol-detail ol-detail-name'>{nombre}</div>
                         <div className='ol-detail'>{autor}</div>
                         <div className='ol-detail'>Lanzamiento: {lanzamiento}</div>
                         <div className='ol-detail'>Tipo: {tipo}</div>
@@ -145,23 +154,12 @@ export default class ObraLector extends Component {
                     </div>
                 </div>
 
-
-                <div className='ol-rating-follow'>
-                    <div className='rating'>
-                        <PI obra={obra} />
-                    </div>
-                    <div className='follow'>
-                        {follow ? <button onClick={() => { this.unfollowObra() }} >Dejar de seguir</button> : <button onClick={() => { this.followObra() }} >Seguir</button>}
-                    </div>
-
-                </div>
-
                 <div className='ol-descripcion'>
-                    <div>Descipción:</div>
+                    <div className='h1-section'>Descipción:</div>
                     <div>{descripcion}</div>
                 </div>
                 <div className='ol-chapters'>
-                    <div>Capítulos: </div>
+                    <div className='h1-section'>Capítulos: </div>
                     <div className='ol-chapters-list'>
 
                         {listChapters.map((item, index) => <CI number={item.NUMERO} chapter={item.ID} name={item.NOMBRE} key={'ol-lc' + index} verChapter={this.verChapter} />)}

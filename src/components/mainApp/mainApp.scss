@@ -3,23 +3,19 @@ $main-bg-color: #3b3b3b;
 $main-container-color: #343742;
 $main-border-color: #161c2e;
 
+
 .main-App {
     width: 90%;
     height: 100%;
-    border: gold 1px solid;
     margin-left: auto;
     margin-right: auto;
-    color: white;
-
     display: grid;
     row-gap: 20px;
-
 }
 
 .header-app {
 
     background-color: $main-container-color;
-
     margin-top: 5px;
     display: grid;
     align-items: center;

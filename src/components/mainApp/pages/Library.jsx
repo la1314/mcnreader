@@ -63,9 +63,10 @@ export default class Library extends Component {
             lista.map((item, index) => {
               return [
                 <div className='library-obra' onClick={() => { this.verObra(item.ID) }} key={'l-o' + index}>
-                  <div>{item.TIPO}</div>
-                  <div>{item.NOMBRE}</div>
+                  <div className='cover-tipo'>{item.TIPO}</div>
+                  
                   <img alt='cover de la obra' src={item.COVER}></img>
+                  <div className='cover-name'>{item.NOMBRE}</div>
                 </div>
               ]
             })

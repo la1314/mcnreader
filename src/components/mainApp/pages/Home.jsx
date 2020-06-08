@@ -69,10 +69,10 @@ export default class Home extends Component {
                 return [
 
                   <div className='recientes' onClick={() => { this.verObra(item.OBRA) }} key={'co' + index} >
-                    <div>{item.TIPO}</div>
-                    <div>{item.NOMBRE}</div>
+                    <div className='cover-tipo' >{item.TIPO}</div>
                     <img alt='cover de la obra' src={item.COVER} ></img>
-                    <div>{item.FECHA}</div>
+                    <div className='cover-name'>{item.NOMBRE}</div>
+                    <div className='cover-date'>{item.FECHA}</div>
                   </div>
 
                 ]

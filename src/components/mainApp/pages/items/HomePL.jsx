@@ -9,6 +9,7 @@ export default class HomePL extends Component {
             pendientes: [],
             lista: [],
             isSelect: 0,
+            clsname: 'select'
         }
     }
 
@@ -46,13 +47,13 @@ export default class HomePL extends Component {
 
     render() {
 
-        const { isSelect, lista, pendientes } = this.state;
+        const { isSelect, lista, pendientes, clsname } = this.state;
 
         return (
             <div className='home-pl-container'>
                 <div className='home-pl-options'>
-                    <div onClick={() => { this.changeSelect(0) }}>Capítulos pendientes</div>
-                    <div onClick={() => { this.changeSelect(1) }}>Lista</div>
+                    <div className={`option-pl h1-section `+ (!isSelect && clsname)} onClick={() => { this.changeSelect(0) }}>Capítulos pendientes</div>
+                    <div className={`option-pl h1-section `+ (isSelect && clsname)} onClick={() => { this.changeSelect(1) }}>Lista</div>
                 </div>
 
                 <div className='home-pl-list' >
@@ -61,8 +62,8 @@ export default class HomePL extends Component {
                         lista.map((item, index) => {
                             return [
                                 <div className='seguidos' onClick={() => { this.props.verObra(item.ID) }} key={'pl-l' + index} >
-                                    <div>{item.NOMBRE}</div>
                                     <img alt='cover de la obra' src={item.COVER}></img>
+                                    <div className='cover-name'>{item.NOMBRE}</div>
                                 </div>
                             ]
                         })
@@ -70,9 +71,9 @@ export default class HomePL extends Component {
                         pendientes.map((item, index) => {
                             return [
                                 <div className='pendientes' onClick={() => { this.props.verObra(item.ID) }} key={'pl-p' + index} >
-                                    <div>{item.NOMBRE}</div>
                                     <img alt='cover de la obra' src={item.COVER} ></img>
-                                    <div>{item.LEIDOS}/{item.TOTALCAPS}</div>
+                                    <div className='cover-name'>{item.NOMBRE}</div>
+                                    <div className='cover-leido'>{item.LEIDOS}/{item.TOTALCAPS}</div>
                                 </div>
                             ]
                         })

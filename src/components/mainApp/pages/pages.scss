@@ -1,13 +1,15 @@
 //Apartado de variables
 $main-bg-color: #3b3b3b;
 $main-container-color: #343742;
-$main-border-color: #161c2e;
+$main-border-color: #8c8c8c;
 $main-buttonC-color: #756451;
 $main-button-color: #71778F;
-$main-height-cover-phone: 180px;
+$main-bg-tipo-color: #806640;
+$main-bg-cover-text: #807566;
+$main-border-section: #ffd600;
+$main-height-cover-phone: 210px;
 
-
-
+/************************************************************************/
 /** Vista del lector **/
 .home-container {
 
@@ -16,14 +18,11 @@ $main-height-cover-phone: 180px;
     background-color: $main-container-color;
 
     .home-top-10 {
+
+        border-top: $main-border-section 1px solid;
         display: grid;
 
-        .h1-section {
-            margin-top: 5px;
-            display: grid;
-            align-self: center;
-            justify-self: center;
-        }
+
 
         .home-top-container {
 
@@ -39,7 +38,7 @@ $main-height-cover-phone: 180px;
                 width: 100%;
 
                 img {
-                    height: 180px;
+                    height: $main-height-cover-phone;
                     width: 100%;
                 }
             }
@@ -48,8 +47,19 @@ $main-height-cover-phone: 180px;
 
     .home-pendientes {
 
-       
+        border-top: $main-border-section 1px solid;
+
         .home-pl-container {
+
+            margin-top: 10px;
+
+            .home-pl-options {
+
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                text-align: center;
+                width: 100%;
+            }
 
             .home-pl-list {
                 margin-top: 10px;
@@ -63,7 +73,6 @@ $main-height-cover-phone: 180px;
                     width: 100%;
 
                     img {
-
                         height: $main-height-cover-phone;
                         width: 100%;
                     }
@@ -84,15 +93,9 @@ $main-height-cover-phone: 180px;
 
     .home-recientes {
 
-        border: 1px solid red;
+        border-top: $main-border-section 1px solid;
         display: grid;
 
-        .h1-section {
-            margin-top: 5px;
-            display: grid;
-            align-self: center;
-            justify-self: center;
-        }
         .recientes-container {
 
             margin-top: 10px;
@@ -116,6 +119,173 @@ $main-height-cover-phone: 180px;
         }
     }
 }
+
+
+.h1-section {
+    margin-top: 5px;
+    display: grid;
+    align-self: center;
+    justify-self: center;
+    font-size: 18px;
+    text-align: center;
+    width: 100%;
+}
+
+.option-pl {
+    border: solid 1px $main-border-color;
+}
+
+.select {
+
+    background-color: #161c2e;
+
+}
+
+.cover-name,
+.cover-tipo,
+.cover-score,
+.cover-leido,
+.cover-date {
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+}
+
+.cover-name {
+    border-top: 1px solid $main-border-color;
+}
+
+.cover-name,
+.cover-score,
+.cover-leido,
+.cover-date {
+    background-color: $main-bg-cover-text;
+}
+
+.cover-tipo {
+    background-color: $main-bg-tipo-color;
+    border-bottom: 1px solid $main-border-color;
+}
+
+/*********************************************************/
+/** Obra-Lector **/
+
+.obra-lector {
+
+    .ol-cover-details {
+        display: grid;
+        grid-template-columns: 1fr;
+        column-gap: 10px;
+
+        .ol-cover {
+
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+
+        }
+    }
+
+    .ol-details {
+        margin-top: 10px;
+        border-top: $main-border-section 1px solid;
+
+        .ol-detail-name{
+            margin-top: 10px;
+        }
+
+        .ol-detail-generos {
+            display: flex;
+
+            .ol-generos {
+                margin-left: 5px;
+                margin-right: 5px;
+            }
+
+        }
+    }
+
+    .ol-descripcion {
+        margin-top: 10px;
+        border-top: $main-border-section 1px solid;
+        div {
+            width: 100%;
+        }
+
+    }
+}
+
+.ol-chapters {
+    margin-top: 10px;
+    border-top: $main-border-section 1px solid;
+    .ol-chapters-list {
+        
+        display: grid;
+        column-gap: 20px;
+        row-gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+
+        .ol-chapter-item {
+            
+            border: $main-border-color 1px solid;
+            
+            .ol-chapter-description{
+                height: 120px;
+                display: grid;
+                align-items: center;
+                justify-items: center;
+            }
+
+            .ol-chapter-vl {
+                
+                display: grid;
+                align-items: center;
+                justify-items: center;
+                border: $main-border-color 1px solid;
+
+                img {
+                    
+                    width: 35px;
+                }
+            }
+        }
+    }
+}
+
+//Clases para la puntiación y AVG de la obra
+.ol-rating-follow {
+
+    width: 100%;
+
+    .puntuacion-container {
+
+        .puntos-item {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            background-color: $main-bg-cover-text;
+
+            .puntos-img img {
+                width: 100%;
+            }
+
+            .avg-obra {
+                display: grid;
+                justify-items: center;
+                align-items: center;
+
+                div {
+                    font-size: 25px;
+                }
+            }
+        }
+
+
+    }
+}
+
+
 
 
 
@@ -234,107 +404,6 @@ $main-height-cover-phone: 180px;
 
 
 
-
-
-
-
-/** Obra-Lector **/
-
-.obra-lector {
-
-    .ol-cover-details {
-        display: grid;
-        grid-template-columns: 350px 5fr 1fr;
-        column-gap: 20px;
-
-        .ol-cover {
-
-            width: 100%;
-
-            img {
-                width: 100%;
-            }
-
-        }
-    }
-
-    .ol-details {
-
-        .ol-detail-generos {
-            display: flex;
-
-            .ol-generos {
-                margin-left: 5px;
-                margin-right: 5px;
-            }
-
-        }
-    }
-
-    .ol-descripcion {
-
-        div {
-            width: 60%;
-        }
-
-    }
-}
-
-.ol-chapters {
-
-    .ol-chapters-list {
-        display: grid;
-        column-gap: 20px;
-        row-gap: 20px;
-        grid-template-columns: repeat(4, 250px);
-
-        .ol-chapter-item {
-            border: yellow 1px solid;
-
-            .ol-chapter-vl {
-                display: grid;
-                align-items: center;
-                justify-items: center;
-                border: gainsboro 1px solid;
-
-                img {
-                    width: 35px;
-                }
-            }
-        }
-    }
-}
-
-//Clases para la puntiación y AVG de la obra
-.puntuacion-container {
-
-    display: flex;
-
-    .puntos-item {
-        display: grid;
-        grid-template-columns: repeat(6, 55px);
-
-        .puntos-img img {
-            width: 100%;
-        }
-
-        .avg-obra {
-            background-color: rosybrown;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-
-            div {
-                font-size: 25px;
-            }
-        }
-    }
-
-
-}
-
-
-
 /** READER **/
 
 .paginada {
@@ -447,7 +516,9 @@ $main-height-cover-phone: 180px;
     .library-abcedario {
 
         display: grid;
-        grid-template-columns: repeat(12, 80px);
+        column-gap: 20px;
+        row-gap: 20px;
+        grid-template-columns: repeat(6, 35px);
 
 
         .library-letra {
@@ -459,16 +530,18 @@ $main-height-cover-phone: 180px;
     }
 
     .library-lista {
+
+        margin-top: 20px;
         display: grid;
         column-gap: 20px;
         row-gap: 20px;
-        grid-template-columns: repeat(4, 250px);
+        grid-template-columns: repeat(2, 1fr);
 
         .library-obra {
             width: 100%;
 
             img {
-                height: 350px;
+                height: $main-height-cover-phone;
                 width: 100%;
             }
         }
