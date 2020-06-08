@@ -7,7 +7,7 @@ import Editor from './pages/LoginEditor';
 import RegisterEditor from './pages/RegisterEditor';
 import axios from 'axios';
 
-//import Logo from './logo.png';
+import Logo from './logo.png';
 
 export default class MainSession extends Component {
   constructor(props) {
@@ -89,14 +89,14 @@ export default class MainSession extends Component {
     const { centro, derecha, loginP, registerP } = this.state;
     if (centro === null) { return null }
 
-    const current = ['Login', 'Register', 'Recover',];
+    const current = ['Accesos', 'Registros', 'Recover',];
     //TODO por implementar el cambio de pestañas a la derecha
     return (
 
       <div className='main-container'>
         <div className='logo-container'>
           <img className='logo-app'
-            //src={Logo}
+            src={Logo}
             alt='app logo'
           ></img>
         </div>

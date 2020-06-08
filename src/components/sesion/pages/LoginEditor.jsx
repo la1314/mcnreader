@@ -91,19 +91,19 @@ export default class LoginEditor extends Component {
   render() {
     return (
       <div className="base-container" ref={this.props.containerRef}>
-        <button type="button" onClick={() => this.cambiarLogin()} className="btn">
-          Lector
+        <button type="button" onClick={() => this.cambiarLogin()} className="btnC">
+          Acceso lector
           </button>
-        <div className="header">Login Editores</div>
+        <div className="header">Acceso Editores</div>
         <div className="content">
           <div className="form">
             <div className="form-group">
-              <label htmlFor="username">Username or Email</label>
-              <input type="text" onChange={this.updateUsername} onBlur={this.verificarUsuario} name="username" placeholder="username" />
+              <label htmlFor="username">Usuario o email</label>
+              <input type="text" onChange={this.updateUsername} onBlur={this.verificarUsuario} name="username" placeholder="Usuario o email" />
             </div>
             <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input onChange={this.updatePassword} type="password" name="password" placeholder="password" />
+              <label htmlFor="password">Contraseña</label>
+              <input onChange={this.updatePassword} type="password" name="password" placeholder="Contraseña" />
             </div>
           </div>
         </div>

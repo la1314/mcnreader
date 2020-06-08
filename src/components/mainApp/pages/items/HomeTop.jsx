@@ -32,6 +32,7 @@ export default class HomeTop extends Component {
                     lista.map((item, index) => {
                         return [
                             <div className='top-10' onClick={() => { this.props.verObra(item.ID) }} key={'pl-l' + index} >
+                                <div>{item.TIPO}</div>
                                 <div>{item.NOMBRE}</div>
                                 <img alt='cover de la obra' src={item.COVER}></img>
                                 <div>{(Math.round(item.MEDIA * 100) / 100)}</div>

@@ -1,5 +1,9 @@
-.main-App {
+//Apartado de variables
+$main-bg-color: #3b3b3b;
+$main-container-color: #343742;
+$main-border-color: #161c2e;
 
+.main-App {
     width: 90%;
     height: 100%;
     border: gold 1px solid;
@@ -7,21 +11,51 @@
     margin-right: auto;
     color: white;
 
+    display: grid;
+    row-gap: 20px;
+
 }
 
-.menu-item-container {
+.header-app {
 
+    background-color: $main-container-color;
+
+    margin-top: 5px;
     display: grid;
-    grid-template-columns: repeat(4, 100px);
-    column-gap: 10px;
+    align-items: center;
+    justify-items: center;
 
-    .menu-item {
-        height: 50px;
-        border: solid 1px pink;
+    .menu-item-container {
+
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        justify-items: center;
+        column-gap: 5px;
+
+        .menu-item {
+
+            background-color: $main-border-color;
+            font-size: 15px;
+            display: grid;
+            width: 100%;
+            align-items: center;
+            justify-items: center;
+            height: 30px;
+            border: solid 1px $main-border-color;
+        }
+
+        .menu-item-logout {
+
+            background-color: gainsboro;
+            background-image: url('./pages/images/logout.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 55% 55%;
+            height: 30px;
+            width: 50%;
+            border: solid 1px $main-border-color;
+        }
     }
 
-    .menu-item-logout {
-        height: 50px;
-        border: solid 2px red;
-    }
 }

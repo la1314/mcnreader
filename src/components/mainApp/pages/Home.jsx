@@ -51,7 +51,9 @@ export default class Home extends Component {
 
     return (
       <div className='home-container'>
+
         <div className='home-top-10'>
+          <div className='h1-section'>TOP 10</div>
           <HomeTop verObra={this.verObra} />
         </div>
 
@@ -60,7 +62,7 @@ export default class Home extends Component {
         </div>
 
         <div className='home-recientes' >
-          <label>Capítulos recientes:</label>
+          <div className='h1-section'>Capítulos recientes</div>
           <div className='recientes-container'>
             {
               recientes.map((item, index) => {

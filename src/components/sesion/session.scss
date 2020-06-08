@@ -1,13 +1,18 @@
 //SCSS para los componentes que componen a la session de la app
 
 //Apartado de variables
-$main-bg-color: #161c2e;
-
+$main-bg-color: #3b3b3b;
+$main-container-color: #343742;
+$main-border-color: #161c2e;
+$main-buttonC-color: #756451;
+$main-button-color: #71778F;
 
 //Apartado CSS
 body {
+
     background-color: $main-bg-color;
 }
+
 .main-container {
 
     height: 100%;
@@ -15,19 +20,24 @@ body {
     display: flex;
     flex-direction: column;
     background-color: $main-bg-color;
-}
 
-.logo-container {
+    .logo-container {
 
-    margin-left: auto;
-    margin-right: auto;
-    height: 20%;
-    width: 60vw;
-    .logo-app {
-        width: 100%;
-        height: 100%;  
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-left: auto;
+        margin-right: auto;
+        height: 20%;
+        width: 60vw;
+
+        .logo-app {
+            width: 100%;
+            height: 100%;
+        }
     }
 }
+
+
 
 //Contenedor principal de los componentes de session
 //Adopta el 100% del alto y ancho visible del navegador
@@ -49,40 +59,75 @@ body {
     grid-template-columns: 3fr 1fr;
     height: 100%;
     width: 80vw;
-    background-color: #ef6c35;
-    border: 1px solid $main-bg-color;
+    background-color: $main-container-color;
+    border: 1px solid $main-border-color;
 
     .session-cent {
-            display: grid;
-            align-items: center;
-            justify-items: center;
-            border-top: 1px solid $main-bg-color;
-            border-bottom: 1px solid $main-bg-color;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        border-top: 1px solid $main-border-color;
+        border-bottom: 1px solid $main-border-color;
 
         .base-container {
-            
+
             display: grid;
             align-items: center;
             justify-items: center;
+            grid-template-rows: 1fr 1fr 4fr 1fr;
             width: 90%;
-            background-color: indigo;
-    
-            .form-group {
+
+            .btnC {
+                justify-self: end;
+                background-color: $main-buttonC-color;
+                border: 1px solid $main-border-color;
+            }
+
+            .header {
+                font-size: 25px;
+            }
+
+            .form {
+
                 display: grid;
-                align-items: center;
-                justify-items: center;
-                
-                input {
+                row-gap: 15px;
+
+                .form-group {
                     display: grid;
-                    width: 90%;
+                    align-items: start;
+                    justify-items: start;
+                    row-gap: 5px;
+
+                    input {
+                        display: grid;
+                        width: 90%;
+                    }
                 }
-            }   
+            }
+
+
+            .btn {
+                background-color: $main-button-color;
+                border: 1px solid $main-border-color;
+            }
+
         }
     }
-    
+
     //Modificaciones en el lateral Derecho
     .session-der {
-        border: 1px solid $main-bg-color;
+
+        display: grid;
+        align-items: center;
+        justify-items: center;
+
+        .inner-container {
+            display: grid;
+            align-items: center;
+            justify-items: center;
+        }
+
+        border: 1px solid $main-border-color;
     }
 
 }

@@ -178,31 +178,31 @@ export default class Register extends Component {
 
     return (
       <div className="base-container" ref={this.props.containerRef}>
-        <button type="button" onClick={() => this.cambiarRegistro()} className="btn">
+        <button type="button" onClick={() => this.cambiarRegistro()} className="btnC">
           Registar Lector
           </button>
-        <div className="header">Register Editor</div>
+        <div className="header">Registrar editor</div>
         <div className="content">
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario</label>
-              <input type="text" onChange={this.updateUsername} value={username} onBlur={() => { this.verificarUsuario('username') }} name="username" placeholder="username" />
+              <input type="text" onChange={this.updateUsername} value={username} onBlur={() => { this.verificarUsuario('username') }} name="username" placeholder="Usuario" />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" onChange={this.updateEmail} value={email} onBlur={() => { this.verificarUsuario('email') }} name="email" placeholder="email" />
+              <input type="email" onChange={this.updateEmail} value={email} onBlur={() => { this.verificarUsuario('email') }} name="email" placeholder="Email" />
             </div>
             <div className="form-group">
               <label htmlFor="phone">Teléfono</label>
-              <input type="number" onChange={this.updatePhone} value={phone} name="phone" placeholder="Insert your phone" />
+              <input type="number" onChange={this.updatePhone} value={phone} name="phone" placeholder="Ingresar teléfono" />
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
-              <input type="password" onChange={this.updatePassword} name="password" placeholder="Insert password" />
+              <input type="password" onChange={this.updatePassword} name="password" placeholder="Ingresar contraseña" />
             </div>
             <div className="form-group">
               <label htmlFor="repassword">Repetir contraseña</label>
-              <input type="password" onChange={this.updateRePassword} name="repassword" placeholder="Insert repassword" />
+              <input type="password" onChange={this.updateRePassword} name="repassword" placeholder="Repetir contraseña" />
             </div>
           </div>
         </div>
