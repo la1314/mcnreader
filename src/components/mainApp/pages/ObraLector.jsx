@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './pages.scss';
 import PI from './items/PuntuacionItem.jsx';
 import CI from './items/ChapterItem.jsx';
 export default class ObraLector extends Component {
@@ -118,18 +117,18 @@ export default class ObraLector extends Component {
                 <div className='ol-cover-details'>
                     <div className='ol-cover' >
                         <img alt='cover de la obra' src={cover} />
-                        { rol === 'READER' && (
+                        {rol === 'READER' && (
                             <div className='ol-rating-follow'>
-                            <div className='rating'>
-                                <PI obra={obra} />
-                            </div>
-                            <div className='follow'>
-                                {follow ? <button onClick={() => { this.unfollowObra() }} >Dejar de seguir</button> : <button onClick={() => { this.followObra() }} >Seguir</button>}
-                            </div>
+                                <div className='rating'>
+                                    <PI obra={obra} />
+                                </div>
+                                <div className='follow'>
+                                    {follow ? <button onClick={() => { this.unfollowObra() }} >Dejar de seguir</button> : <button onClick={() => { this.followObra() }} >Seguir</button>}
+                                </div>
 
-                        </div>
+                            </div>
                         )}
-                       
+
                     </div>
 
                     <div className='ol-details' >
@@ -150,13 +149,17 @@ export default class ObraLector extends Component {
                         <div className='ol-detail'>Estado: {estado}</div>
                     </div>
                     <div className='ol-social'>
-                        {socialMedia.map((item, index) => {
-                            return [
-                                <div key={'ol-sm' + index} >
-                                    <a href={item.LINK} rel={'author'}  ><img className='logo-sm' alt={''} src={item.LOGO} /></a>
-                                </div>
-                            ]
-                        })}
+                        <div className='h1-section'>Colabora con el autor</div>
+                        <div className='ol-social-list'>
+                            {socialMedia.map((item, index) => {
+                                return [
+                                    <div className='ol-social-item' key={'ol-sm' + index} >
+                                        <a href={item.LINK} rel={'author'}  ><img className='logo-sm' alt={''} src={item.LOGO} /></a>
+                                    </div>
+                                ]
+                            })}
+                        </div>
+
                     </div>
                 </div>
 

@@ -149,7 +149,7 @@ export default class ProfileEditor extends Component {
 
         this.refNewPasswordE.current.disabled = true;
         this.refRNewPasswordE.current.disabled = true;
-        this.setState({ disabledPasswordUpdate: false})
+        this.setState({ disabledPasswordUpdate: false })
 
       } else {
         console.log('No iguales');
@@ -276,39 +276,54 @@ export default class ProfileEditor extends Component {
       <div className='profile-container'>
 
         <div className='profile-details' >
-          <div>Información de la cuenta:</div>
-          <div>Tu usuario: {user}</div>
+          <div className='h1-section'>Información de la cuenta:</div>
+          <div className='profile-name'>Tu usuario: {user}</div>
           <div>Email registrado: {email}</div>
           <div>Teléfono registrado: {phone}</div>
         </div>
 
         <div className='profile-update'>
-          <div>Actualizar información</div>
+          <div className='h1-section'>Actualizar información</div>
+          <div>
+            <label>Usuario: </label>
+            <div className='profile-update-inputs'>
+              <input type='text' ref={this.refEditUserE} onChange={(e) => { this.updateState(e, 1) }} value={newName} disabled />
+              <button disabled={!disabledUserE} onClick={() => { this.updateUserName() }} >actualizar</button>
+              <button onClick={() => { this.activarEditUser() }} >editar</button>
+            </div>
+          </div>
+          <div>
+            <label>Email: </label>
+            <div className='profile-update-inputs'>
+              <input type='email' ref={this.refEditEmailE} onChange={(e) => { this.updateState(e, 2) }} value={newEmail} disabled />
+              <button disabled={!disabledEmailE} onClick={() => { this.updateEmail() }} >actualizar</button>
+              <button onClick={() => { this.activarEditEmail() }}>editar</button>
+            </div>
+          </div>
+          <div>
+            <label>Phone: </label>
+            <div className='profile-update-inputs'>
+              <input type='number' ref={this.refEditPhone} onChange={(e) => { this.updateState(e, 6) }} value={newPhone} disabled />
+              <button disabled={!disabledPHone} onClick={() => { this.updatePhone() }} >actualizar</button>
+              <button onClick={() => { this.activarEditPhone() }}>editar</button>
+            </div>
+          </div>
+          <div>
+            <label>Contraseña:</label>
+            <div className='profile-update-inputs'>
+              <input type='password' ref={this.refOldPasswordE} value={oldPassword} onChange={(e) => { this.updateState(e, 3) }} placeholder='Contraseña actual' disabled />
+              <button disabled={!disabledPasswordCheckE} onClick={(e) => { this.activarInputsNewPassword(e) }} >Comprobar</button>
+              <button onClick={() => { this.activarEditPassword() }}>editar</button>
+            </div>
 
-          <label>Usuario: </label>
-          <input type='text' ref={this.refEditUserE} onChange={(e) => { this.updateState(e, 1) }} value={newName} disabled />
-          <button disabled={!disabledUserE} onClick={() => { this.updateUserName() }} >actualizar</button>
-          <button onClick={() => { this.activarEditUser() }} >editar</button>
-
-          <label>Email: </label>
-          <input type='email' ref={this.refEditEmailE} onChange={(e) => { this.updateState(e, 2) }} value={newEmail} disabled />
-          <button disabled={!disabledEmailE} onClick={() => { this.updateEmail() }} >actualizar</button>
-          <button onClick={() => { this.activarEditEmail() }}>editar</button>
+            <div className='profile-update-inputs'>
+              <input type='password' ref={this.refNewPasswordE} onChange={(e) => { this.updateState(e, 4) }} value={newPassword} placeholder='Nueva contraseña' disabled />
+              <input type='password' ref={this.refRNewPasswordE} onChange={(e) => { this.updateState(e, 5) }} value={reNewPassword} placeholder='Repetir contraseña' disabled />
+              <button disabled={!disabledPasswordUpdate} onClick={() => { this.updatePassword() }} >actualizar</button>
+            </div>
+          </div>
 
 
-          <label>Phone: </label>
-          <input type='number' ref={this.refEditPhone} onChange={(e) => { this.updateState(e, 6) }} value={newPhone} disabled />
-          <button disabled={!disabledPHone} onClick={() => { this.updatePhone() }} >actualizar</button>
-          <button onClick={() => { this.activarEditPhone() }}>editar</button>
-
-          <label>Contraseña:</label>
-
-          <input type='password' ref={this.refOldPasswordE} value={oldPassword} onChange={(e) => { this.updateState(e, 3) }} placeholder='Contraseña actual' disabled />
-          <button disabled={!disabledPasswordCheckE} onClick={(e) => { this.activarInputsNewPassword(e) }} >Comprobar</button>
-          <button onClick={() => { this.activarEditPassword() }}>editar</button>
-          <input type='password' ref={this.refNewPasswordE} onChange={(e) => { this.updateState(e, 4) }} value={newPassword} placeholder='Nueva contraseña' disabled />
-          <input type='password' ref={this.refRNewPasswordE} onChange={(e) => { this.updateState(e, 5) }} value={reNewPassword} placeholder='Repetir contraseña' disabled />
-          <button disabled={!disabledPasswordUpdate} onClick={() => { this.updatePassword() }} >actualizar</button>
         </div>
       </div>
     );

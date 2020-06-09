@@ -23,16 +23,18 @@ export default class HomePL extends Component {
 
     // compruba que el usuario ha leido el capítulo
     checkLeido = () => {
-        const { chapter } = this.state
-        axios.post(`/api/check-leido/`, null, { params: { chapter: chapter } }).then((res) => { this.setState({ leido: res.data.Booleano }) })
+        const { chapter, rol } = this.state
+        if (rol === 'READER') {
+            axios.post(`/api/check-leido/`, null, { params: { chapter: chapter } }).then((res) => { this.setState({ leido: res.data.Booleano }) })
+        }
     }
 
 
     // Crear Leido
     createLeido = async () => {
         const { chapter, leido } = this.state
-        if ( !parseInt(leido)) {
-            axios.post(`/api/new-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({leido:1}) })
+        if (!parseInt(leido)) {
+            axios.post(`/api/new-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({ leido: 1 }) })
         }
     }
 
@@ -49,8 +51,7 @@ export default class HomePL extends Component {
     // Delete Leido
     deleteLeido = () => {
         const { chapter } = this.state
-        axios.post(`/api/delete-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({leido:0}) })
-
+        axios.post(`/api/delete-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({ leido: 0 }) })
     }
 
 
@@ -66,7 +67,6 @@ export default class HomePL extends Component {
         }
     }
 
-
     render() {
 
         const { number, name, leido, imgSrc, rol } = this.state
@@ -77,10 +77,10 @@ export default class HomePL extends Component {
                     <div>Número: {number}</div>
                     <div>{name}</div>
                 </div>
-                { rol === 'READER' && (  <div className='ol-chapter-vl' onClick={() => { this.changeLeido() }} >
+                {rol === 'READER' && (<div className='ol-chapter-vl' onClick={() => { this.changeLeido() }} >
                     <img alt='' src={leido ? imgSrc[1] : imgSrc[0]} ></img>
                 </div>)}
-              
+
             </div>
         );
     }

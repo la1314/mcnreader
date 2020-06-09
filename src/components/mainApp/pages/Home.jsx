@@ -3,6 +3,7 @@ import axios from 'axios';
 import HomePL from './items/HomePL.jsx';
 import HomeTop from './items/HomeTop.jsx'
 
+
 export default class Home extends Component {
 
   _isMounted = false;
@@ -67,7 +68,6 @@ export default class Home extends Component {
             {
               recientes.map((item, index) => {
                 return [
-
                   <div className='recientes' onClick={() => { this.verObra(item.OBRA) }} key={'co' + index} >
                     <div className='cover-tipo' >{item.TIPO}</div>
                     <img alt='cover de la obra' src={item.COVER} ></img>

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import "./session.scss";
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Recover from './pages/Recover';
 import Editor from './pages/LoginEditor';
 import RegisterEditor from './pages/RegisterEditor';
 import axios from 'axios';
-
 import Logo from './logo.png';
-
+import "./session.scss";
 export default class MainSession extends Component {
   constructor(props) {
     super(props);

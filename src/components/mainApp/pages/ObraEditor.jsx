@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './pages.scss';
 import ECItem from './items/EditorChapterItem.jsx';
 import ESM from './items/EditorSM.jsx';
 import ESMI from './items/EditorSMItem.jsx';

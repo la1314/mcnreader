@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import "./pages.scss";
 import EOItem from './items/EditorObraItem.jsx';
 
 export default class Gestor extends Component {

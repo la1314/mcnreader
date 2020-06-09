@@ -1,0 +1,145 @@
+//Apartado de variables
+$main-bg-color: #3b3b3b;
+$main-container-color: #343742;
+$main-border-color: #8c8c8c;
+$main-buttonC-color: #756451;
+$main-button-color: #71778F;
+$main-bg-tipo-color: #806640;
+$main-bg-cover-text: #807566;
+$main-border-section: #ffd600;
+$main-height-cover-pc: 450px;
+$main-columns-MAX: 5;
+$main-columns-MEDIUM: 3;
+$main-row-gap: 20px;
+$main-column-gap: 20px;
+$main-font-size: 20px;
+$main-font-size-h1: 25px;
+
+
+/* Medium */
+@media (min-width:720px) {
+
+    .home-container {
+        row-gap: $main-row-gap;
+
+        .home-top-10 {
+            .home-top-container {
+
+                margin-top: $main-row-gap;
+                row-gap: $main-row-gap;
+                column-gap: $main-column-gap;
+                grid-template-columns: repeat($main-columns-MEDIUM, 1fr);
+
+                .top-10 {
+                    img {
+                        height: $main-height-cover-pc;
+                    }
+                }
+            }
+        }
+
+        .home-pendientes {
+            .home-pl-container {
+
+                margin-top: $main-row-gap;
+
+                .home-pl-list {
+                    margin-top: $main-row-gap;
+                    row-gap: $main-row-gap;
+                    column-gap: $main-column-gap;
+                    grid-template-columns: repeat($main-columns-MEDIUM, 1fr);
+
+                    .pendientes {
+                        img {
+                            height: $main-height-cover-pc;
+                        }
+                    }
+
+                    .seguidos {
+                        img {
+                            height: $main-height-cover-pc;
+                        }
+                    }
+                }
+            }
+        }
+
+        .home-recientes {
+            .recientes-container {
+                margin-top: $main-row-gap;
+                row-gap: $main-row-gap;
+                column-gap: $main-column-gap;
+                grid-template-columns: repeat($main-columns-MEDIUM, 1fr);
+
+                .recientes {
+                    img {
+                        height: $main-height-cover-pc;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* big landscape tablets, laptops, and desktops */
+@media (min-width:1025px) {
+
+    /* Styles */
+    /** Vista del lector **/
+    .header-app {
+
+        .menu-item-container {
+            column-gap: 15px;
+
+            .menu-item {
+                height: 50px;
+                border: solid 1px $main-border-color;
+
+                .menu-item-text {
+                    font-size: $main-font-size;
+                }
+            }
+
+            .menu-item-logout {
+                background-size: 65% 65%;
+                height: 40px;
+            }
+        }
+    }
+
+    .h1-section {
+        margin-top: 15px;
+        font-size: $main-font-size-h1;
+    }
+
+    .cover-name,
+    .cover-tipo,
+    .cover-score,
+    .cover-leido,
+    .cover-date {
+        font-size: $main-font-size;
+    }
+
+    .home-container {
+        .home-top-10 {
+            .home-top-container {
+                grid-template-columns: repeat($main-columns-MAX, 1fr);
+            }
+        }
+
+        .home-pendientes {
+            .home-pl-container {
+                .home-pl-list {
+                    grid-template-columns: repeat($main-columns-MAX, 1fr);
+                }
+            }
+        }
+
+        .home-recientes {
+            .recientes-container {
+                grid-template-columns: repeat($main-columns-MAX, 1fr);
+            }
+        }
+    }
+
+}

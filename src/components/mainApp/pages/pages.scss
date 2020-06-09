@@ -106,7 +106,7 @@ $main-height-cover-phone: 210px;
 
             .recientes {
 
-                border: solid 1px gold;
+                border: solid 1px $main-border-color;
                 height: 100%;
 
                 //If an image is 100% wide and height:auto and you think it's too tall, that is specifically 
@@ -205,6 +205,26 @@ $main-height-cover-phone: 210px;
             }
 
         }
+    }
+
+    //Social Media Lector
+    .ol-social{
+        margin-top: 10px;
+        border-top: $main-border-section 1px solid;
+
+
+        .ol-social-list{
+            display: grid;
+             grid-template-columns: repeat(4, 1fr);
+            .ol-social-item{
+                width: 100%;
+                .logo-sm{
+                    width: 60%;
+                }
+            }
+        }
+
+       
     }
 
     .ol-descripcion {

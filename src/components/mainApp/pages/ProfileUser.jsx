@@ -362,10 +362,10 @@ export default class ProfileUser extends Component {
           <div>
             <label>Contraseña:</label>
             <div className='profile-update-inputs'>
-
               <input type='password' ref={this.refOldPassword} value={oldPassword} onChange={(e) => { this.updateState(e, 3) }} placeholder='Contraseña actual' disabled />
               <button disabled={!disabledPasswordCheck} onClick={(e) => { this.activarInputsNewPassword(e) }} >Comprobar</button>
-              <button onClick={() => { this.activarEditPassword() }}>editar</button></div>
+              <button onClick={() => { this.activarEditPassword() }}>editar</button>
+            </div>
             <div className='profile-update-inputs'>
               <input type='password' ref={this.refNewPassword} onChange={(e) => { this.updateState(e, 4) }} value={newPassword} placeholder='Nueva contraseña' disabled />
               <input type='password' ref={this.refRNewPassword} onChange={(e) => { this.updateState(e, 5) }} value={reNewPassword} placeholder='Repetir contraseña' disabled />
