@@ -19,7 +19,7 @@ export default class EditorObraItem extends Component {
                 <div className='editor-cover-obra-name'>
                     {this.props.name}
                 </div>
-                <button onClick={() => this.editarObra() } >Editar Obra</button>
+                <button className='editor-cover-obra-button' onClick={() => this.editarObra() } >Editar Obra</button>
             </div>
         );
     }

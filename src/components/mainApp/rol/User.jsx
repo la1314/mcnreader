@@ -49,8 +49,8 @@ export default class User extends Component {
       case 3:
         return <ObraL obra={obra} changeToChapter={this.changeToChapter} />;
 
-      case 4:
-        return <Reader chapter={chapter} />;
+        case 4:
+          return <Reader chapter={chapter} />;
 
       default:
         return <Home changeToObra={this.changeToObra} />;
@@ -110,5 +110,4 @@ export default class User extends Component {
     );
   }
 }
-
 

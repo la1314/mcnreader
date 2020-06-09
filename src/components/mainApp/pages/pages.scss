@@ -192,7 +192,7 @@ $main-height-cover-phone: 210px;
         margin-top: 10px;
         border-top: $main-border-section 1px solid;
 
-        .ol-detail-name{
+        .ol-detail-name {
             margin-top: 10px;
         }
 
@@ -210,6 +210,7 @@ $main-height-cover-phone: 210px;
     .ol-descripcion {
         margin-top: 10px;
         border-top: $main-border-section 1px solid;
+
         div {
             width: 100%;
         }
@@ -220,18 +221,19 @@ $main-height-cover-phone: 210px;
 .ol-chapters {
     margin-top: 10px;
     border-top: $main-border-section 1px solid;
+
     .ol-chapters-list {
-        
+
         display: grid;
         column-gap: 20px;
         row-gap: 20px;
         grid-template-columns: repeat(2, 1fr);
 
         .ol-chapter-item {
-            
+
             border: $main-border-color 1px solid;
-            
-            .ol-chapter-description{
+
+            .ol-chapter-description {
                 height: 120px;
                 display: grid;
                 align-items: center;
@@ -239,14 +241,14 @@ $main-height-cover-phone: 210px;
             }
 
             .ol-chapter-vl {
-                
+
                 display: grid;
                 align-items: center;
                 justify-items: center;
                 border: $main-border-color 1px solid;
 
                 img {
-                    
+
                     width: 35px;
                 }
             }
@@ -286,138 +288,313 @@ $main-height-cover-phone: 210px;
 }
 
 
+/***************************************************************/
+/** Profile Lector **/
 
+.profile-container {
+
+    background-color: $main-container-color;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+
+    .profile-details {
+        margin-top: 10px;
+        border-top: $main-border-section 1px solid;
+
+        .profile-name {
+            margin-top: 10px;
+        }
+    }
+
+    .profile-update {
+        margin-top: 10px;
+        border-top: $main-border-section 1px solid;
+        display: grid;
+        row-gap: 10px;
+
+        div {
+
+            label {
+
+                margin-top: 10px;
+            }
+
+            .profile-update-inputs {
+                margin-top: 5px;
+                display: grid;
+                grid-template-columns: 120px 80px 80px;
+                column-gap: 5px;
+            }
+        }
+
+    }
+
+    .profile-lector {
+        margin-top: 10px;
+        border-top: $main-border-section 1px solid;
+
+        .profile-lector-tipos {
+            margin-top: 10px;
+
+            .profile-lector-create {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+    }
+
+    .profile-lector-edit {
+        margin-top: 10px;
+        border-top: $main-border-section 1px solid;
+
+        .profile-lector-options {
+            margin-top: 10px;
+
+        }
+    }
+
+    .profile-lector-edit-pc {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+    }
+
+    .profile-lector-edit-ocors {
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+    }
+
+}
 
 
 /****************************************************************/
 /** Editor **/
+/** Gestor **/
 .gestor-container {
-    display: grid;
-    grid-template-rows: auto;
-    row-gap: 20px;
+    border-top: $main-border-section 1px solid;
+
 }
 
 .editor-container-obras {
 
-    border: 1px solid yellow;
+    margin-top: 15px;
     display: grid;
-    grid-template-columns: repeat(6, 200px);
-    column-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 10px;
+    row-gap: 10px;
 
     .editor-cover-list {
 
-        border: 1px solid gold;
+        border: 1px solid $main-border-color;
 
         .editor-cover-image {
             width: 100%;
             height: $main-height-cover-phone;
 
         }
+
+        .editor-cover-obra-name {
+            background-color: $main-bg-cover-text;
+            text-align: center;
+        }
+
+        .editor-cover-obra-button {
+            width: 100%;
+            border: 1px solid $main-container-color;
+            background-color: $main-button-color;
+        }
+
     }
+
 
 }
 
 .create-obra-container {
-    border: 1px solid green;
+    margin-top: 15px;
+    border-top: $main-border-section 1px solid;
 
-}
-
-.contact-admin {
-    border: 1px solid pink;
-}
-
-.edit-obra-new-chapter {
-    border: solid yellowgreen 2px;
-}
-
-.edit-obra-chapters-list {
-    border: solid palegreen 2px;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    column-gap: 20px;
-    row-gap: 20px;
-
-    .edit-obra-chapters-list-item {
-        border: 1px solid royalblue;
-    }
-}
-
-.container-cover-details {
-
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    column-gap: 20px;
-
-    .edit-obra-cover {
-
+    .form {
         display: grid;
-
-
-        img {
-
-            width: 100%;
-            height: 400px;
-        }
-    }
-
-    .edit-obra-details {
-
-        display: grid;
-        grid-template-columns: 0.8fr;
+        grid-template-columns: 1fr;
         column-gap: 20px;
         row-gap: 20px;
-
-        div[class*='edit-'] {
-            border: solid red 1px;
-        }
-
     }
 }
 
+/** Edit obra **/
+.edit-single-obra-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 25px;
+    border-top: $main-border-section 1px solid;
+
+    // COVER AND DETAILS
+    .edit-obra-cover-details-container {
+
+        margin-top: 15px;
+
+        .container-cover-details {
+
+            display: grid;
+            grid-template-columns: 1fr;
+            column-gap: 20px;
+            row-gap: 20px;
+
+            .edit-obra-cover {
+
+                display: grid;
+
+                img {
+
+                    width: 100%;
+                    height: 200px;
+                }
+            }
+
+            .edit-obra-details {
+
+                display: grid;
+                column-gap: 20px;
+                row-gap: 10px;
+
+                div[class*='edit-'] {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .edit-obra-visibilidad {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+    }
+
+    //GENEROS
+    .edit-obra-generos {
+        border-top: $main-border-section 1px solid;
+
+        .obra-generos-actuales {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .obra-generos-lista {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .edit-obra-social-media-container {
+        .edit-obra-social-new-media {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+}
+
+.edit-obra-chapters-container {
+    border-top: $main-border-section 1px solid;
+
+    .edit-obra-chapters-list {
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 10px;
+        row-gap: 10px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        .edit-obra-chapters-list-item {
+            height: 150px;
+            border: 1px solid $main-border-color;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+
+            .chapter-item-name{
+                text-align: center;
+            }
+        }
+    }
+
+    .edit-obra-new-chapter {
+        border-top: $main-border-section 1px solid;
+        margin-bottom: 15px;
+        .btn{
+            font-size: 15px;
+            border: 1px solid $main-border-color;
+            background-color: $main-buttonC-color;
+            margin-top: 10px;
+            width: 100%;
+        }
+    }
+}
 
 /** Edición de capitulo y paginas **/
-
 .edit-chapter {
 
     display: grid;
-    row-gap: 40px;
+    row-gap: 10px;
+
+    
+
+    .edit-chapter-upload-images{
+        width: 100%;
+        display: grid;
+        grid-template-columns:1fr;
+    }
 
     .edit-chapter-pages {
 
         display: grid;
-        grid-template-columns: repeat(6, 200px);
-        column-gap: 20px;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 10px;
         row-gap: 20px;
 
         .edit-page-item {
-
+            border: solid 1px $main-border-color;
+            background-color: $main-bg-cover-text;
             width: 100%;
-
             img {
                 width: 100%;
                 height: $main-height-cover-phone;
+            }
+
+            .btn{
+                border: 1px solid $main-border-color;
+                background-color: $main-buttonC-color;
+                margin-top: 5px;
+                width: 100%;
             }
         }
 
     }
 }
 
-
-
 /** READER **/
 
 .paginada {
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 15px;
-    justify-items: center;
 
-    div div .simple {
-        width: 65%;
+    .reader-grid {
+        margin-top: 15px;
+        margin-bottom: 15px;
+        display: grid;
+        grid-template-columns: 1fr;
+        row-gap: 15px;
+        align-items: center;
+        justify-items: center;
     }
 
-    div div .doble {
+    .reader-grid .simple {
+
+        height: 650px;
+        width: 75%;
+    }
+
+    .reader-grid .doble {
+        height: 600px;
         width: 100%;
     }
 }
@@ -427,18 +604,40 @@ $main-height-cover-phone: 210px;
     margin-left: auto;
     margin-right: auto;
     width: 90%;
-    margin-top: 10px;
 
-    div div .simple {
-        height: 1100px;
+    .reader-grid {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .reader-grid .simple {
+        height: 450px;
         width: 50%;
         margin-top: 15px;
     }
 
-    div div .doble {
+    .reader-grid .doble {
         width: 100%;
     }
 
+}
+
+
+.reader-button {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .reader-left-Button,
+    .reader-right-Button {
+        border: 1px solid $main-border-color;
+    }
+
+    div {
+        background-color: $main-container-color;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+    }
 }
 
 .cascada {
@@ -450,13 +649,13 @@ $main-height-cover-phone: 210px;
     justify-items: center;
 
     .simple {
+        height: 500px;
         width: 65%;
     }
 
     .doble {
         width: 100%;
     }
-
 }
 
 .cascada-oriental,
@@ -468,46 +667,18 @@ $main-height-cover-phone: 210px;
     margin-top: 10px;
 
     .simple {
-        height: 1100px;
+        height: 450px;
         width: 50%;
         margin-top: 15px;
     }
 
     .doble {
+        height: 450px;
         width: 100%;
     }
 
 }
 
-/** Profile **/
-
-.profile-container {
-
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 15px;
-
-    .profile-details {
-        border: solid 1px green;
-    }
-
-    .profile-update {
-        border: solid 1px yellow;
-    }
-
-    .profile-lector {
-        border: solid 1px khaki;
-    }
-
-    .profile-lector-edit {
-        border: solid 1px powderblue;
-
-        .profile-lector-options {
-            border: solid 1px powderblue;
-        }
-    }
-
-}
 
 /** Library **/
 

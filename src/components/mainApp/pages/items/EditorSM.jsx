@@ -59,7 +59,7 @@ export default class EditorSM extends Component {
 
         return (
             <div className='social-media-item' >
-                <label>{this.props.name}</label>
+                <label>{this.props.name + ': '}</label>
                 {activo ? <button onClick={ () => this.deleteSocial()}>Eliminar</button> : <button onClick={ () => this.createSocial()}>Añadir</button>}
             </div>
         );

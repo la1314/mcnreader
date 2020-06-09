@@ -4,8 +4,10 @@ import Header from '../header/EditorHeader.jsx';
 import Gestor from '../pages/Gestor.jsx';
 import Library from '../pages/Library.jsx';
 import ProfileE from '../pages/ProfileEditor.jsx';
-import Obra from '../pages/ObraEditor.jsx';
+import ObraE from '../pages/ObraEditor.jsx';
 import EditChapter from '../pages/EditChapter.jsx';
+import ObraL from '../pages/ObraLector.jsx';
+import Reader from '../pages/Reader.jsx';
 
 export default class Editor extends Component {
 
@@ -32,29 +34,45 @@ export default class Editor extends Component {
   //Renderiza un componente depediento al valor de page 
   renderSwitch = () => {
 
-    const { page, obraEditID, chapterEditID } = this.state
+    const { page, obraEditID, chapterEditID, chapter } = this.state
     const { user } = this.props
-
+    const obra = obraEditID;
     switch (page) {
 
       case 0:
         return <Gestor user={user} changeToEditObra={this.changeToEditObra} />;
 
       case 1:
-        return <Library />;
+        return <Library changeToObra={this.changeToObra} />;
 
       case 2:
         return <ProfileE />;
 
       case 3:
-        return <Obra user={user} obraID={obraEditID} changeToEditChapter={this.changeToEditChapter} />;
+        return <ObraL obra={obra} changeToChapter={this.changeToChapter} />;
 
       case 4:
+        return <Reader chapter={chapter} />;
+
+      case 5:
         return <EditChapter user={user} obraID={obraEditID} changeToEditObra={this.changeToEditObra} chapter={chapterEditID} />;
+
+      case 6:
+        return <ObraE user={user} obraID={obraEditID} changeToEditChapter={this.changeToEditChapter} />;
 
       default:
         return <Gestor user={user} changeToEditObra={this.changeToEditObra} />;
     }
+  }
+
+  //Accede a un capítulo
+  changeToChapter = (chapter) => {
+    this.setState({ chapter: chapter }, () => { this.changePage(4) })
+  }
+
+  //Accede a una obra
+  changeToObra = (obra) => {
+    this.setState({ obra: obra }, () => { this.changePage(3) })
   }
 
 
@@ -91,12 +109,17 @@ export default class Editor extends Component {
 
   //Accede a la edición de una obra
   changeToEditObra = (obra) => {
-    this.setState({ obraEditID: obra }, () => { this.changePage(3) })
+    this.setState({ obraEditID: obra }, () => { this.changePage(6) })
   }
 
   //Accede a la edición de un capitulo
   changeToEditChapter = (chapter) => {
-    this.setState({ chapterEditID: chapter }, () => { this.changePage(4) })
+    this.setState({ chapterEditID: chapter }, () => { this.changePage(5) })
+  }
+
+  //Accede a un capítulo
+  changeToChapter = (chapter) => {
+    this.setState({ chapter: chapter }, () => { this.changePage(4) })
   }
 
   render() {

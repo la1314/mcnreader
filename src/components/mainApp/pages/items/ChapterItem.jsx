@@ -6,6 +6,7 @@ export default class HomePL extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            rol: props.rol,
             chapter: props.chapter,
             number: props.number,
             name: props.name,
@@ -36,9 +37,11 @@ export default class HomePL extends Component {
     }
 
     verChapter = () => {
-        const { chapter, leido } = this.state
-        if (!leido) {
-            this.createLeido()
+        const { chapter, leido, rol } = this.state
+        if (rol === 'READER') {
+            if (!leido) {
+                this.createLeido()
+            }
         }
         this.props.verChapter(chapter)
     }
@@ -66,7 +69,7 @@ export default class HomePL extends Component {
 
     render() {
 
-        const { number, name, leido, imgSrc } = this.state
+        const { number, name, leido, imgSrc, rol } = this.state
 
         return (
             <div className='ol-chapter-item'>
@@ -74,10 +77,10 @@ export default class HomePL extends Component {
                     <div>Número: {number}</div>
                     <div>{name}</div>
                 </div>
-
-                <div className='ol-chapter-vl' onClick={() => { this.changeLeido() }} >
+                { rol === 'READER' && (  <div className='ol-chapter-vl' onClick={() => { this.changeLeido() }} >
                     <img alt='' src={leido ? imgSrc[1] : imgSrc[0]} ></img>
-                </div>
+                </div>)}
+              
             </div>
         );
     }

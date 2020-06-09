@@ -174,10 +174,6 @@ export default class Gestor extends Component {
 
     const { tipos, estados, nombre, autor, lanzamiento, coverList } = this.state
 
-    /*if (coverList === null) { return null }
-    if (tipos === null) { return null }
-    if (estados === null) { return null }*/
-
     return (
       <div className='gestor-container'>
 
@@ -186,6 +182,7 @@ export default class Gestor extends Component {
         </div>
 
         <div className='create-obra-container' >
+        <div className='h1-section'>Añadir Obra</div>
           <div className="form">
             <div className="form-group">
               <label htmlFor="nameObra">nombre: </label>
@@ -223,8 +220,6 @@ export default class Gestor extends Component {
           </button>
           </div>
         </div>
-
-        <div className='contact-admin'>Contartar con el administrador</div>
       </div>
     );
   }

@@ -194,6 +194,7 @@ export default class EditChapter extends Component {
             <div className='edit-chapter'>
 
                 <div className='edit-chapter-details-contaienr' >
+                    <div className='h1-section'>Detalles del capítulo</div>
                     <div className='edit-chapter-name'>
                         <label htmlFor='label-new-chapter-number'>Nombre: </label>
                         <input type='text' value={name} name="input-new-chapter-name" onChange={(e) => { this.editChapter(e, 2) }} placeholder="Nombre del capítulo" />

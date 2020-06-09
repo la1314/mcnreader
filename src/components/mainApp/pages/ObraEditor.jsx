@@ -338,7 +338,6 @@ export default class ObraEditor extends Component {
         return (
             <div className='edit-single-obra-container'>
                 <div className='edit-obra-cover-details-container' >
-
                     <div className='container-cover-details'>
                         <div className='edit-obra-cover'>
                             <img alt={nombre} src={`${cover}?${coverHash}`}></img>
@@ -374,10 +373,11 @@ export default class ObraEditor extends Component {
                                 </select>
                             </div>
                             <div className='edit-obra-visibilidad' ref={this.inputVisibilidadRef} >
-                                <label htmlFor="obra-visibilidad">Visibilidad: </label>
+                                <div>Visibilidad: </div>
 
                                 <label htmlFor="obra-visibilidad">Oculto </label>
                                 <input type="radio" value='0' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
+
                                 <label htmlFor="obra-visibilidad">Visible </label>
                                 <input type="radio" value='1' onChange={(e) => { this.editObra(e, 7) }} name="input-visibilidad"></input>
 
@@ -395,29 +395,35 @@ export default class ObraEditor extends Component {
                 </div>
 
                 <div className='edit-obra-generos' >
-                    <label htmlFor="obra-generos">Generos: </label>
+                    <div className='h1-section' >Generos: </div>
                     <div className='obra-generos-actuales'>
                         {generos.map((item, index) => <div key={item.NOMBRE + '-ga-' + index} className='obra-genero-texto' >{item.NOMBRE}</div>)}
                     </div>
-                    {
-                        listGeneros.map((item, index) => {
-                            return [
-                                <label htmlFor="obra-generos" key={item.NOMBRE + 'label' + index} >{item.NOMBRE}</label>,
-                                <input type='checkbox' ref={(input) => { this.checkboxes[index] = input }} onChange={this.editGenero} key={item.NOMBRE + index} value={item.ID} />
-                            ]
-                        })
-                    }
+                    <div className='h1-section'>Generos disponibles: </div>
+                    <div className='obra-generos-lista'>
+                        {
+                            listGeneros.map((item, index) => {
+                                return [
+                                    <div className='obra-generos-lista-item' key={item.NOMBRE + 'label' + index}>
+                                        <label htmlFor="obra-generos" >{item.NOMBRE}</label>
+                                        <input type='checkbox' ref={(input) => { this.checkboxes[index] = input }} onChange={this.editGenero} key={item.NOMBRE + index} value={item.ID} />
+                                    </div>
+
+                                ]
+                            })
+                        }
+                    </div>
+
                 </div>
 
                 <div className='edit-obra-resume'>
-                    <label htmlFor="obra-resume">Descripción: </label>
-                    <textarea rows={20} cols={70} placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
+                    <div className='h1-section'>Descripción: </div>
+                    <textarea rows={20} cols={40} placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
                 </div>
 
                 <div className='edit-obra-social-media-container' >
-                    <div>Social media</div>
+                    <div className='h1-section'>Social media</div>
                     <div className='edit-obra-social-new-media'>
-
                         {
                             listSocialMedia.map((item, index) => {
                                 return [
@@ -426,6 +432,7 @@ export default class ObraEditor extends Component {
                             })
                         }
                     </div>
+                    <div className='h1-section'>Editar social media</div>
                     <div className='edit-obra-social-media-item'>
                         {
                             socialMedia.map((item, index) => {
@@ -441,7 +448,7 @@ export default class ObraEditor extends Component {
                 <div className='edit-obra-chapters-container'>
 
                     <div className='edit-obra-chapters'>
-                        <label>Capitulos: </label>
+                        <div className='h1-section'>Capitulos</div>
                         <div className='edit-obra-chapters-list'>
                             {listChapters.map((item, index) =>
                                 <ECItem key={'chapter-item' + index} chapter={item.ID} name={item.NOMBRE} number={item.NUMERO} changeToEditChapter={this.props.changeToEditChapter} />)
@@ -450,6 +457,7 @@ export default class ObraEditor extends Component {
                     </div>
 
                     <div className='edit-obra-new-chapter'>
+                    <div className='h1-section'>Añadir capítulo</div>
                         <div className='edit-chapter-number'>
                             <label htmlFor='label-new-chapter-number'>Numero: </label>
                             <input type='number' name="input-new-chapter-number" value={newChapterNumber} onChange={(e) => { this.updateNewChapterState(e, 1) }} placeholder="Número del capítulo" />

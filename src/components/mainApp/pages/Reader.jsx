@@ -17,7 +17,13 @@ export default class Reader extends Component {
         if (localStorage.getItem('chapter')) {
             const obra = parseInt(localStorage.getItem('obra'));
             const chapter = parseInt(localStorage.getItem('chapter'));
-            this.setState({ obra: obra, chapter: chapter, puntero: 0 }, async () => {
+            const rol = localStorage.getItem('rol')
+            this.setState({ obra: obra, chapter: chapter, puntero: 0, rol:rol }, async () => {
+
+                if (rol === 'READER') {
+                    this.findTipoLector();
+                }
+
                 this.setState({ listPages: await this.findPages() }, () => {
                     this.reordenarManga(this.state.listPages)
                     document.addEventListener("keydown", this.eventosKey, false);
@@ -25,7 +31,7 @@ export default class Reader extends Component {
             })
         }
 
-        this.findTipoLector();
+        
     }
 
     //Remueve los eventos asignados
@@ -146,16 +152,16 @@ export default class Reader extends Component {
 
             return [
                 <div key='pd' >
-                    <div>
+                    <div className='reader-button'>
                         <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                         <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
                     </div>
-                    <div>
+                    <div className='reader-grid'>
                         <img onClick={() => { this.modificarPuntero(0) }} className={'reader-page ' + estilo[lista[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={lista[puntero].RUTA} />
                         <img onClick={() => { this.modificarPuntero(1) }} className={'reader-page ' + estilo[lista[puntero + 1].ESTILO]} key={'img-paginada2'} alt='imagen del capítulo' src={lista[puntero + 1].RUTA} />
                     </div>
 
-                    <div>
+                    <div className='reader-button'>
                         <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                         <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
                     </div>
@@ -167,16 +173,16 @@ export default class Reader extends Component {
 
             return [
                 <div key='pd'>
-                    <div>
+                    <div className='reader-button'>
                         <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                         <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
                     </div>
-                    <div>
+                    <div className='reader-grid'>
                         <img onClick={() => { this.modificarPuntero(1) }} className={'reader-page ' + estilo[lista[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={lista[puntero].RUTA} />
                     </div>
 
 
-                    <div>
+                    <div className='reader-button'>
                         <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                         <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
                     </div>
@@ -218,14 +224,14 @@ export default class Reader extends Component {
 
                 {reader === 'paginada' && (
                     <div>
-                        <div>
+                        <div className='reader-button'>
                             <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                             <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
                         </div>
-                        <div>
+                        <div className='reader-grid'>
                             <img onClick={() => { this.modificarPuntero(1) }} className={'reader-page ' + estilo[listPages[puntero].ESTILO]} key={'img-paginada'} alt='imagen del capítulo' src={listPages[puntero].RUTA} />
                         </div>
-                        <div>
+                        <div className='reader-button'>
                             <ReaderButton onClick={() => { this.modificarPuntero(0) }} className='reader-left-Button' current='Anterior' />
                             <ReaderButton onClick={() => { this.modificarPuntero(1) }} className='reader-right-Button' current='Siguiente' />
                         </div>

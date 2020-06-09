@@ -331,46 +331,52 @@ export default class ProfileUser extends Component {
       newEmail, newName, oldPassword, newPassword, reNewPassword, tipos, lectores
     } = this.state
 
-    //if (tipos === null) { return null }
-
     return (
       <div className='profile-container'>
 
         <div className='profile-details' >
-          <div>Información de la cuenta:</div>
-          <div>Tu usuario: {user}</div>
+          <div className='h1-section' >Información de la cuenta:</div>
+          <div className='profile-name'>Tu usuario: {user}</div>
           <div>Email registrado: {email}</div>
         </div>
 
         <div className='profile-update'>
-          <div>Actualizar información</div>
+          <div className='h1-section'>Actualizar información</div>
+          <div>
+            <label>Usuario: </label>
+            <div className='profile-update-inputs'>
+              <input type='text' ref={this.refEditUser} onChange={(e) => { this.updateState(e, 1) }} value={newName} disabled />
+              <button disabled={!disabledUser} onClick={() => { this.updateUserName() }} >actualizar</button>
+              <button onClick={() => { this.activarEditUser() }} >editar</button>
+            </div>
+          </div>
+          <div>
+            <label>Email: </label>
+            <div className='profile-update-inputs'>
 
-          <label>Usuario: </label>
-          <input type='text' ref={this.refEditUser} onChange={(e) => { this.updateState(e, 1) }} value={newName} disabled />
-          <button disabled={!disabledUser} onClick={() => { this.updateUserName() }} >actualizar</button>
-          <button onClick={() => { this.activarEditUser() }} >editar</button>
+              <input type='email' ref={this.refEditEmail} onChange={(e) => { this.updateState(e, 2) }} value={newEmail} disabled />
+              <button disabled={!disabledEmail} onClick={() => { this.updateEmail() }} >actualizar</button>
+              <button onClick={() => { this.activarEditEmail() }}>editar</button>
+            </div>
+          </div>
+          <div>
+            <label>Contraseña:</label>
+            <div className='profile-update-inputs'>
 
-          <label>Email: </label>
-          <input type='email' ref={this.refEditEmail} onChange={(e) => { this.updateState(e, 2) }} value={newEmail} disabled />
-          <button disabled={!disabledEmail} onClick={() => { this.updateEmail() }} >actualizar</button>
-          <button onClick={() => { this.activarEditEmail() }}>editar</button>
-
-
-          <label>Contraseña:</label>
-
-          <input type='password' ref={this.refOldPassword} value={oldPassword} onChange={(e) => { this.updateState(e, 3) }} placeholder='Contraseña actual' disabled />
-          <button disabled={!disabledPasswordCheck} onClick={(e) => { this.activarInputsNewPassword(e) }} >Comprobar</button>
-          <button onClick={() => { this.activarEditPassword() }}>editar</button>
-          <input type='password' ref={this.refNewPassword} onChange={(e) => { this.updateState(e, 4) }} value={newPassword} placeholder='Nueva contraseña' disabled />
-          <input type='password' ref={this.refRNewPassword} onChange={(e) => { this.updateState(e, 5) }} value={reNewPassword} placeholder='Repetir contraseña' disabled />
-          <button disabled={!disabledPasswordUpdate} onClick={() => { this.updatePassword() }} >actualizar</button>
+              <input type='password' ref={this.refOldPassword} value={oldPassword} onChange={(e) => { this.updateState(e, 3) }} placeholder='Contraseña actual' disabled />
+              <button disabled={!disabledPasswordCheck} onClick={(e) => { this.activarInputsNewPassword(e) }} >Comprobar</button>
+              <button onClick={() => { this.activarEditPassword() }}>editar</button></div>
+            <div className='profile-update-inputs'>
+              <input type='password' ref={this.refNewPassword} onChange={(e) => { this.updateState(e, 4) }} value={newPassword} placeholder='Nueva contraseña' disabled />
+              <input type='password' ref={this.refRNewPassword} onChange={(e) => { this.updateState(e, 5) }} value={reNewPassword} placeholder='Repetir contraseña' disabled />
+              <button disabled={!disabledPasswordUpdate} onClick={() => { this.updatePassword() }} >actualizar</button>
+            </div>
+          </div>
         </div>
 
         <div className='profile-lector'>
 
-          <div>
-            Preferencias de lectura
-          </div>
+          <div className='h1-section'>Preferencias de lectura</div>
 
           <div className='profile-lector-tipos'>
             <div className='profile-lector-create'>
@@ -390,20 +396,29 @@ export default class ProfileUser extends Component {
                   <div className='profile-lector-options' key={'ple' + index}>
                     <label>{item.NOMBRE}: </label>
                     <div className='profile-lector-edit-pc'>
-                      <label htmlFor={'lector' + index}>PAGINADA</label>
-                      <input type="radio" value='PAGINADA' checked={item.PAGINADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE} />
-                      <label htmlFor={'lector' + index}>CASCADA</label>
-                      <input type="radio" value='CASCADA' checked={item.CASCADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE} />
+                      <div>
+                        <label htmlFor={'lector' + index}>PAGINADA</label>
+                        <input type="radio" value='PAGINADA' checked={item.PAGINADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE} />
+                      </div>
+                      <div>
+                        <label htmlFor={'lector' + index}>CASCADA</label>
+                        <input type="radio" value='CASCADA' checked={item.CASCADA ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector" + item.NOMBRE} />
+                      </div>
                     </div>
 
                     <div className='profile-lector-edit-ocors'>
-
-                      <label htmlFor={'lector' + index}>SIMPLE</label>
-                      <input type="radio" value='SIMPLE' checked={(!item.OCCIDENTAL && !item.ORIENTAL) ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
-                      <label htmlFor={'lector' + index}>OCCIDENTAL</label>
-                      <input type="radio" value='OCCIDENTAL' checked={item.OCCIDENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
-                      <label htmlFor={'lector' + index}>ORIENTAL</label>
-                      <input type="radio" value='ORIENTAL' checked={item.ORIENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
+                      <div>
+                        <label htmlFor={'lector' + index}>SIMPLE</label>
+                        <input type="radio" value='SIMPLE' checked={(!item.OCCIDENTAL && !item.ORIENTAL) ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
+                      </div>
+                      <div>
+                        <label htmlFor={'lector' + index}>OCCIDENTAL</label>
+                        <input type="radio" value='OCCIDENTAL' checked={item.OCCIDENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
+                      </div>
+                      <div>
+                        <label htmlFor={'lector' + index}>ORIENTAL</label>
+                        <input type="radio" value='ORIENTAL' checked={item.ORIENTAL ? true : false} onChange={(e) => { this.updateLector(e, item.ID) }} name={"radio-lector-ds" + item.NOMBRE} />
+                      </div>
                     </div>
                   </div>
                 ]

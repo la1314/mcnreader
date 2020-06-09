@@ -21,7 +21,8 @@ export default class ObraLector extends Component {
         if (localStorage.getItem('obra')) {
             const n = parseInt(localStorage.getItem('obra'));
             const user = parseInt(localStorage.getItem('user'));
-            this.setState({ obra: n, user: user }, () => { this.findDetailtObra() })
+            const rol = localStorage.getItem('rol');
+            this.setState({ obra: n, user: user, rol: rol }, () => { this.findDetailtObra() })
         }
     }
 
@@ -79,7 +80,8 @@ export default class ObraLector extends Component {
 
     // compruba que el usuario sigue una obra
     checkFollow = (obra) => {
-        return axios.post(`/api/find-follow/`, null, { params: { obra: obra } }).then((res) => { return res.data.Booleano })
+        const { rol } = this.state
+        return rol === 'READER' ? axios.post(`/api/find-follow/`, null, { params: { obra: obra } }).then((res) => { return res.data.Booleano }) : 0
     }
 
     // follow obra
@@ -104,7 +106,7 @@ export default class ObraLector extends Component {
 
     render() {
 
-        const { obra, nombre, autor, lanzamiento, descripcion, cover, estado, tipo, demografia, generos, listChapters, follow, socialMedia } = this.state
+        const { obra, rol, nombre, autor, lanzamiento, descripcion, cover, estado, tipo, demografia, generos, listChapters, follow, socialMedia } = this.state
 
         if (obra === null) {
             return null;
@@ -116,14 +118,18 @@ export default class ObraLector extends Component {
                 <div className='ol-cover-details'>
                     <div className='ol-cover' >
                         <img alt='cover de la obra' src={cover} />
-                        <div className='ol-rating-follow'>
+                        { rol === 'READER' && (
+                            <div className='ol-rating-follow'>
                             <div className='rating'>
                                 <PI obra={obra} />
                             </div>
                             <div className='follow'>
                                 {follow ? <button onClick={() => { this.unfollowObra() }} >Dejar de seguir</button> : <button onClick={() => { this.followObra() }} >Seguir</button>}
                             </div>
+
                         </div>
+                        )}
+                       
                     </div>
 
                     <div className='ol-details' >
@@ -162,7 +168,7 @@ export default class ObraLector extends Component {
                     <div className='h1-section'>Capítulos: </div>
                     <div className='ol-chapters-list'>
 
-                        {listChapters.map((item, index) => <CI number={item.NUMERO} chapter={item.ID} name={item.NOMBRE} key={'ol-lc' + index} verChapter={this.verChapter} />)}
+                        {listChapters.map((item, index) => <CI rol={rol} number={item.NUMERO} chapter={item.ID} name={item.NOMBRE} key={'ol-lc' + index} verChapter={this.verChapter} />)}
 
                     </div>
                 </div>
