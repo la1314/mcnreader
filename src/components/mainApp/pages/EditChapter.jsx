@@ -192,8 +192,11 @@ export default class EditChapter extends Component {
 
         return (
             <div className='edit-chapter'>
-
+                <div className='return-edit-obra'>
+                    <button onClick={() => { this.props.changeToEditObra(obra) }}> Regrasar a edición </button>
+                </div>
                 <div className='edit-chapter-details-contaienr' >
+
                     <div className='h1-section'>Detalles del capítulo</div>
                     <div className='edit-chapter-name'>
                         <label htmlFor='label-new-chapter-number'>Nombre: </label>
@@ -216,9 +219,7 @@ export default class EditChapter extends Component {
                         </select>
                     </div>
 
-                    <div className='return-edit-obra'>
-                        <button onClick={() => { this.props.changeToEditObra(obra) }}> Regrasar a edición </button>
-                    </div>
+
                 </div>
 
                 <div className='edit-chapter-upload-images' onDrag={this.chargeImages}>

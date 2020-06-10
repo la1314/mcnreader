@@ -558,7 +558,17 @@ $main-height-cover-phone: 210px;
     display: grid;
     row-gap: 10px;
 
-    
+    .return-edit-obra{
+        display: grid;
+        button{
+
+            border: 1px solid $main-border-color;
+            background-color: $main-button-color;
+            margin-left: auto;
+            margin-right: auto;
+        }
+       
+    }
 
     .edit-chapter-upload-images{
         width: 100%;

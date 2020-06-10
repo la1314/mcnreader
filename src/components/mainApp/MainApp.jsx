@@ -3,6 +3,7 @@ import User from './rol/User.jsx';
 import Editor from './rol/Editor.jsx';
 import "./mainApp.scss";
 import "./pages/pages.scss";
+import "./pages/pagesmd.scss";
 import "./pages/pagespc.scss";
 
 export default class MainApp extends Component {

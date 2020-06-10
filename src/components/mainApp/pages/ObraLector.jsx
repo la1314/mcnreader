@@ -133,7 +133,7 @@ export default class ObraLector extends Component {
 
                     <div className='ol-details' >
                         <div className='ol-detail ol-detail-name'>{nombre}</div>
-                        <div className='ol-detail'>{autor}</div>
+                        <div className='ol-detail ol-detail-autor'>{autor}</div>
                         <div className='ol-detail'>Lanzamiento: {lanzamiento}</div>
                         <div className='ol-detail'>Tipo: {tipo}</div>
                         <div className='ol-detail-generos'>
@@ -164,11 +164,11 @@ export default class ObraLector extends Component {
                 </div>
 
                 <div className='ol-descripcion'>
-                    <div className='h1-section'>Descipción:</div>
+                    <div className='h1-section'>Descipción</div>
                     <div>{descripcion}</div>
                 </div>
                 <div className='ol-chapters'>
-                    <div className='h1-section'>Capítulos: </div>
+                    <div className='h1-section'>Capítulos</div>
                     <div className='ol-chapters-list'>
 
                         {listChapters.map((item, index) => <CI rol={rol} number={item.NUMERO} chapter={item.ID} name={item.NOMBRE} key={'ol-lc' + index} verChapter={this.verChapter} />)}

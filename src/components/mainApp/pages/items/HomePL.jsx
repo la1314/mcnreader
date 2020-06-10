@@ -24,7 +24,9 @@ export default class HomePL extends Component {
         axios.post(`/api/get-no-leidos/`).then((res) => {
 
             const filtrado = res.data.filter(item => item.TOTALCAPS !== item.LEIDOS)
-            this.setState({ pendientes: filtrado })
+            this.setState({ pendientes: filtrado }, ()=> {
+                console.log(res.data)
+            })
 
         })
     }

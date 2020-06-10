@@ -335,7 +335,7 @@ export default class ProfileUser extends Component {
       <div className='profile-container'>
 
         <div className='profile-details' >
-          <div className='h1-section' >Información de la cuenta:</div>
+          <div className='h1-section' >Información de la cuenta</div>
           <div className='profile-name'>Tu usuario: {user}</div>
           <div>Email registrado: {email}</div>
         </div>

@@ -289,16 +289,20 @@ export default class ObraEditor extends Component {
             }
 
             const { listChapters } = this.state;
+            const filtro = listChapters.sort(function(a, b){
+                return a.ID - b.ID;
+            });
             const last = listChapters.length - 1;
-
+            console.log(filtro[last].ID);
+            
             const formData = new FormData();
             formData.append('editor', editor);
             formData.append('work', obra);
-            formData.append('chapter', listChapters[last].ID);
+            formData.append('chapter', filtro[last].ID);
             formData.append('action', 'newChapterDirectory');
             axios.post('https://tuinki.gupoe.com/media/options.php', formData, config)
 
-        }))
+        })).then(async () => this.setState({ listChapters: await this.findCaracteristicaObra('chapters') }))
     }
 
     //Actualiza los estados para la creación de un nuevo capítulo

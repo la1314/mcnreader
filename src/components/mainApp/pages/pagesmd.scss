@@ -12,132 +12,11 @@ $main-columns-MAX: 5;
 $main-columns-MEDIUM: 3;
 $main-row-gap: 20px;
 $main-column-gap: 20px;
-$main-font-size: 22px;
+$main-font-size: 20px;
 $main-font-size-h1: 30px;
 
-
-
-/* big landscape tablets, laptops, and desktops */
-@media (min-width:1025px) {
-
-    /* Styles */
-    /** Sesiones **/
-    .main-container {
-
-        height: 100vh;
-        width: 80%;
-        display: grid;
-        margin-left: auto;
-        margin-right: auto;
-        justify-items: center;
-        align-items: center;
-        column-gap: 50px;
-        grid-template-columns: 1.2fr 2fr;
-        background-color: $main-bg-color;
-
-        .logo-container {
-
-            margin-top: 15px;
-            margin-bottom: 15px;
-            height: 500px;
-            width: 100%;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-
-            .logo-app:hover {
-                -webkit-animation-name: pulse;
-                animation-name: pulse;
-                -webkit-animation-duration: 1s;
-                animation-duration: 1s;
-                -webkit-animation-fill-mode: both;
-                animation-fill-mode: both;
-            }
-        }
-
-        .main-session-container {
-
-            width: 100%;
-            background-color: $main-bg-color;
-            display: grid;
-            align-items: center;
-            justify-items: center;
-
-            .session-container {
-
-                display: grid;
-                height: 100%;
-                width: 100%;
-                background-color: $main-container-color;
-                border: 1px solid $main-border-color;
-
-                .session-cent {
-                    display: grid;
-                    align-items: center;
-                    justify-items: center;
-                    border-top: 1px solid $main-border-color;
-                    border-bottom: 1px solid $main-border-color;
-
-                    .base-container {
-
-                        .btnC {
-                            justify-self: end;
-                            background-color: $main-buttonC-color;
-                            border: 1px solid $main-border-color;
-                        }
-
-                        .header {
-                            font-size: 25px;
-                        }
-
-                        .btn {
-                            background-color: $main-button-color;
-                            border: 1px solid $main-border-color;
-                        }
-
-                    }
-                }
-
-                //Modificaciones en el lateral Derecho
-                .session-der {
-
-                    .inner-container {
-                        display: grid;
-                        align-items: center;
-                        justify-items: center;
-                    }
-
-                    border: 1px solid $main-border-color;
-                }
-
-            }
-        }
-
-
-    }
-
-
-    /** Vista del lector **/
-    .header-app {
-
-        .menu-item-container {
-            column-gap: 15px;
-
-            .menu-item {
-                height: 50px;
-                border: solid 1px $main-border-color;
-
-                .menu-item-text {
-                    font-size: $main-font-size;
-                }
-            }
-
-            .menu-item-logout {
-                background-size: 65% 65%;
-                height: 40px;
-            }
-        }
-    }
+/* Medium */
+@media (min-width:620px) {
 
     .h1-section {
         margin-top: 15px;
@@ -154,32 +33,73 @@ $main-font-size-h1: 30px;
     }
 
     .home-container {
+        row-gap: $main-row-gap;
+
         .home-top-10 {
             .home-top-container {
-                grid-template-columns: repeat($main-columns-MAX, 1fr);
 
+                margin-top: $main-row-gap;
+                row-gap: $main-row-gap;
+                column-gap: $main-column-gap;
+                grid-template-columns: repeat($main-columns-MEDIUM, 1fr);
+
+                .top-10 {
+                    img {
+                        height: $main-height-cover-pc;
+                    }
+                }
             }
         }
 
         .home-pendientes {
             .home-pl-container {
+
+                margin-top: $main-row-gap;
+
                 .home-pl-list {
-                    grid-template-columns: repeat($main-columns-MAX, 1fr);
+                    margin-top: $main-row-gap;
+                    row-gap: $main-row-gap;
+                    column-gap: $main-column-gap;
+                    grid-template-columns: repeat($main-columns-MEDIUM, 1fr);
+
+                    .pendientes {
+                        img {
+                            height: $main-height-cover-pc;
+                        }
+                    }
+
+                    .seguidos {
+                        img {
+                            height: $main-height-cover-pc;
+                        }
+                    }
                 }
             }
         }
 
         .home-recientes {
             .recientes-container {
-                grid-template-columns: repeat($main-columns-MAX, 1fr);
+                margin-top: $main-row-gap;
+                row-gap: $main-row-gap;
+                column-gap: $main-column-gap;
+                grid-template-columns: repeat($main-columns-MEDIUM, 1fr);
+
+                .recientes {
+                    img {
+                        height: $main-height-cover-pc;
+                    }
+                }
             }
         }
     }
+
+
 
     /*********************************************************/
     /** Obra-Lector **/
 
     .obra-lector {
+
 
         .ol-cover-details {
 
@@ -533,7 +453,7 @@ $main-font-size-h1: 30px;
             display: grid;
             column-gap: $main-column-gap;
             row-gap: $main-row-gap;
-            grid-template-columns: repeat(12, 45px);
+            grid-template-columns: repeat(10, 45px);
 
 
             .library-letra {
@@ -550,7 +470,7 @@ $main-font-size-h1: 30px;
             display: grid;
             column-gap: 20px;
             row-gap: 20px;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(3, 1fr);
 
             .library-obra {
                 width: 100%;
@@ -577,13 +497,11 @@ $main-font-size-h1: 30px;
 
         margin-top: 15px;
         display: grid;
-        grid-template-columns: repeat($main-columns-MAX, 1fr);
+        grid-template-columns: repeat($main-columns-MEDIUM, 1fr);
         column-gap: $main-column-gap;
         row-gap: $main-row-gap;
 
         .editor-cover-list {
-
-            font-size: $main-font-size;
 
             border: 1px solid $main-border-color;
 
@@ -599,7 +517,6 @@ $main-font-size-h1: 30px;
             }
 
             .editor-cover-obra-button {
-                font-size: $main-font-size;
                 width: 100%;
                 border: 1px solid $main-container-color;
                 background-color: $main-button-color;
@@ -778,15 +695,17 @@ $main-font-size-h1: 30px;
         }
     }
 
+
     /** Edición de capitulo y paginas **/
     .edit-chapter {
 
         display: grid;
         row-gap: $main-row-gap;
 
-        .return-edit-obra{
+        .return-edit-obra {
             display: grid;
-            button{
+
+            button {
 
                 border: 1px solid $main-border-color;
                 background-color: $main-button-color;
@@ -796,12 +715,13 @@ $main-font-size-h1: 30px;
                 height: 35px;
             }
         }
-    
+
         .edit-chapter-upload-images {
             width: 100%;
             display: grid;
             grid-template-columns: 1fr;
-            button{
+
+            button {
                 width: 200px;
             }
         }
@@ -809,7 +729,7 @@ $main-font-size-h1: 30px;
         .edit-chapter-pages {
 
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             column-gap: $main-column-gap;
             row-gap: $main-row-gap;
             margin-bottom: $main-column-gap;
@@ -838,16 +758,7 @@ $main-font-size-h1: 30px;
 
         }
     }
-
-
 }
-
-
-
-
-
-
-
 
 /*Animaciones*/
 
