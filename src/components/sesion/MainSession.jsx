@@ -7,6 +7,8 @@ import RegisterEditor from './pages/RegisterEditor';
 import axios from 'axios';
 import Logo from './logo.png';
 import "./session.scss";
+axios.defaults.withCredentials = true;
+
 export default class MainSession extends Component {
   constructor(props) {
     super(props);

@@ -8,6 +8,7 @@ import ObraE from '../pages/ObraEditor.jsx';
 import EditChapter from '../pages/EditChapter.jsx';
 import ObraL from '../pages/ObraLector.jsx';
 import Reader from '../pages/Reader.jsx';
+axios.defaults.withCredentials = true;
 
 export default class Editor extends Component {
 
@@ -78,7 +79,7 @@ export default class Editor extends Component {
 
   //Elimina el Token de session para hacer el Logout
   clearCookie = () => {
-    return axios.post('/api/clear', { withCredentials: true })
+    return axios.post('/api/clear')
       .then(function (response) {
         return response.data
       })

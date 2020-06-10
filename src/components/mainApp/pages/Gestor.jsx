@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import EOItem from './items/EditorObraItem.jsx';
+axios.defaults.withCredentials = true;
 
 export default class Gestor extends Component {
 
@@ -87,9 +88,14 @@ export default class Gestor extends Component {
 
   //Actualiza el estado lanzamiento con el value del target
   updateLanzamiento = (e) => {
+
+    const re = /^[0-9\b]+$/;
     const lanzamiento = e.target.value;
-    localStorage.setItem('lanzamiento', lanzamiento);
-    this.setState({ lanzamiento: lanzamiento })
+
+    if ( (lanzamiento === '' || re.test(lanzamiento)) && lanzamiento.length < 5 ) {
+      localStorage.setItem('lanzamiento', lanzamiento);
+      this.setState({ lanzamiento: lanzamiento })
+    }
   }
 
   //Actualiza el estado lanzamiento con el value del target
@@ -193,7 +199,7 @@ export default class Gestor extends Component {
             </div>
             <div className="form-group">
               <label htmlFor="lanzamiento">Lanzamiento: </label>
-              <input type="number" value={lanzamiento} onChange={this.updateLanzamiento} name="lanzamiento" placeholder="Año de lanzamiento" />
+              <input value={lanzamiento} onChange={this.updateLanzamiento} name="lanzamiento" placeholder="Año de lanzamiento" />
             </div>
             <div className="form-group">
               <label htmlFor="tipo">Tipo: </label>

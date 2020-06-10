@@ -1,14 +1,7 @@
 //Apartado de variables
-$main-bg-color: #3b3b3b;
-$main-container-color: #343742;
-$main-border-color: #8c8c8c;
-$main-buttonC-color: #756451;
-$main-button-color: #71778F;
-$main-bg-tipo-color: #806640;
-$main-bg-cover-text: #807566;
-$main-border-section: #ffd500;
+//Se requiere en este scss
+$main-border-section: #0E0B05;
 $main-height-cover-pc: 450px;
-$main-columns-MAX: 5;
 $main-columns-MEDIUM: 3;
 $main-row-gap: 20px;
 $main-column-gap: 20px;
@@ -102,11 +95,9 @@ $main-font-size-h1: 30px;
 
 
         .ol-cover-details {
-
-            border-top: $main-border-section 1px solid;
             display: grid;
             grid-template-columns: 400px 2fr;
-            column-gap: 10px;
+            column-gap: $main-column-gap;
 
             .ol-cover {
                 margin-top: $main-row-gap;
@@ -120,7 +111,6 @@ $main-font-size-h1: 30px;
 
             .ol-details {
                 margin-top: $main-row-gap;
-                border-top: $main-border-section 0px solid;
 
                 .ol-detail {
                     font-size: $main-font-size;
@@ -151,9 +141,7 @@ $main-font-size-h1: 30px;
 
         //Social Media Lector
         .ol-social {
-            margin-top: 10px;
-            border-top: $main-border-section 1px solid;
-
+            margin-top: $main-row-gap;
 
             .ol-social-list {
                 display: grid;
@@ -172,8 +160,7 @@ $main-font-size-h1: 30px;
         }
 
         .ol-descripcion {
-            margin-top: 10px;
-            border-top: $main-border-section 1px solid;
+            margin-top: $main-row-gap;
             font-size: $main-font-size;
 
             div {
@@ -184,8 +171,6 @@ $main-font-size-h1: 30px;
     }
 
     .ol-chapters {
-        margin-top: 10px;
-        border-top: $main-border-section 1px solid;
 
         .ol-chapters-list {
 
@@ -195,9 +180,6 @@ $main-font-size-h1: 30px;
             grid-template-columns: repeat(6, 1fr);
 
             .ol-chapter-item {
-
-                border: $main-border-color 1px solid;
-
                 .ol-chapter-description {
                     height: 200px;
                     display: grid;
@@ -206,14 +188,11 @@ $main-font-size-h1: 30px;
                 }
 
                 .ol-chapter-vl {
-
                     display: grid;
                     align-items: center;
                     justify-items: center;
-                    border: $main-border-color 1px solid;
 
                     img {
-
                         width: 35px;
                     }
                 }
@@ -229,21 +208,13 @@ $main-font-size-h1: 30px;
         .puntuacion-container {
 
             .puntos-item {
-                display: grid;
-                grid-template-columns: repeat(6, 1fr);
-                background-color: $main-bg-cover-text;
-
                 .puntos-img img {
                     width: 100%;
                 }
 
                 .avg-obra {
-                    display: grid;
-                    justify-items: center;
-                    align-items: center;
-
                     div {
-                        font-size: 25px;
+                        font-size: $main-font-size;
                     }
                 }
             }
@@ -301,24 +272,6 @@ $main-font-size-h1: 30px;
 
     }
 
-
-    .reader-button {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
-        .reader-left-Button,
-        .reader-right-Button {
-            border: 1px solid $main-border-color;
-        }
-
-        div {
-            background-color: $main-container-color;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-        }
-    }
-
     .cascada {
 
         margin-top: 10px;
@@ -364,9 +317,6 @@ $main-font-size-h1: 30px;
     /** Profile Lector **/
 
     .profile-container {
-
-        background-color: $main-container-color;
-
         display: grid;
         grid-template-columns: 1fr;
         row-gap: $main-row-gap;
@@ -376,12 +326,10 @@ $main-font-size-h1: 30px;
             display: grid;
             row-gap: $main-row-gap;
             margin-top: $main-row-gap;
-            border-top: $main-border-section 1px solid;
         }
 
         .profile-update {
             margin-top: $main-row-gap;
-            border-top: $main-border-section 1px solid;
             display: grid;
             row-gap: $main-row-gap;
 
@@ -400,8 +348,7 @@ $main-font-size-h1: 30px;
         }
 
         .profile-lector {
-            margin-top: 10px;
-            border-top: $main-border-section 1px solid;
+            margin-top: $main-row-gap;
 
             .profile-lector-tipos {
                 margin-top: 10px;
@@ -416,13 +363,12 @@ $main-font-size-h1: 30px;
         }
 
         .profile-lector-edit {
-            margin-top: 10px;
-            border-top: $main-border-section 1px solid;
+            margin-top: $main-row-gap;
             display: grid;
             row-gap: $main-row-gap;
 
             .profile-lector-options {
-                margin-top: 10px;
+                margin-top: $main-row-gap;
 
             }
         }
@@ -488,10 +434,6 @@ $main-font-size-h1: 30px;
     /****************************************************************/
     /** Editor **/
     /** Gestor **/
-    .gestor-container {
-        border-top: $main-border-section 1px solid;
-
-    }
 
     .editor-container-obras {
 
@@ -502,31 +444,15 @@ $main-font-size-h1: 30px;
         row-gap: $main-row-gap;
 
         .editor-cover-list {
-
-            border: 1px solid $main-border-color;
-
             .editor-cover-image {
                 width: 100%;
                 height: $main-height-cover-pc;
-
-            }
-
-            .editor-cover-obra-name {
-                background-color: $main-bg-cover-text;
-                text-align: center;
-            }
-
-            .editor-cover-obra-button {
-                width: 100%;
-                border: 1px solid $main-container-color;
-                background-color: $main-button-color;
             }
         }
     }
 
     .create-obra-container {
         margin-top: 15px;
-        border-top: $main-border-section 1px solid;
         font-size: $main-font-size;
 
         .form {
@@ -542,8 +468,7 @@ $main-font-size-h1: 30px;
     .edit-single-obra-container {
         display: grid;
         grid-template-columns: 1fr;
-        row-gap: 25px;
-        border-top: $main-border-section 1px solid;
+        row-gap: $main-row-gap;
 
         // COVER AND DETAILS
         .edit-obra-cover-details-container {
@@ -606,8 +531,6 @@ $main-font-size-h1: 30px;
 
         //GENEROS
         .edit-obra-generos {
-            border-top: $main-border-section 1px solid;
-
             .obra-generos-actuales {
                 display: grid;
                 grid-template-columns: repeat(12, 1fr);
@@ -657,38 +580,21 @@ $main-font-size-h1: 30px;
     }
 
     .edit-obra-chapters-container {
-        border-top: $main-border-section 1px solid;
-
         .edit-obra-chapters-list {
 
             display: grid;
             grid-template-columns: repeat(6, 1fr);
-            column-gap: 10px;
-            row-gap: 10px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-
-            .edit-obra-chapters-list-item {
-                height: 150px;
-                border: 1px solid $main-border-color;
-                display: grid;
-                justify-items: center;
-                align-items: center;
-
-                .chapter-item-name {
-                    text-align: center;
-                }
-            }
+            column-gap: $main-column-gap;
+            row-gap: $main-row-gap;
+            margin-top: $main-row-gap;
+            margin-bottom: $main-row-gap;
         }
 
         .edit-obra-new-chapter {
-            border-top: $main-border-section 1px solid;
-            margin-bottom: 15px;
+            margin-bottom: $main-row-gap;
 
             .btn {
-                font-size: 15px;
-                border: 1px solid $main-border-color;
-                background-color: $main-buttonC-color;
+                font-size: $main-font-size;
                 margin-top: 10px;
                 width: 100%;
             }
@@ -698,19 +604,10 @@ $main-font-size-h1: 30px;
 
     /** Edición de capitulo y paginas **/
     .edit-chapter {
-
-        display: grid;
         row-gap: $main-row-gap;
 
         .return-edit-obra {
-            display: grid;
-
             button {
-
-                border: 1px solid $main-border-color;
-                background-color: $main-button-color;
-                margin-left: auto;
-                margin-right: auto;
                 font-size: $main-font-size;
                 height: 35px;
             }
@@ -735,11 +632,9 @@ $main-font-size-h1: 30px;
             margin-bottom: $main-column-gap;
 
             .edit-page-item {
-                border: solid 1px $main-border-color;
-                background-color: $main-bg-cover-text;
+
                 width: 100%;
                 display: grid;
-
                 justify-items: center;
                 align-items: center;
 
@@ -749,8 +644,6 @@ $main-font-size-h1: 30px;
                 }
 
                 .btn {
-                    border: 1px solid $main-border-color;
-                    background-color: $main-buttonC-color;
                     margin-top: 5px;
                     width: 100%;
                 }

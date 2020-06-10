@@ -1,7 +1,14 @@
 //Estilos globales
+$main-bg-color: #251E0D;
 
 body{
-    font-family: 'David Libre', serif;
-    color: #ffebcd;
-  
+    background-color: $main-bg-color;
+    * {
+        font-family: 'David Libre', serif;
+        color: whitesmoke;
+    }
+
+    * input{
+        color: black;
+    }
 }

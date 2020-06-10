@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 const md5 = require('md5');
+axios.defaults.withCredentials = true;
 
 export default class ProfileEditor extends Component {
 

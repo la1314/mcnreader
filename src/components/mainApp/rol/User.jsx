@@ -6,6 +6,7 @@ import Library from '../pages/Library.jsx';
 import ProfileU from '../pages/ProfileUser.jsx';
 import ObraL from '../pages/ObraLector.jsx';
 import Reader from '../pages/Reader.jsx';
+axios.defaults.withCredentials = true;
 
 export default class User extends Component {
 
@@ -20,7 +21,7 @@ export default class User extends Component {
   //TODO guardar datos de la obra que se está viendos
   componentDidMount() {
 
-  
+
     localStorage.setItem('user', this.props.user)
 
     if (localStorage.getItem('page')) {
@@ -49,8 +50,8 @@ export default class User extends Component {
       case 3:
         return <ObraL obra={obra} changeToChapter={this.changeToChapter} />;
 
-        case 4:
-          return <Reader chapter={chapter} />;
+      case 4:
+        return <Reader chapter={chapter} />;
 
       default:
         return <Home changeToObra={this.changeToObra} />;
@@ -59,7 +60,7 @@ export default class User extends Component {
 
   //Limpia el token se session para hacer el logout
   clearCookie = () => {
-    return axios.post('/api/clear', { withCredentials: true })
+    return axios.post('/api/clear')
       .then(function (response) {
         return response.data
       })

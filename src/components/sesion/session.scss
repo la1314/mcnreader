@@ -1,17 +1,14 @@
 //SCSS para los componentes que componen a la session de la app
 
 //Apartado de variables
-$main-bg-color: #3b3b3b;
-$main-container-color: #343742;
-$main-border-color: #161c2e;
-$main-buttonC-color: #756451;
+$main-bg-color: #251E0D;
+$main-container-color: #3D3015;
+$main-border-color: #0E0B05;
+
 $main-button-color: #71778F;
+$main-buttonC-color: #756451;
 
 //Apartado CSS
-body {
-
-    background-color: $main-bg-color;
-}
 
 .main-container {
 
@@ -63,6 +60,7 @@ body {
     border: 1px solid $main-border-color;
 
     .session-cent {
+        
         display: grid;
         align-items: center;
         justify-items: center;

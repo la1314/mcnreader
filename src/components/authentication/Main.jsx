@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Session from '../sesion/MainSession.jsx';
-import MainApp from '../mainApp/MainApp.jsx'
+import MainApp from '../mainApp/MainApp.jsx';
+axios.defaults.withCredentials = true;
 
 export default class Main extends Component {
 

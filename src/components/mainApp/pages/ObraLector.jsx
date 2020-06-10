@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import PI from './items/PuntuacionItem.jsx';
 import CI from './items/ChapterItem.jsx';
+axios.defaults.withCredentials = true;
+
 export default class ObraLector extends Component {
 
     constructor(props) {

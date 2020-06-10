@@ -3,6 +3,7 @@ import axios from 'axios';
 import ECItem from './items/EditorChapterItem.jsx';
 import ESM from './items/EditorSM.jsx';
 import ESMI from './items/EditorSMItem.jsx';
+axios.defaults.withCredentials = true;
 
 export default class ObraEditor extends Component {
 
@@ -139,7 +140,7 @@ export default class ObraEditor extends Component {
         const { obra, listDemografias, listTipos } = this.state
 
         const value = e.target.value
-
+        const re = /^[0-9\b]+$/;
         axios.post('/api/edit-obra/', null, {
             params: { type: type, obra: obra, value: value }
         }).then(async () => {
@@ -158,7 +159,11 @@ export default class ObraEditor extends Component {
                 break;
 
             case 3:
-                this.setState({ lanzamiento: value })
+
+                if ( (value === '' || re.test(value)) && value.length < 5 ) {
+                    this.setState({ lanzamiento: value })
+                }
+                
                 break;
 
             case 4:
@@ -275,9 +280,9 @@ export default class ObraEditor extends Component {
         axios.post('/api/new-chapter/', null, {
             params: {
                 obra: obra,
-                number: newChapterNumber,
-                name: newChapterName,
-                date: newChapterDate,
+                number: newChapterNumber || 0,
+                name: newChapterName || '',
+                date: newChapterDate || '2000-01-01',
                 visibilidad: newChapterVisibilidad
             }
         }).then(async () => this.setState({ listChapters: await this.findCaracteristicaObra('chapters') }, () => {
@@ -289,12 +294,12 @@ export default class ObraEditor extends Component {
             }
 
             const { listChapters } = this.state;
-            const filtro = listChapters.sort(function(a, b){
+            const filtro = listChapters.sort(function (a, b) {
                 return a.ID - b.ID;
             });
             const last = listChapters.length - 1;
             console.log(filtro[last].ID);
-            
+
             const formData = new FormData();
             formData.append('editor', editor);
             formData.append('work', obra);
@@ -308,11 +313,14 @@ export default class ObraEditor extends Component {
     //Actualiza los estados para la creación de un nuevo capítulo
     updateNewChapterState = (e, type) => {
         const value = e.target.value;
+        const re = /^[0-9\b]+$/;
 
         switch (type) {
             case 1:
 
-                this.setState({ newChapterNumber: value })
+                if (value === '' || re.test(value)) {
+                    this.setState({ newChapterNumber: value })
+                }
                 break;
 
             case 2:
@@ -356,11 +364,11 @@ export default class ObraEditor extends Component {
                             </div>
                             <div className='edit-obra-autor'>
                                 <label htmlFor="obra-autor">Autor: </label>
-                                <input type="text" value={autor} onChange={(e) => { this.editObra(e, 2) }} name="obra-autor" placeholder="Editar Autor" />
+                                <input type="text" value={autor} onChange={(e) => { this.editObra(e, 2) }} name="obra-autor" placeholder="Editar autor" />
                             </div>
                             <div className='edit-obra-lanzamiento' >
                                 <label htmlFor="obra-lanzamiento">Lanzamiento: </label>
-                                <input type="number" value={lanzamiento} onChange={(e) => { this.editObra(e, 3) }} name="obra-lanzamiento" placeholder="Editar Lanzamiento" />
+                                <input value={lanzamiento} onChange={(e) => { this.editObra(e, 3) }} name="obra-lanzamiento" placeholder="Editar año de anzamiento" />
                             </div>
                             <div className='edit-obra-tipo' >
                                 <label htmlFor="obra-tipo">Tipo: {tipo}</label>
@@ -460,10 +468,10 @@ export default class ObraEditor extends Component {
                     </div>
 
                     <div className='edit-obra-new-chapter'>
-                    <div className='h1-section'>Añadir capítulo</div>
+                        <div className='h1-section'>Añadir capítulo</div>
                         <div className='edit-chapter-number'>
                             <label htmlFor='label-new-chapter-number'>Numero: </label>
-                            <input type='number' name="input-new-chapter-number" value={newChapterNumber} onChange={(e) => { this.updateNewChapterState(e, 1) }} placeholder="Número del capítulo" />
+                            <input name="input-new-chapter-number" value={newChapterNumber} onChange={(e) => { this.updateNewChapterState(e, 1) }} placeholder="Número del capítulo" />
                         </div>
                         <div className='edit-chapter-name'>
                             <label htmlFor='label-new-chapter-number'>Nombre: </label>

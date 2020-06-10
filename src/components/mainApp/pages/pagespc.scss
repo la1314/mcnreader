@@ -1,21 +1,13 @@
 //Apartado de variables
-$main-bg-color: #3b3b3b;
-$main-container-color: #343742;
-$main-border-color: #8c8c8c;
-$main-buttonC-color: #756451;
-$main-button-color: #71778F;
-$main-bg-tipo-color: #806640;
-$main-bg-cover-text: #807566;
-$main-border-section: #ffd500;
+
+//Se requiere en este scss
+$main-border-section: #0E0B05;
 $main-height-cover-pc: 450px;
 $main-columns-MAX: 5;
-$main-columns-MEDIUM: 3;
 $main-row-gap: 20px;
 $main-column-gap: 20px;
 $main-font-size: 22px;
 $main-font-size-h1: 30px;
-
-
 
 /* big landscape tablets, laptops, and desktops */
 @media (min-width:1025px) {
@@ -33,7 +25,6 @@ $main-font-size-h1: 30px;
         align-items: center;
         column-gap: 50px;
         grid-template-columns: 1.2fr 2fr;
-        background-color: $main-bg-color;
 
         .logo-container {
 
@@ -58,7 +49,6 @@ $main-font-size-h1: 30px;
         .main-session-container {
 
             width: 100%;
-            background-color: $main-bg-color;
             display: grid;
             align-items: center;
             justify-items: center;
@@ -68,31 +58,20 @@ $main-font-size-h1: 30px;
                 display: grid;
                 height: 100%;
                 width: 100%;
-                background-color: $main-container-color;
-                border: 1px solid $main-border-color;
 
                 .session-cent {
                     display: grid;
                     align-items: center;
                     justify-items: center;
-                    border-top: 1px solid $main-border-color;
-                    border-bottom: 1px solid $main-border-color;
 
                     .base-container {
 
                         .btnC {
                             justify-self: end;
-                            background-color: $main-buttonC-color;
-                            border: 1px solid $main-border-color;
                         }
 
                         .header {
                             font-size: 25px;
-                        }
-
-                        .btn {
-                            background-color: $main-button-color;
-                            border: 1px solid $main-border-color;
                         }
 
                     }
@@ -106,14 +85,9 @@ $main-font-size-h1: 30px;
                         align-items: center;
                         justify-items: center;
                     }
-
-                    border: 1px solid $main-border-color;
                 }
-
             }
         }
-
-
     }
 
 
@@ -125,8 +99,6 @@ $main-font-size-h1: 30px;
 
             .menu-item {
                 height: 50px;
-                border: solid 1px $main-border-color;
-
                 .menu-item-text {
                     font-size: $main-font-size;
                 }
@@ -157,7 +129,6 @@ $main-font-size-h1: 30px;
         .home-top-10 {
             .home-top-container {
                 grid-template-columns: repeat($main-columns-MAX, 1fr);
-
             }
         }
 
@@ -182,8 +153,6 @@ $main-font-size-h1: 30px;
     .obra-lector {
 
         .ol-cover-details {
-
-            border-top: $main-border-section 1px solid;
             display: grid;
             grid-template-columns: 400px 2fr;
             column-gap: 10px;
@@ -200,7 +169,6 @@ $main-font-size-h1: 30px;
 
             .ol-details {
                 margin-top: $main-row-gap;
-                border-top: $main-border-section 0px solid;
 
                 .ol-detail {
                     font-size: $main-font-size;
@@ -231,9 +199,7 @@ $main-font-size-h1: 30px;
 
         //Social Media Lector
         .ol-social {
-            margin-top: 10px;
-            border-top: $main-border-section 1px solid;
-
+            margin-top: $main-row-gap;
 
             .ol-social-list {
                 display: grid;
@@ -247,25 +213,21 @@ $main-font-size-h1: 30px;
                     }
                 }
             }
-
-
         }
 
         .ol-descripcion {
-            margin-top: 10px;
-            border-top: $main-border-section 1px solid;
+            margin-top: $main-row-gap;
             font-size: $main-font-size;
 
             div {
                 width: 100%;
             }
-
         }
     }
 
     .ol-chapters {
-        margin-top: 10px;
-        border-top: $main-border-section 1px solid;
+
+        margin-top: $main-row-gap;
 
         .ol-chapters-list {
 
@@ -276,22 +238,11 @@ $main-font-size-h1: 30px;
 
             .ol-chapter-item {
 
-                border: $main-border-color 1px solid;
-
                 .ol-chapter-description {
                     height: 200px;
-                    display: grid;
-                    align-items: center;
-                    justify-items: center;
                 }
 
                 .ol-chapter-vl {
-
-                    display: grid;
-                    align-items: center;
-                    justify-items: center;
-                    border: $main-border-color 1px solid;
-
                     img {
 
                         width: 35px;
@@ -304,31 +255,25 @@ $main-font-size-h1: 30px;
     //Clases para la puntiación y AVG de la obra
     .ol-rating-follow {
 
-        width: 100%;
-
         .puntuacion-container {
 
             .puntos-item {
-                display: grid;
-                grid-template-columns: repeat(6, 1fr);
-                background-color: $main-bg-cover-text;
-
                 .puntos-img img {
                     width: 100%;
                 }
 
                 .avg-obra {
-                    display: grid;
-                    justify-items: center;
-                    align-items: center;
-
                     div {
-                        font-size: 25px;
+                        font-size: $main-font-size;
                     }
                 }
             }
+        }
 
-
+        .follow{
+            button{
+                font-size: $main-font-size;
+            }
         }
     }
 
@@ -336,16 +281,6 @@ $main-font-size-h1: 30px;
     /** READER **/
 
     .paginada {
-
-        .reader-grid {
-            margin-top: 15px;
-            margin-bottom: 15px;
-            display: grid;
-            grid-template-columns: 1fr;
-            row-gap: 15px;
-            align-items: center;
-            justify-items: center;
-        }
 
         .reader-grid .simple {
 
@@ -359,10 +294,6 @@ $main-font-size-h1: 30px;
 
     .paginada-occidental,
     .paginada-oriental {
-        margin-left: auto;
-        margin-right: auto;
-        width: 90%;
-
         .reader-grid {
             margin-top: 15px;
             margin-bottom: 15px;
@@ -378,26 +309,8 @@ $main-font-size-h1: 30px;
             height: 850px;
             width: 100%;
         }
-
     }
 
-
-    .reader-button {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-
-        .reader-left-Button,
-        .reader-right-Button {
-            border: 1px solid $main-border-color;
-        }
-
-        div {
-            background-color: $main-container-color;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-        }
-    }
 
     .cascada {
 
@@ -419,12 +332,6 @@ $main-font-size-h1: 30px;
 
     .cascada-oriental,
     .cascada-occidental {
-
-        margin-left: auto;
-        margin-right: auto;
-        width: 90%;
-        margin-top: 10px;
-
         .simple {
             margin-top: 15px;
             height: 850px;
@@ -445,24 +352,16 @@ $main-font-size-h1: 30px;
 
     .profile-container {
 
-        background-color: $main-container-color;
-
-        display: grid;
-        grid-template-columns: 1fr;
         row-gap: $main-row-gap;
         font-size: $main-font-size;
 
         .profile-details {
-            display: grid;
             row-gap: $main-row-gap;
             margin-top: $main-row-gap;
-            border-top: $main-border-section 1px solid;
         }
 
         .profile-update {
             margin-top: $main-row-gap;
-            border-top: $main-border-section 1px solid;
-            display: grid;
             row-gap: $main-row-gap;
 
             div {
@@ -471,17 +370,13 @@ $main-font-size-h1: 30px;
                 }
 
                 .profile-update-inputs {
-                    margin-top: 5px;
-                    display: grid;
                     grid-template-columns: 220px 120px 120px;
-                    column-gap: 5px;
                 }
             }
         }
 
         .profile-lector {
             margin-top: 10px;
-            border-top: $main-border-section 1px solid;
 
             .profile-lector-tipos {
                 margin-top: 10px;
@@ -497,25 +392,17 @@ $main-font-size-h1: 30px;
 
         .profile-lector-edit {
             margin-top: 10px;
-            border-top: $main-border-section 1px solid;
-            display: grid;
             row-gap: $main-row-gap;
 
-            .profile-lector-options {
-                margin-top: 10px;
-
-            }
         }
 
         .profile-lector-options {
 
             .profile-lector-edit-pc {
-                display: grid;
                 grid-template-columns: repeat(2, 150px);
             }
 
             .profile-lector-edit-ocors {
-                display: grid;
                 grid-template-columns: repeat(3, 150px);
             }
         }
@@ -568,15 +455,9 @@ $main-font-size-h1: 30px;
     /****************************************************************/
     /** Editor **/
     /** Gestor **/
-    .gestor-container {
-        border-top: $main-border-section 1px solid;
-
-    }
 
     .editor-container-obras {
 
-        margin-top: 15px;
-        display: grid;
         grid-template-columns: repeat($main-columns-MAX, 1fr);
         column-gap: $main-column-gap;
         row-gap: $main-row-gap;
@@ -585,66 +466,51 @@ $main-font-size-h1: 30px;
 
             font-size: $main-font-size;
 
-            border: 1px solid $main-border-color;
-
             .editor-cover-image {
                 width: 100%;
                 height: $main-height-cover-pc;
 
             }
 
-            .editor-cover-obra-name {
-                background-color: $main-bg-cover-text;
-                text-align: center;
-            }
 
             .editor-cover-obra-button {
                 font-size: $main-font-size;
-                width: 100%;
-                border: 1px solid $main-container-color;
-                background-color: $main-button-color;
             }
         }
     }
 
     .create-obra-container {
         margin-top: 15px;
-        border-top: $main-border-section 1px solid;
         font-size: $main-font-size;
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
 
         .form {
-            display: grid;
-            grid-template-columns: 1fr;
             column-gap: $main-column-gap;
             row-gap: $main-row-gap;
             margin-bottom: $main-row-gap;
+
         }
     }
 
     /** Edit obra **/
     .edit-single-obra-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        row-gap: 25px;
-        border-top: $main-border-section 1px solid;
+        row-gap: $main-row-gap;
 
         // COVER AND DETAILS
         .edit-obra-cover-details-container {
 
-            margin-top: 15px;
+            margin-top: $main-row-gap;
 
             .container-cover-details {
 
-                display: grid;
                 grid-template-columns: 1fr 3fr;
                 column-gap: $main-column-gap;
                 row-gap: $main-row-gap;
 
 
                 .edit-obra-cover {
-
-                    display: grid;
-
                     img {
 
                         width: 100%;
@@ -655,8 +521,8 @@ $main-font-size-h1: 30px;
                 .edit-obra-details {
 
                     display: grid;
-                    column-gap: 20px;
-                    row-gap: 10px;
+                    column-gap: $main-column-gap;
+                    row-gap: $main-row-gap;
 
                     div[class*='edit-'] {
                         display: grid;
@@ -740,8 +606,6 @@ $main-font-size-h1: 30px;
     }
 
     .edit-obra-chapters-container {
-        border-top: $main-border-section 1px solid;
-
         .edit-obra-chapters-list {
 
             display: grid;
@@ -753,27 +617,15 @@ $main-font-size-h1: 30px;
 
             .edit-obra-chapters-list-item {
                 height: 150px;
-                border: 1px solid $main-border-color;
-                display: grid;
-                justify-items: center;
-                align-items: center;
-
-                .chapter-item-name {
-                    text-align: center;
-                }
             }
         }
 
         .edit-obra-new-chapter {
-            border-top: $main-border-section 1px solid;
-            margin-bottom: 15px;
+            margin-bottom: $main-row-gap;
 
             .btn {
-                font-size: 15px;
-                border: 1px solid $main-border-color;
-                background-color: $main-buttonC-color;
-                margin-top: 10px;
-                width: 100%;
+                font-size: $main-font-size;
+                margin-top: $main-column-gap;
             }
         }
     }
@@ -781,45 +633,32 @@ $main-font-size-h1: 30px;
     /** Edición de capitulo y paginas **/
     .edit-chapter {
 
-        display: grid;
         row-gap: $main-row-gap;
 
-        .return-edit-obra{
-            display: grid;
-            button{
+        .return-edit-obra {
 
-                border: 1px solid $main-border-color;
-                background-color: $main-button-color;
-                margin-left: auto;
-                margin-right: auto;
+            button {
                 font-size: $main-font-size;
                 height: 35px;
             }
         }
-    
+
         .edit-chapter-upload-images {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr;
-            button{
+            button {
                 width: 200px;
             }
         }
 
         .edit-chapter-pages {
 
-            display: grid;
             grid-template-columns: repeat(6, 1fr);
             column-gap: $main-column-gap;
             row-gap: $main-row-gap;
             margin-bottom: $main-column-gap;
 
             .edit-page-item {
-                border: solid 1px $main-border-color;
-                background-color: $main-bg-cover-text;
                 width: 100%;
                 display: grid;
-
                 justify-items: center;
                 align-items: center;
 
@@ -829,8 +668,6 @@ $main-font-size-h1: 30px;
                 }
 
                 .btn {
-                    border: 1px solid $main-border-color;
-                    background-color: $main-buttonC-color;
                     margin-top: 5px;
                     width: 100%;
                 }
@@ -838,15 +675,7 @@ $main-font-size-h1: 30px;
 
         }
     }
-
-
 }
-
-
-
-
-
-
 
 
 /*Animaciones*/

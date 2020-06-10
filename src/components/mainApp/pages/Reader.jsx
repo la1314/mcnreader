@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 export default class Reader extends Component {
 
@@ -30,8 +31,6 @@ export default class Reader extends Component {
                 })
             })
         }
-
-        
     }
 
     //Remueve los eventos asignados

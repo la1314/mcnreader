@@ -1,12 +1,21 @@
 //Apartado de variables
-$main-bg-color: #3b3b3b;
-$main-container-color: #343742;
-$main-border-color: #8c8c8c;
-$main-buttonC-color: #756451;
+$main-container-color: #3D3015;
+$main-border-color: #0E0B05;
+
+//Afecta a los botones
 $main-button-color: #71778F;
+$main-buttonC-color: #756451;
+$main-select-color: #9334a0;
+
+//Tipo de obra
 $main-bg-tipo-color: #806640;
+
+//Separa unas secciones de otras
+$main-border-section: #595959;
+
+//Texto de las cajas
 $main-bg-cover-text: #807566;
-$main-border-section: #ffd600;
+
 $main-height-cover-phone: 210px;
 
 /************************************************************************/
@@ -21,8 +30,6 @@ $main-height-cover-phone: 210px;
 
         border-top: $main-border-section 1px solid;
         display: grid;
-
-
 
         .home-top-container {
 
@@ -137,7 +144,7 @@ $main-height-cover-phone: 210px;
 
 .select {
 
-    background-color: #161c2e;
+    background-color: $main-select-color;
 
 }
 
@@ -173,6 +180,7 @@ $main-height-cover-phone: 210px;
 .obra-lector {
 
     .ol-cover-details {
+        border-top: $main-border-section 1px solid;
         display: grid;
         grid-template-columns: 1fr;
         column-gap: 10px;

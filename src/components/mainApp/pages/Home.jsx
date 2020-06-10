@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import HomePL from './items/HomePL.jsx';
 import HomeTop from './items/HomeTop.jsx'
-
+axios.defaults.withCredentials = true;
 
 export default class Home extends Component {
 
