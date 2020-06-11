@@ -1,7 +1,8 @@
 //Apartado de variables
-$main-bg-color: #251E0D;
-$main-container-color: #3D3015;
-$main-border-color: #0E0B05;
+$main-bg-color: #191919;
+$main-container-color: #191919;
+$main-border-color: white;
+$main-button-text-color: #c9af0f;
 
 
 .main-App {
@@ -31,14 +32,43 @@ $main-border-color: #0E0B05;
 
         .menu-item {
 
-            background-color: $main-border-color;
+
             font-size: 15px;
             display: grid;
             width: 100%;
             align-items: center;
             justify-items: center;
             height: 30px;
-            border: solid 1px $main-border-color;
+            border: solid 1px $main-button-text-color;
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Old versions of Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+
+            * {
+                color: $main-button-text-color;
+            }
+        }
+
+        .select {
+            * {
+                color: black;
+            }
+        }
+
+        .menu-item:hover {
+            background-color: $main-button-text-color;
+
+            * {
+                color: black;
+            }
         }
 
         .menu-item-logout {
@@ -50,7 +80,7 @@ $main-border-color: #0E0B05;
             background-size: 55% 55%;
             height: 30px;
             width: 50%;
-            border: solid 1px $main-border-color;
+            border: solid 1px $main-container-color;
         }
     }
 

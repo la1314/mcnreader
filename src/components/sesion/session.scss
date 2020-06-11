@@ -1,12 +1,13 @@
 //SCSS para los componentes que componen a la session de la app
 
 //Apartado de variables
-$main-bg-color: #251E0D;
-$main-container-color: #3D3015;
-$main-border-color: #0E0B05;
+$main-bg-color: #191919;
+$main-container-color: #191919;
+$main-border-color: white;
 
-$main-button-color: #71778F;
-$main-buttonC-color: #756451;
+$main-select-color: #c9af0f;
+$main-button-color: #ffffff00;
+$main-buttonC-color: #ffffff00;
 
 //Apartado CSS
 
@@ -77,8 +78,9 @@ $main-buttonC-color: #756451;
 
             .btnC {
                 justify-self: end;
-                background-color: $main-buttonC-color;
-                border: 1px solid $main-border-color;
+                background-color: $main-select-color;
+                border: 1px solid $main-select-color;
+                color: black;
             }
 
             .header {
@@ -106,7 +108,12 @@ $main-buttonC-color: #756451;
 
             .btn {
                 background-color: $main-button-color;
-                border: 1px solid $main-border-color;
+                border: 1px solid $main-select-color;
+            }
+
+            .btn:hover {
+                background-color: $main-select-color;
+                color: black;
             }
 
         }

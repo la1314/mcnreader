@@ -1,20 +1,27 @@
 //Apartado de variables
-$main-container-color: #3D3015;
-$main-border-color: #0E0B05;
+$main-container-color: #191919;
+$main-border-color: #191919;
 
 //Afecta a los botones
-$main-button-color: #71778F;
-$main-buttonC-color: #756451;
-$main-select-color: #9334a0;
+$main-button-color: #c9af0f;
+$main-buttonC-color: #537740;
+$main-select-color: #c9af0f;
 
+
+/**Obra cartas**/
 //Tipo de obra
-$main-bg-tipo-color: #806640;
-
-//Separa unas secciones de otras
-$main-border-section: #595959;
+$main-bg-tipo-color: #6C573E;
 
 //Texto de las cajas
-$main-bg-cover-text: #807566;
+$main-bg-cover-text: #191919;
+
+//Borde de las cartas
+$main-border-card-color: white;
+
+//Separa unas secciones de otras
+$main-border-section: #c9af0f;
+
+
 
 $main-height-cover-phone: 210px;
 
@@ -41,7 +48,8 @@ $main-height-cover-phone: 210px;
 
             .top-10 {
                 display: grid;
-                border: 1px solid $main-border-color;
+                border: 1px solid $main-border-card-color;
+                background-color: $main-bg-cover-text;
                 width: 100%;
 
                 img {
@@ -49,8 +57,15 @@ $main-height-cover-phone: 210px;
                     width: 100%;
                 }
             }
+
+            .op-10:hover{
+                background-color: #c9b00f2d;
+            }
+
         }
     }
+
+    
 
     .home-pendientes {
 
@@ -76,7 +91,8 @@ $main-height-cover-phone: 210px;
                 grid-template-columns: repeat(2, 1fr);
 
                 .pendientes {
-
+                    border: 1px solid $main-border-card-color;
+                    background-color: $main-bg-cover-text;
                     width: 100%;
 
                     img {
@@ -86,7 +102,8 @@ $main-height-cover-phone: 210px;
                 }
 
                 .seguidos {
-
+                    border: 1px solid $main-border-card-color;
+                    background-color: $main-bg-cover-text;
                     width: 100%;
 
                     img {
@@ -113,7 +130,8 @@ $main-height-cover-phone: 210px;
 
             .recientes {
 
-                border: solid 1px $main-border-color;
+                border: 1px solid $main-border-card-color;
+                background-color: $main-bg-cover-text;
                 height: 100%;
 
                 //If an image is 100% wide and height:auto and you think it's too tall, that is specifically 
@@ -136,17 +154,33 @@ $main-height-cover-phone: 210px;
     font-size: 18px;
     text-align: center;
     width: 100%;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
 }
 
 .option-pl {
+
+    color: $main-button-color;
     border: solid 1px $main-border-color;
 }
 
-.select {
+.option-pl:hover {
 
-    background-color: $main-select-color;
-
+    background-color: $main-button-color;
+    color: black;
+    border: solid 1px $main-border-color;
 }
+
+
 
 .cover-name,
 .cover-tipo,
@@ -156,10 +190,31 @@ $main-height-cover-phone: 210px;
     justify-self: center;
     text-align: center;
     width: 100%;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
 }
 
-.cover-name {
-    border-top: 1px solid $main-border-color;
+.profile-details{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.cover-name:hover,
+.cover-tipo:hover,
+.cover-score:hover,
+.cover-leido:hover,
+.cover-date:hover {
+    color: $main-select-color;
 }
 
 .cover-name,
@@ -216,23 +271,25 @@ $main-height-cover-phone: 210px;
     }
 
     //Social Media Lector
-    .ol-social{
+    .ol-social {
         margin-top: 10px;
         border-top: $main-border-section 1px solid;
 
 
-        .ol-social-list{
+        .ol-social-list {
             display: grid;
-             grid-template-columns: repeat(4, 1fr);
-            .ol-social-item{
+            grid-template-columns: repeat(4, 1fr);
+
+            .ol-social-item {
                 width: 100%;
-                .logo-sm{
+
+                .logo-sm {
                     width: 60%;
                 }
             }
         }
 
-       
+
     }
 
     .ol-descripcion {
@@ -444,10 +501,22 @@ $main-height-cover-phone: 210px;
     border-top: $main-border-section 1px solid;
 
     .form {
+
         display: grid;
         grid-template-columns: 1fr;
         column-gap: 20px;
         row-gap: 20px;
+        
+        .btn{
+            border: 1px solid $main-button-color;
+            background-color: #c9b00f00;
+            color:  $main-button-color;
+        }
+
+        .btn:hover{
+            color: black;
+            background-color: $main-button-color;
+        }
     }
 }
 
@@ -534,6 +603,7 @@ $main-height-cover-phone: 210px;
         row-gap: 10px;
         margin-top: 15px;
         margin-bottom: 15px;
+
         .edit-obra-chapters-list-item {
             height: 150px;
             border: 1px solid $main-border-color;
@@ -541,7 +611,7 @@ $main-height-cover-phone: 210px;
             justify-items: center;
             align-items: center;
 
-            .chapter-item-name{
+            .chapter-item-name {
                 text-align: center;
             }
         }
@@ -550,7 +620,8 @@ $main-height-cover-phone: 210px;
     .edit-obra-new-chapter {
         border-top: $main-border-section 1px solid;
         margin-bottom: 15px;
-        .btn{
+
+        .btn {
             font-size: 15px;
             border: 1px solid $main-border-color;
             background-color: $main-buttonC-color;
@@ -566,22 +637,23 @@ $main-height-cover-phone: 210px;
     display: grid;
     row-gap: 10px;
 
-    .return-edit-obra{
+    .return-edit-obra {
         display: grid;
-        button{
+
+        button {
 
             border: 1px solid $main-border-color;
             background-color: $main-button-color;
             margin-left: auto;
             margin-right: auto;
         }
-       
+
     }
 
-    .edit-chapter-upload-images{
+    .edit-chapter-upload-images {
         width: 100%;
         display: grid;
-        grid-template-columns:1fr;
+        grid-template-columns: 1fr;
     }
 
     .edit-chapter-pages {
@@ -595,12 +667,13 @@ $main-height-cover-phone: 210px;
             border: solid 1px $main-border-color;
             background-color: $main-bg-cover-text;
             width: 100%;
+
             img {
                 width: 100%;
                 height: $main-height-cover-phone;
             }
 
-            .btn{
+            .btn {
                 border: 1px solid $main-border-color;
                 background-color: $main-buttonC-color;
                 margin-top: 5px;
@@ -756,4 +829,19 @@ $main-height-cover-phone: 210px;
         }
     }
 
+}
+
+
+
+.select {
+    background-color: $main-select-color;
+    color: black !important;
+
+    .menu-item-text {
+        color: black !important;
+    }
+}
+
+* input, * select, * option, * textarea {
+    color: black !important;
 }

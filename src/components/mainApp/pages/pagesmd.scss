@@ -1,6 +1,6 @@
 //Apartado de variables
 //Se requiere en este scss
-$main-border-section: #0E0B05;
+$main-border-section: #c9af0f;
 $main-height-cover-pc: 450px;
 $main-columns-MEDIUM: 3;
 $main-row-gap: 20px;
@@ -444,6 +444,9 @@ $main-font-size-h1: 30px;
         row-gap: $main-row-gap;
 
         .editor-cover-list {
+
+            border: 1px solid white;
+
             .editor-cover-image {
                 width: 100%;
                 height: $main-height-cover-pc;
@@ -462,6 +465,7 @@ $main-font-size-h1: 30px;
             row-gap: $main-row-gap;
             margin-bottom: $main-row-gap;
         }
+
     }
 
     /** Edit obra **/
