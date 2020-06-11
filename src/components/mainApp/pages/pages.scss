@@ -336,6 +336,7 @@ $main-height-cover-phone: 210px;
         column-gap: 20px;
         row-gap: 20px;
         grid-template-columns: repeat(2, 1fr);
+        margin-bottom: 20px;
 
         .ol-chapter-item {
 
@@ -914,20 +915,38 @@ $main-height-cover-phone: 210px;
 
 .library-container {
 
+    display: grid;
+
     .library-abcedario {
+        justify-self: center;
+        align-self: center;
 
         display: grid;
         column-gap: 20px;
         row-gap: 20px;
         grid-template-columns: repeat(6, 35px);
 
-
         .library-letra {
             display: grid;
             justify-items: center;
-            border: solid 1px powderblue;
             width: 100%;
+
+            div {
+                
+                border: 1px solid $main-button-color;
+                width: 100%;
+                font-size: 15px;
+                background-color: $main-transparente;
+                color: $main-button-color;
+                text-align: center;
+            }
+
+            div:hover{
+                background-color: $main-button-color;
+                color: black;
+            }
         }
+
     }
 
     .library-lista {
@@ -995,6 +1014,6 @@ $main-height-cover-phone: 210px;
     border: $main-border-section 1px solid !important;
 }
 
-.ol-chapter-vl:hover{
+.ol-chapter-vl:hover {
     border-top: $main-border-section 1px solid !important;
 }

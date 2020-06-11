@@ -13,126 +13,132 @@ $main-buttonC-color: #ffffff00;
 
 .main-container {
 
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: $main-bg-color;
-
-    .logo-container {
-
-        margin-top: 15px;
-        margin-bottom: 15px;
-        margin-left: auto;
-        margin-right: auto;
-        height: 20%;
-        width: 60vw;
-
-        .logo-app {
-            width: 100%;
-            height: 100%;
-        }
+    .container-text{
+        display: none !important;
     }
-}
 
+    .main-container-logo-session {
 
-
-//Contenedor principal de los componentes de session
-//Adopta el 100% del alto y ancho visible del navegador
-//Centra el contenido que posee
-.main-session-container {
-    height: 50vh;
-    width: 100%;
-    background-color: $main-bg-color;
-    display: grid;
-    align-items: center;
-    justify-items: center;
-}
-
-//Contenedor de los componentes Login, Register y Recover
-//distribuira los componentes en 3 columnas
-.session-container {
-
-    display: grid;
-    grid-template-columns: 3fr 1fr;
-    height: 100%;
-    width: 80vw;
-    background-color: $main-container-color;
-    border: 1px solid $main-border-color;
-
-    .session-cent {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: $main-bg-color;
         
-        display: grid;
-        align-items: center;
-        justify-items: center;
-        border-top: 1px solid $main-border-color;
-        border-bottom: 1px solid $main-border-color;
 
-        .base-container {
+        .logo-container {
 
+            margin-top: 15px;
+            margin-bottom: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 20%;
+            width: 60vw;
+
+            .logo-app {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        //Contenedor principal de los componentes de session
+        //Adopta el 100% del alto y ancho visible del navegador
+        //Centra el contenido que posee
+        .main-session-container {
+            height: 50vh;
+            width: 100%;
+            background-color: $main-bg-color;
             display: grid;
             align-items: center;
             justify-items: center;
-            grid-template-rows: 1fr 1fr 4fr 1fr;
-            width: 90%;
+        }
 
-            .btnC {
-                justify-self: end;
-                background-color: $main-select-color;
-                border: 1px solid $main-select-color;
-                color: black;
-            }
+        //Contenedor de los componentes Login, Register y Recover
+        //distribuira los componentes en 3 columnas
+        .session-container {
 
-            .header {
-                font-size: 25px;
-            }
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            height: 100%;
+            width: 80vw;
+            background-color: $main-container-color;
+            border: 1px solid $main-border-color;
 
-            .form {
+            .session-cent {
 
                 display: grid;
-                row-gap: 15px;
+                align-items: center;
+                justify-items: center;
+                border-top: 1px solid $main-border-color;
+                border-bottom: 1px solid $main-border-color;
 
-                .form-group {
+                .base-container {
+
                     display: grid;
-                    align-items: start;
-                    justify-items: start;
-                    row-gap: 5px;
+                    align-items: center;
+                    justify-items: center;
+                    grid-template-rows: 1fr 1fr 4fr 1fr;
+                    width: 90%;
 
-                    input {
-                        display: grid;
-                        width: 90%;
+                    .btnC {
+                        justify-self: end;
+                        background-color: $main-select-color;
+                        border: 1px solid $main-select-color;
+                        color: black;
                     }
+
+                    .header {
+                        font-size: 25px;
+                    }
+
+                    .form {
+
+                        display: grid;
+                        row-gap: 15px;
+
+                        .form-group {
+                            display: grid;
+                            align-items: start;
+                            justify-items: start;
+                            row-gap: 5px;
+
+                            input {
+                                display: grid;
+                                width: 90%;
+                            }
+                        }
+                    }
+
+
+                    .btn {
+                        background-color: $main-button-color;
+                        border: 1px solid $main-select-color;
+                    }
+
+                    .btn:hover {
+                        background-color: $main-select-color;
+                        color: black;
+                    }
+
                 }
             }
 
+            //Modificaciones en el lateral Derecho
+            .session-der {
 
-            .btn {
-                background-color: $main-button-color;
-                border: 1px solid $main-select-color;
-            }
+                display: grid;
+                align-items: center;
+                justify-items: center;
 
-            .btn:hover {
-                background-color: $main-select-color;
-                color: black;
+                .inner-container {
+                    display: grid;
+                    align-items: center;
+                    justify-items: center;
+                }
+
+                border: 1px solid $main-border-color;
             }
 
         }
     }
-
-    //Modificaciones en el lateral Derecho
-    .session-der {
-
-        display: grid;
-        align-items: center;
-        justify-items: center;
-
-        .inner-container {
-            display: grid;
-            align-items: center;
-            justify-items: center;
-        }
-
-        border: 1px solid $main-border-color;
-    }
-
 }

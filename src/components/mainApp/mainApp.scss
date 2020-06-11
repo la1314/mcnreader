@@ -29,7 +29,7 @@ $main-button-text-color: #c9af0f;
         width: 100%;
 
         img{
-            height: 150px;
+            height: 70px;
         }
 
         img:hover{
@@ -143,5 +143,24 @@ $main-button-text-color: #c9af0f;
     100% {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
+    }
+}
+
+
+/* Medium */
+@media (min-width:620px) {
+    .menu-logo{
+        img{
+            height: 100px !important;
+        }
+    }
+}
+
+/* big landscape tablets, laptops, and desktops */
+@media (min-width:1025px) {
+    .menu-logo{
+        img{
+            height: 150px !important;
+        }
     }
 }

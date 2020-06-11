@@ -18,82 +18,126 @@ $main-font-size-h1: 28px;
         font-size: $main-font-size;
     }
 
+
+
     /* Styles */
     /** Sesiones **/
+
+
     .main-container {
 
-        height: 100vh;
-        width: 80%;
         display: grid;
-        margin-left: auto;
-        margin-right: auto;
-        justify-items: center;
-        align-items: center;
-        column-gap: 50px;
-        grid-template-columns: 1.2fr 2fr;
 
-        .logo-container {
+        grid-template-columns: 1fr;
+        row-gap: 85px;
 
-            margin-top: 15px;
-            margin-bottom: 15px;
-            height: 500px;
-            width: 100%;
-            display: grid;
-            justify-items: center;
+        .container-text{
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Old versions of Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+
+            display: grid !important;
             align-items: center;
 
-            .logo-app:hover {
-                -webkit-animation-name: pulse;
-                animation-name: pulse;
-                -webkit-animation-duration: 1s;
-                animation-duration: 1s;
-                -webkit-animation-fill-mode: both;
-                animation-fill-mode: both;
+            .tittle-container-text{
+                margin-top: 25px;
+                margin-left: 30%;
+                font-family: 'Fenix', serif;
+                font-size: 120px;
+            }
+
+            .subtittle-container-text{
+                margin-left: 30%;
+                font-family: 'Fenix', serif;
+                font-size: 35px;
             }
         }
 
-        .main-session-container {
-
-            width: 100%;
+        .main-container-logo-session {
+            height: 100%;
+            width: 80%;
             display: grid;
-            align-items: center;
+            margin-left: auto;
+            margin-right: auto;
             justify-items: center;
+            align-items: center;
+            column-gap: 50px;
+            grid-template-columns: 1.2fr 2fr;
 
-            .session-container {
+            .logo-container {
 
-                display: grid;
-                height: 100%;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                height: 500px;
                 width: 100%;
+                display: grid;
+                justify-items: center;
+                align-items: center;
 
-                .session-cent {
-                    display: grid;
-                    align-items: center;
-                    justify-items: center;
-
-                    .base-container {
-
-                        .btnC {
-                            justify-self: end;
-                        }
-
-                        .header {
-                            font-size: 25px;
-                        }
-
-                    }
+                .logo-app:hover {
+                    -webkit-animation-name: pulse;
+                    animation-name: pulse;
+                    -webkit-animation-duration: 1s;
+                    animation-duration: 1s;
+                    -webkit-animation-fill-mode: both;
+                    animation-fill-mode: both;
                 }
+            }
 
-                //Modificaciones en el lateral Derecho
-                .session-der {
+            .main-session-container {
 
-                    .inner-container {
+                width: 100%;
+                display: grid;
+                align-items: center;
+                justify-items: center;
+
+                .session-container {
+
+                    display: grid;
+                    height: 100%;
+                    width: 100%;
+
+                    .session-cent {
                         display: grid;
                         align-items: center;
                         justify-items: center;
+
+                        .base-container {
+
+                            .btnC {
+                                justify-self: end;
+                            }
+
+                            .header {
+                                font-size: 25px;
+                            }
+
+                        }
+                    }
+
+                    //Modificaciones en el lateral Derecho
+                    .session-der {
+
+                        .inner-container {
+                            display: grid;
+                            align-items: center;
+                            justify-items: center;
+                        }
                     }
                 }
             }
+
         }
+
+
     }
 
 
@@ -136,8 +180,9 @@ $main-font-size-h1: 28px;
         .home-top-10 {
             .home-top-container {
                 grid-template-columns: repeat($main-columns-MAX, 1fr);
-                .top-10{
-                    img{
+
+                .top-10 {
+                    img {
                         height: $main-height-cover-pc;
                     }
                 }
@@ -148,7 +193,14 @@ $main-font-size-h1: 28px;
             .home-pl-container {
                 .home-pl-list {
                     grid-template-columns: repeat($main-columns-MAX, 1fr);
+
                     .pendientes {
+                        img {
+                            height: $main-height-cover-pc;
+                        }
+                    }
+
+                    .seguidos{
                         img {
                             height: $main-height-cover-pc;
                         }
@@ -160,6 +212,7 @@ $main-font-size-h1: 28px;
         .home-recientes {
             .recientes-container {
                 grid-template-columns: repeat($main-columns-MAX, 1fr);
+
                 .recientes {
                     img {
                         height: $main-height-cover-pc;
@@ -450,14 +503,6 @@ $main-font-size-h1: 28px;
             column-gap: $main-column-gap;
             row-gap: $main-row-gap;
             grid-template-columns: repeat(12, 45px);
-
-
-            .library-letra {
-                display: grid;
-                justify-items: center;
-                border: solid 1px powderblue;
-                width: 100%;
-            }
         }
 
         .library-lista {
@@ -470,9 +515,8 @@ $main-font-size-h1: 28px;
 
             .library-obra {
                 width: 100%;
-
                 img {
-                    
+
                     height: $main-height-cover-pc;
                     width: 100%;
                 }

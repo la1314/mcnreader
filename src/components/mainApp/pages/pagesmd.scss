@@ -409,14 +409,6 @@ $main-font-size-h1: 25px;
             column-gap: $main-column-gap;
             row-gap: $main-row-gap;
             grid-template-columns: repeat(10, 45px);
-
-
-            .library-letra {
-                display: grid;
-                justify-items: center;
-                border: solid 1px powderblue;
-                width: 100%;
-            }
         }
 
         .library-lista {

@@ -94,37 +94,51 @@ export default class MainSession extends Component {
     return (
 
       <div className='main-container'>
-        <div className='logo-container'>
-          <img className='logo-app'
-            src={Logo}
-            alt='app logo'
-          ></img>
-        </div>
-        <div className='main-session-container' >
-          <div className="session-container">
-            <div className="session-cent" ref={ref => (this.container = ref)}>
-              {centro === 0 && (loginP ?
-                <Editor cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
-                :
-                <Login cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
-              )}
-              {centro === 1 && (registerP ?
-                <RegisterEditor cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
-                :
-                <Register cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
-              )}
-              {centro === 2 && (
 
-                <Recover containerRef={ref => (this.current = ref)} />
-              )}
+        <div className='container-text'>
+            <div className='tittle-container-text'>
+              Minerva
             </div>
-            <Lateral
-              className='session-der'
-              current={current[derecha]}
-              onClick={this.changeStateRight}
-            />
+            <div className='subtittle-container-text'>
+            “Un lector vive mil vidas antes de morir.”
+            </div>
+        </div>
+
+        <div className='main-container-logo-session'>
+          <div className='logo-container'>
+            <img className='logo-app'
+              src={Logo}
+              alt='app logo'
+            ></img>
+          </div>
+          <div className='main-session-container' >
+            <div className="session-container">
+              <div className="session-cent" ref={ref => (this.container = ref)}>
+                {centro === 0 && (loginP ?
+                  <Editor cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
+                  :
+                  <Login cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
+                )}
+                {centro === 1 && (registerP ?
+                  <RegisterEditor cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
+                  :
+                  <Register cambiarRegistro={this.cambiarRegistro} checkUser={this.checkUser} resetPages={this.resetPages} containerRef={ref => (this.current = ref)} />
+                )}
+                {centro === 2 && (
+
+                  <Recover containerRef={ref => (this.current = ref)} />
+                )}
+              </div>
+              <Lateral
+                className='session-der'
+                current={current[derecha]}
+                onClick={this.changeStateRight}
+              />
+            </div>
           </div>
         </div>
+
+
       </div>
     );
   }
