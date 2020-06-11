@@ -34,7 +34,7 @@ export default class ProfileEditor extends Component {
 
   // Carga los datos del usuario al state
   findDetailts = () => {
-    axios.post('https://mcnreader.herokuapp.com/api/find-editor-details/')
+    axios.post('/api/find-editor-details/')
       .then(res => {
         this.setState({
           user: res.data.USERNAME,
@@ -53,7 +53,7 @@ export default class ProfileEditor extends Component {
     const { newName } = this.state
 
     if (newName.length > 4) {
-      axios.post('https://mcnreader.herokuapp.com/api/check-username/', null, {
+      axios.post('/api/check-username/', null, {
         params: { username: newName }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
@@ -68,7 +68,7 @@ export default class ProfileEditor extends Component {
   //Actualiza el nombre del editor
   updateUserName = () => {
     const { newName } = this.state
-    axios.post('https://mcnreader.herokuapp.com/api/edit-username/', null, {
+    axios.post('/api/edit-username/', null, {
       params: { username: newName }
     }).then(() => { this.findDetailts() })
     this.setState({ disabledUserE: false })
@@ -81,7 +81,7 @@ export default class ProfileEditor extends Component {
 
     const { newEmail } = this.state
     if (newEmail.length > 8) {
-      axios.post('https://mcnreader.herokuapp.com/api/check-email/', null, {
+      axios.post('/api/check-email/', null, {
         params: { email: newEmail }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
@@ -97,7 +97,7 @@ export default class ProfileEditor extends Component {
   updateEmail = () => {
 
     const { newEmail } = this.state
-    axios.post('https://mcnreader.herokuapp.com/api/edit-email/', null, {
+    axios.post('/api/edit-email/', null, {
       params: { email: newEmail }
     }).then(() => { this.findDetailts() })
     this.refEditEmailE.current.disabled = true;
@@ -108,7 +108,7 @@ export default class ProfileEditor extends Component {
   updatePhone = () => {
 
     const { newPhone } = this.state
-    axios.post('https://mcnreader.herokuapp.com/api/edit-phone/', null, {
+    axios.post('/api/edit-phone/', null, {
       params: { phone: newPhone }
     }).then(() => { this.findDetailts() })
     this.refEditPhone.current.disabled = true;
@@ -144,7 +144,7 @@ export default class ProfileEditor extends Component {
       const { passBool, repassBool, newPassword } = this.state
 
       if (passBool && repassBool) {
-        axios.post('https://mcnreader.herokuapp.com/api/edit-editor-password/', null, {
+        axios.post('/api/edit-editor-password/', null, {
           params: { password: md5(newPassword) }
         })
 
@@ -253,7 +253,7 @@ export default class ProfileEditor extends Component {
 
     const { oldPassword } = this.state
 
-    const comprobacion = await axios.post('https://mcnreader.herokuapp.com/api/check-editor-password/', null, {
+    const comprobacion = await axios.post('/api/check-editor-password/', null, {
       params: { password: md5(oldPassword) }
     }).then(res => { return parseInt(res.data[0].booleano) })
 

@@ -25,6 +25,11 @@ export default class UserHeader extends Component {
 
         return (
             <div className='header-app'>
+                
+                <div className='menu-logo'>
+                    <img alt='logo de la página' onClick={() => Promise.resolve(this.props.changePage(0)).then( () => {this.changeSelect()} ) } src={'https://tuinki.gupoe.com/media/app-images/logo.png'} />
+                </div>
+
                 <div className='menu-item-container'>
                     <MenuItem className={'menu-item ' + (select===0 && clsname) } nameItem='Home' onClick={() => Promise.resolve(this.props.changePage(0)).then( () => {this.changeSelect()} ) } />
                     <MenuItem className={'menu-item ' + (select===1 && clsname) } nameItem='Biblioteca' onClick={() => Promise.resolve(this.props.changePage(1)).then( () => {this.changeSelect()} )} />

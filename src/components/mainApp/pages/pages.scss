@@ -21,11 +21,14 @@ $main-border-card-color: white;
 //Separa unas secciones de otras
 $main-border-section: #c9af0f;
 
-
+$main-transparente: #00000000;
 
 $main-height-cover-phone: 210px;
 
 /************************************************************************/
+
+
+
 /** Vista del lector **/
 .home-container {
 
@@ -57,15 +60,10 @@ $main-height-cover-phone: 210px;
                     width: 100%;
                 }
             }
-
-            .op-10:hover{
-                background-color: #c9b00f2d;
-            }
-
         }
     }
 
-    
+
 
     .home-pendientes {
 
@@ -81,6 +79,11 @@ $main-height-cover-phone: 210px;
                 grid-template-columns: repeat(2, 1fr);
                 text-align: center;
                 width: 100%;
+
+                .option-pl {
+                    border: $main-border-section 1px solid;
+                }
+
             }
 
             .home-pl-list {
@@ -190,22 +193,34 @@ $main-height-cover-phone: 210px;
     justify-self: center;
     text-align: center;
     width: 100%;
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
-.profile-details{
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+.profile-details {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
@@ -279,13 +294,21 @@ $main-height-cover-phone: 210px;
         .ol-social-list {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
+            row-gap: 15px;
 
             .ol-social-item {
-                width: 100%;
 
-                .logo-sm {
-                    width: 60%;
+                a {
+                    display: grid;
+                    justify-items: center;
+                    align-items: center;
+
+                    .logo-sm {
+
+                        width: 50%;
+                    }
                 }
+
             }
         }
 
@@ -316,11 +339,17 @@ $main-height-cover-phone: 210px;
 
         .ol-chapter-item {
 
-            border: $main-border-color 1px solid;
+            border: white 1px solid;
 
             .ol-chapter-description {
+                background-image: url('./images/logo.png');
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 60% 60%;
+
                 height: 120px;
                 display: grid;
+                text-align: center;
                 align-items: center;
                 justify-items: center;
             }
@@ -330,7 +359,7 @@ $main-height-cover-phone: 210px;
                 display: grid;
                 align-items: center;
                 justify-items: center;
-                border: $main-border-color 1px solid;
+                border-top: white 1px solid;
 
                 img {
 
@@ -367,8 +396,27 @@ $main-height-cover-phone: 210px;
                 }
             }
         }
+    }
 
+    .follow {
 
+        display: grid;
+        justify-items: center;
+
+        button {
+            width: 100%;
+
+            font-size: 15px;
+            border: 1px solid $main-button-color;
+            margin-left: 5px;
+            background-color: $main-transparente;
+            color: $main-button-color;
+        }
+
+        button:hover {
+            background-color: $main-button-color;
+            color: black;
+        }
     }
 }
 
@@ -412,21 +460,21 @@ $main-height-cover-phone: 210px;
                 grid-template-columns: 120px 80px 80px;
                 column-gap: 5px;
 
-                input:enabled{
+                input:enabled {
                     background-color: white;
                 }
 
-                input:disabled{
+                input:disabled {
                     background-color: #afa3a321;
                 }
 
-                button{
+                button {
                     background-color: #19191900;
                     color: $main-button-color;
                     border: $main-button-color 1px solid;
                 }
 
-                button:disabled{
+                button:disabled {
                     text-decoration: line-through;
                 }
 
@@ -449,6 +497,24 @@ $main-height-cover-phone: 210px;
             .profile-lector-create {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
+
+                div {
+                    button {
+
+                        font-size: 15px;
+                        border: 1px solid $main-button-color;
+                        margin-left: 5px;
+                        background-color: $main-transparente;
+                        color: $main-button-color;
+                    }
+
+                    button:hover {
+                        background-color: $main-button-color;
+                        color: black;
+                    }
+
+                }
+
             }
         }
 
@@ -529,14 +595,14 @@ $main-height-cover-phone: 210px;
         grid-template-columns: 1fr;
         column-gap: 20px;
         row-gap: 20px;
-        
-        .btn{
+
+        .btn {
             border: 1px solid $main-button-color;
             background-color: #c9b00f00;
-            color:  $main-button-color;
+            color: $main-button-color;
         }
 
-        .btn:hover{
+        .btn:hover {
             color: black;
             background-color: $main-button-color;
         }
@@ -570,6 +636,17 @@ $main-height-cover-phone: 210px;
 
                     width: 100%;
                     height: 200px;
+                }
+
+                button {
+                    background-color: $main-transparente;
+                    color: $main-button-color;
+                    border: $main-button-color 1px solid;
+                }
+
+                button:hover {
+                    background-color: $main-button-color;
+                    color: black;
                 }
             }
 
@@ -611,7 +688,23 @@ $main-height-cover-phone: 210px;
         .edit-obra-social-new-media {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
+
         }
+    }
+}
+
+.social-media-item {
+
+    button {
+        margin-left: 5px;
+        background-color: $main-transparente;
+        color: $main-button-color;
+        border: $main-button-color 1px solid;
+    }
+
+    button:hover {
+        background-color: $main-button-color;
+        color: black;
     }
 }
 
@@ -644,12 +737,16 @@ $main-height-cover-phone: 210px;
         border-top: $main-border-section 1px solid;
         margin-bottom: 15px;
 
-        .btn {
-            font-size: 15px;
-            border: 1px solid $main-border-color;
-            background-color: $main-buttonC-color;
-            margin-top: 10px;
-            width: 100%;
+        button {
+            margin-left: 5px;
+            background-color: $main-transparente;
+            color: $main-button-color;
+            border: $main-button-color 1px solid;
+        }
+
+        button:hover {
+            background-color: $main-button-color;
+            color: black;
         }
     }
 }
@@ -813,7 +910,6 @@ $main-height-cover-phone: 210px;
 
 }
 
-
 /** Library **/
 
 .library-container {
@@ -843,6 +939,8 @@ $main-height-cover-phone: 210px;
         grid-template-columns: repeat(2, 1fr);
 
         .library-obra {
+
+            border: solid 1px white;
             width: 100%;
 
             img {
@@ -855,6 +953,21 @@ $main-height-cover-phone: 210px;
 }
 
 
+.MANGA {
+    background-color: #38564D;
+}
+
+.COMIC {
+    background-color: #6C573E;
+}
+
+.NOVELALIGERA {
+    background-color: #6D723F;
+}
+
+.NOVELA {
+    background-color: #537740;
+}
 
 .select {
     background-color: $main-select-color;
@@ -865,6 +978,23 @@ $main-height-cover-phone: 210px;
     }
 }
 
-* input, * select, * option, * textarea {
+* input,
+* select,
+* option,
+* textarea {
     color: black !important;
+}
+
+
+.top-10:hover,
+.pendientes:hover,
+.recientes:hover,
+.seguidos:hover,
+.library-obra:hover,
+.ol-chapter-item:hover {
+    border: $main-border-section 1px solid !important;
+}
+
+.ol-chapter-vl:hover{
+    border-top: $main-border-section 1px solid !important;
 }

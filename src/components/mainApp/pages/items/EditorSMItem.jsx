@@ -49,7 +49,7 @@ export default class EditorSMItem extends Component {
         return (
             <div className='social-media-item' >
                 <label>{this.props.name + ': ' }</label>
-                <input type='text' value={link} onChange={(e) => this.updateValue(e)} />
+                <input type='text' placeholder='Añadir enlace' value={link} onChange={(e) => this.updateValue(e)} />
                 <button disabled={!activo} onClick={() => this.updateSocial()}>Actualizar</button>
             </div>
         );

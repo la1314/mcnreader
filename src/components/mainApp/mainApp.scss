@@ -17,10 +17,30 @@ $main-button-text-color: #c9af0f;
 .header-app {
 
     background-color: $main-container-color;
-    margin-top: 5px;
+    grid-template-columns: 1fr 2fr;
+    margin-top: 20px;
     display: grid;
     align-items: center;
     justify-items: center;
+
+    .menu-logo{
+
+        display: grid;
+        width: 100%;
+
+        img{
+            height: 150px;
+        }
+
+        img:hover{
+            -webkit-animation-name: pulse;
+                animation-name: pulse;
+                -webkit-animation-duration: 1s;
+                animation-duration: 1s;
+                -webkit-animation-fill-mode: both;
+                animation-fill-mode: both;
+        }
+    }
 
     .menu-item-container {
 
@@ -28,7 +48,9 @@ $main-button-text-color: #c9af0f;
         grid-template-columns: repeat(4, 1fr);
         align-items: center;
         justify-items: center;
+        justify-self: end;
         column-gap: 5px;
+        
 
         .menu-item {
 
@@ -73,6 +95,7 @@ $main-button-text-color: #c9af0f;
 
         .menu-item-logout {
 
+            justify-self: end;
             background-color: gainsboro;
             background-image: url('./pages/images/logout.png');
             background-repeat: no-repeat;
@@ -84,4 +107,41 @@ $main-button-text-color: #c9af0f;
         }
     }
 
+}
+
+
+/*Animaciones*/
+
+@-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.05, 1.05, 1.05);
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.05, 1.05, 1.05);
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
 }

@@ -3,13 +3,22 @@
 $main-border-section: #c9af0f;
 $main-height-cover-pc: 450px;
 $main-columns-MEDIUM: 3;
-$main-row-gap: 20px;
-$main-column-gap: 20px;
-$main-font-size: 20px;
-$main-font-size-h1: 30px;
+$main-row-gap: 15px;
+$main-column-gap: 15px;
+$main-font-size: 18px;
+$main-font-size-h1: 25px;
+
+
+
+
 
 /* Medium */
 @media (min-width:620px) {
+
+
+    * {
+        font-size: $main-font-size;
+    }
 
     .h1-section {
         margin-top: 15px;
@@ -543,7 +552,7 @@ $main-font-size-h1: 30px;
             .obra-generos-lista {
                 display: grid;
                 row-gap: 5px;
-                grid-template-columns: repeat(6, 1fr);
+                grid-template-columns: repeat(4, 1fr);
             }
         }
 
@@ -572,7 +581,16 @@ $main-font-size-h1: 30px;
                 display: grid;
                 justify-items: center;
                 align-items: center;
-                grid-template-columns: repeat(11, 1fr);
+                grid-template-columns: repeat(5, 1fr);
+
+                .social-media-item {
+
+                    button {
+                        font-size: $main-font-size;
+                    }
+
+                }
+
             }
 
             .social-media-item {
@@ -623,6 +641,7 @@ $main-font-size-h1: 30px;
             grid-template-columns: 1fr;
 
             button {
+                font-size: $main-font-size;
                 width: 200px;
             }
         }
