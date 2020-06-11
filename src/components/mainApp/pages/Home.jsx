@@ -31,7 +31,7 @@ export default class Home extends Component {
   // Devuelve los capítulos recientemente publicados
   findRecientes = () => {
 
-    axios.post('/api/find-recientes/').then((res) => {
+    axios.post('https://mcnreader.herokuapp.com/api/find-recientes/').then((res) => {
       if (this._isMounted) {
         this.setState({ recientes: res.data })
       }

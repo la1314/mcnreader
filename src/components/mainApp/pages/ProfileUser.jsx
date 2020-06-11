@@ -42,7 +42,7 @@ export default class ProfileUser extends Component {
 
   // Carga los datos del usuario al state
   findDetailts = () => {
-    axios.post('/api/find-user-details/')
+    axios.post('https://mcnreader.herokuapp.com/api/find-user-details/')
       .then(res => {
 
         this.setState({
@@ -56,7 +56,7 @@ export default class ProfileUser extends Component {
 
   // Carga los diferentes tipos de obras al state
   findTipos = () => {
-    axios.post('/api/find-tipos/')
+    axios.post('https://mcnreader.herokuapp.com/api/find-tipos/')
       .then(res => {
         this.setState({
           tipos: res.data,
@@ -66,7 +66,7 @@ export default class ProfileUser extends Component {
 
   //Carga los tipos de lectores del usuario al state lectores
   findLectores = () => {
-    axios.post('/api/find-lectores/')
+    axios.post('https://mcnreader.herokuapp.com/api/find-lectores/')
       .then(res => {
         this.setState({
           lectores: res.data
@@ -80,11 +80,11 @@ export default class ProfileUser extends Component {
     const { newName } = this.state
 
     if (newName.length > 4) {
-      axios.post('/api/check-username/', null, {
+      axios.post('https://mcnreader.herokuapp.com/api/check-username/', null, {
         params: { username: newName }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
-          axios.post('/api/edit-username/', null, {
+          axios.post('https://mcnreader.herokuapp.com/api/edit-username/', null, {
             params: { username: newName }
           })
           this.refEditUser.current.disabled = true;
@@ -99,11 +99,11 @@ export default class ProfileUser extends Component {
   //Actualiza el nombre del Usuario
   updateUserName = () => {
     const { newName } = this.state
-    axios.post('/api/edit-username/', null, {
+    axios.post('https://mcnreader.herokuapp.com/api/edit-username/', null, {
       params: { username: newName }
     }).then(() => { this.findDetailts() })
     this.setState({ disabledUserE: false })
-    this.refEditUserE.current.disabled = true;
+    this.refEditUser.current.disabled = true;
 
   }
 
@@ -112,11 +112,11 @@ export default class ProfileUser extends Component {
 
     const { newEmail } = this.state
     if (newEmail.length > 8) {
-      axios.post('/api/check-email/', null, {
+      axios.post('https://mcnreader.herokuapp.com/api/check-email/', null, {
         params: { email: newEmail }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
-          axios.post('/api/edit-email/', null, {
+          axios.post('https://mcnreader.herokuapp.com/api/edit-email/', null, {
             params: { email: newEmail }
           })
           this.setState({ disabledEmail: true })
@@ -131,24 +131,24 @@ export default class ProfileUser extends Component {
   updateEmail = () => {
 
     const { newEmail } = this.state
-    axios.post('/api/edit-email/', null, {
+    axios.post('https://mcnreader.herokuapp.com/api/edit-email/', null, {
       params: { email: newEmail }
     }).then(() => { this.findDetailts() })
-    this.refEditEmailE.current.disabled = true;
+    this.refEditEmail.current.disabled = true;
     this.setState({ disabledEmailE: false })
   }
 
   //Comprueba si la preferencia existe, en caso contrario la crea
   activarPreferencia = async (id) => {
 
-    const incognita = await axios.post('/api/check-reader/', null, {
+    const incognita = await axios.post('https://mcnreader.herokuapp.com/api/check-reader/', null, {
       params: { tipo: id }
     }).then(res => {
       return res.data[0].booleano;
     })
 
     if (!incognita) {
-      axios.post('/api/create-reader/', null, {
+      axios.post('https://mcnreader.herokuapp.com/api/create-reader/', null, {
         params: { tipo: id }
       }).then(() => { this.findLectores() })
     }
@@ -183,7 +183,7 @@ export default class ProfileUser extends Component {
       const { passBool, repassBool, newPassword } = this.state
 
       if (passBool && repassBool) {
-        axios.post('/api/edit-user-password/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/edit-user-password/', null, {
           params: { password: md5(newPassword) }
         })
       } else {
@@ -269,7 +269,7 @@ export default class ProfileUser extends Component {
 
     const { oldPassword } = this.state
 
-    const comprobacion = await axios.post('/api/check-user-password/', null, {
+    const comprobacion = await axios.post('https://mcnreader.herokuapp.com/api/check-user-password/', null, {
       params: { password: md5(oldPassword) }
     }).then(res => { return parseInt(res.data[0].booleano) })
 
@@ -290,31 +290,31 @@ export default class ProfileUser extends Component {
     switch (e.target.value) {
 
       case 'PAGINADA':
-        axios.post('/api/update-reader-pc/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/update-reader-pc/', null, {
           params: { tipo: id, cascada: 0, paginada: 1 }
         }).then(() => { this.findLectores() })
         break;
 
       case 'CASCADA':
-        axios.post('/api/update-reader-pc/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/update-reader-pc/', null, {
           params: { tipo: id, cascada: 1, paginada: 0 }
         }).then(() => { this.findLectores() })
         break;
 
       case 'OCCIDENTAL':
-        axios.post('/api/update-reader-oroc/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/update-reader-oroc/', null, {
           params: { tipo: id, occidental: 1, oriental: 0 }
         }).then(() => { this.findLectores() })
         break;
 
       case 'ORIENTAL':
-        axios.post('/api/update-reader-oroc/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/update-reader-oroc/', null, {
           params: { tipo: id, occidental: 0, oriental: 1 }
         }).then(() => { this.findLectores() })
         break;
 
       case 'SIMPLE':
-        axios.post('/api/update-reader-oroc/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/update-reader-oroc/', null, {
           params: { tipo: id, occidental: 0, oriental: 0 }
         }).then(() => { this.findLectores() })
         break;

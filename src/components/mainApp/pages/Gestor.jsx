@@ -66,7 +66,7 @@ export default class Gestor extends Component {
   //Recupera datos para los options
   obtenerValores = (option) => {
 
-    return axios.post(`/api/find-${option}/`).then(function (res) {
+    return axios.post(`https://mcnreader.herokuapp.com/api/find-${option}/`).then(function (res) {
       // handle success
       return res.data
     })
@@ -121,7 +121,7 @@ export default class Gestor extends Component {
 
     const { tipo, estado, nombre, autor, lanzamiento, visibilidad } = this.state
 
-    axios.post('/api/new-obra/', null, {
+    axios.post('https://mcnreader.herokuapp.com/api/new-obra/', null, {
       params: {
         editor: this.props.user,
         tipo: tipo,
@@ -133,7 +133,7 @@ export default class Gestor extends Component {
       }
     }).then(() => {
 
-      axios.post('/api/obra-id/', null, {
+      axios.post('https://mcnreader.herokuapp.com/api/obra-id/', null, {
         params: {
           editor: this.props.user,
           name: nombre,
@@ -157,7 +157,7 @@ export default class Gestor extends Component {
 
         this.setState({ coverList: await this.findObras() })
 
-        axios.post('/api/default-demografia/', null, { params: { obra: obra } })
+        axios.post('https://mcnreader.herokuapp.com/api/default-demografia/', null, { params: { obra: obra } })
 
       })
     })
@@ -166,7 +166,7 @@ export default class Gestor extends Component {
   //Recupera todas las obras del editor
   findObras = () => {
 
-    return axios.post('/api/find-all-editor-obras/', null, {
+    return axios.post('https://mcnreader.herokuapp.com/api/find-all-editor-obras/', null, {
       params: {
         editor: this.props.user,
       }

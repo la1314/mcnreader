@@ -85,7 +85,7 @@ export default class Reader extends Component {
 
         const tipo = parseInt(localStorage.getItem('tipo'));
 
-        axios.post('/api/find-lector-tipo/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/find-lector-tipo/', null, {
             params: { tipo: tipo }
         }).then(res => {
             if (res.data.length !== 0) {
@@ -98,7 +98,7 @@ export default class Reader extends Component {
     //Devuelve las paginas de un capítulo
     findPages = () => {
         const { chapter } = this.state
-        return axios.post('/api/find-chapter-pages/', null, {
+        return axios.post('https://mcnreader.herokuapp.com/api/find-chapter-pages/', null, {
             params: { chapter: parseInt(chapter) }
         }).then(res => { return res.data })
     }

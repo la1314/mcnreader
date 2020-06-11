@@ -411,6 +411,29 @@ $main-height-cover-phone: 210px;
                 display: grid;
                 grid-template-columns: 120px 80px 80px;
                 column-gap: 5px;
+
+                input:enabled{
+                    background-color: white;
+                }
+
+                input:disabled{
+                    background-color: #afa3a321;
+                }
+
+                button{
+                    background-color: #19191900;
+                    color: $main-button-color;
+                    border: $main-button-color 1px solid;
+                }
+
+                button:disabled{
+                    text-decoration: line-through;
+                }
+
+                button:enabled:hover {
+                    background-color: $main-button-color;
+                    color: black;
+                }
             }
         }
 

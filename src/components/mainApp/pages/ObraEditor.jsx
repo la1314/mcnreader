@@ -79,7 +79,7 @@ export default class ObraEditor extends Component {
 
         const { obra } = this.state
 
-        axios.post('/api/find-info-obra/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/find-info-obra/', null, {
             params: { obra: obra }
         }).then(res => {
             const datos = res.data[0];
@@ -128,7 +128,7 @@ export default class ObraEditor extends Component {
 
         const { obra } = this.state
 
-        return axios.post(`/api/find-${option}/`, null, { params: { obra: obra } }).then(function (res) {
+        return axios.post(`https://mcnreader.herokuapp.com/api/find-${option}/`, null, { params: { obra: obra } }).then(function (res) {
             // handle success
             return res.data
         })
@@ -141,7 +141,7 @@ export default class ObraEditor extends Component {
 
         const value = e.target.value
         const re = /^[0-9\b]+$/;
-        axios.post('/api/edit-obra/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/edit-obra/', null, {
             params: { type: type, obra: obra, value: value }
         }).then(async () => {
             if (type === 11 || type === 10) {
@@ -212,7 +212,7 @@ export default class ObraEditor extends Component {
 
         const { estadoValue } = this.state;
 
-        axios.post('/api/get-estado/', null, { params: { id: estadoValue } }).then((res) => {
+        axios.post('https://mcnreader.herokuapp.com/api/get-estado/', null, { params: { id: estadoValue } }).then((res) => {
             // handle success
             this.setState({ estado: res.data[0].NOMBRE })
         })
@@ -260,7 +260,7 @@ export default class ObraEditor extends Component {
 
             axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then((res) => {
 
-                axios.post('/api/edit-obra/', null, {
+                axios.post('https://mcnreader.herokuapp.com/api/edit-obra/', null, {
                     params: { type: 5, obra: obra, value: res.data[0].ruta }
                 }).then(async () => { this.setState({ coverHash: Date.now(), cover: await this.findCaracteristicaObra('cover') }) })
             });
@@ -277,7 +277,7 @@ export default class ObraEditor extends Component {
 
         const { newChapterName, newChapterNumber, newChapterDate, newChapterVisibilidad, obra, editor } = this.state
 
-        axios.post('/api/new-chapter/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/new-chapter/', null, {
             params: {
                 obra: obra,
                 number: newChapterNumber || 0,

@@ -133,7 +133,7 @@ export default class Register extends Component {
     const { username, password, email, phone, usernameBool, passBool, repassBool, emailBool, phoneBool } = this.state;
 
     if (usernameBool & passBool & repassBool & emailBool & phoneBool) {
-      axios.post('/api/create-user/', null, {
+      axios.post('https://mcnreader.herokuapp.com/api/create-user/', null, {
         params: {
           email: email,
           username: username,
@@ -147,7 +147,7 @@ export default class Register extends Component {
         localStorage.removeItem('email');
         localStorage.removeItem('phone');
 
-        axios.post('/api/editor-id/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/editor-id/', null, {
           params: {
             editor: username
           }

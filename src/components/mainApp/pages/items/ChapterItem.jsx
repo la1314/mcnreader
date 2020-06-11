@@ -26,7 +26,7 @@ export default class HomePL extends Component {
     checkLeido = () => {
         const { chapter, rol } = this.state
         if (rol === 'READER') {
-            axios.post(`/api/check-leido/`, null, { params: { chapter: chapter } }).then((res) => { this.setState({ leido: res.data.Booleano }) })
+            axios.post(`https://mcnreader.herokuapp.com/api/check-leido/`, null, { params: { chapter: chapter } }).then((res) => { this.setState({ leido: res.data.Booleano }) })
         }
     }
 
@@ -35,7 +35,7 @@ export default class HomePL extends Component {
     createLeido = async () => {
         const { chapter, leido } = this.state
         if (!parseInt(leido)) {
-            axios.post(`/api/new-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({ leido: 1 }) })
+            axios.post(`https://mcnreader.herokuapp.com/api/new-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({ leido: 1 }) })
         }
     }
 
@@ -52,7 +52,7 @@ export default class HomePL extends Component {
     // Delete Leido
     deleteLeido = () => {
         const { chapter } = this.state
-        axios.post(`/api/delete-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({ leido: 0 }) })
+        axios.post(`https://mcnreader.herokuapp.com/api/delete-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({ leido: 0 }) })
     }
 
 

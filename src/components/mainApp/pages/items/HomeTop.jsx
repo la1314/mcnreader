@@ -18,7 +18,7 @@ export default class HomeTop extends Component {
 
     //Carga las 10 Obras con mejor media
     findTop = () => {
-        axios.post(`/api/find-top-10/`).then((res) => {
+        axios.post(`https://mcnreader.herokuapp.com/api/find-top-10/`).then((res) => {
             this.setState({ lista: res.data })
         })
     }

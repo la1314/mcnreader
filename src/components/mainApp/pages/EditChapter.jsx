@@ -34,7 +34,7 @@ export default class EditChapter extends Component {
 
         const { chapter } = this.state
 
-        axios.post('/api/find-info-chapter/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/find-info-chapter/', null, {
             params: { chapter: parseInt(chapter) }
         }).then(res => {
 
@@ -52,7 +52,7 @@ export default class EditChapter extends Component {
     //Devuelve las paginas de un capítulo
     findPages = () => {
         const { chapter } = this.state
-        return axios.post('/api/find-chapter-pages/', null, {
+        return axios.post('https://mcnreader.herokuapp.com/api/find-chapter-pages/', null, {
             params: { chapter: parseInt(chapter) }
         }).then(res => { return res.data })
     }
@@ -63,7 +63,7 @@ export default class EditChapter extends Component {
         const { chapter } = this.state
         const value = e.target.value
 
-        axios.post('/api/edit-chapter-pages/', null, { params: { type: type, id: chapter, value: value } })
+        axios.post('https://mcnreader.herokuapp.com/api/edit-chapter-pages/', null, { params: { type: type, id: chapter, value: value } })
 
         switch (type) {
             case 1:
@@ -106,7 +106,7 @@ export default class EditChapter extends Component {
         formData.append('action', 'deleteChapterFile');
 
         axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then(
-            axios.post('/api/delete-page/', null, {
+            axios.post('https://mcnreader.herokuapp.com/api/delete-page/', null, {
                 params: { page: parseInt(page) }
             }).then(async () => {
                 this.setState({ listPages: await this.findPages() })
@@ -119,7 +119,7 @@ export default class EditChapter extends Component {
         const value = e.target.value
 
         if (value) {
-            axios.post('/api/edit-page-number/', null, { params: { page: page, value: value } }).then(async () => {
+            axios.post('https://mcnreader.herokuapp.com/api/edit-page-number/', null, { params: { page: page, value: value } }).then(async () => {
                 this.setState({ listPages: await this.findPages() })
             })
         }
@@ -130,7 +130,7 @@ export default class EditChapter extends Component {
         const value = e.target.value
 
         if (value) {
-            axios.post('/api/edit-page-style/', null, { params: { page: page, value: value } }).then(async () => {
+            axios.post('https://mcnreader.herokuapp.com/api/edit-page-style/', null, { params: { page: page, value: value } }).then(async () => {
                 this.setState({ listPages: await this.findPages() })
             })
         }
@@ -177,7 +177,7 @@ export default class EditChapter extends Component {
 
                 const rutas = res.data
 
-                axios.post('/api/add-chapter-pages/', null, {
+                axios.post('https://mcnreader.herokuapp.com/api/add-chapter-pages/', null, {
                     params: { chapter: parseInt(chapter), rutas: rutas, numeros: nombres }
                 }).then(async () => {
 

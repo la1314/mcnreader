@@ -38,7 +38,7 @@ export default class PuntuacionItem extends Component {
     //Comprueba si el lector ha votado
     checkPuntuacion = () => {
         const { obra } = this.state
-        return axios.post(`/api/check-user-vote/`, null, { params: { obra: obra } }).then((res) => { return res.data.booleano })
+        return axios.post(`https://mcnreader.herokuapp.com/api/check-user-vote/`, null, { params: { obra: obra } }).then((res) => { return res.data.booleano })
     }
 
     //Actualiza una puntuación
@@ -52,7 +52,7 @@ export default class PuntuacionItem extends Component {
             this.newPuntuacion(puntos)
 
         } else {
-            axios.post(`/api/update-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then(() => { this.getAVG() })
+            axios.post(`https://mcnreader.herokuapp.com/api/update-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then(() => { this.getAVG() })
         }
 
     }
@@ -60,19 +60,19 @@ export default class PuntuacionItem extends Component {
     //Crea una puntuación
     newPuntuacion = (puntos) => {
         const { obra } = this.state
-        axios.post(`/api/new-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then(() => { this.getAVG() })
+        axios.post(`https://mcnreader.herokuapp.com/api/new-user-vote/`, null, { params: { obra: obra, puntos: puntos } }).then(() => { this.getAVG() })
     }
 
     //Recupera la puntuación del lector
     findPuntuaciones = () => {
         const { obra } = this.state
-        return axios.post(`/api/find-user-vote/`, null, { params: { obra: obra } }).then((res) => { return res.data.PUNTOS })
+        return axios.post(`https://mcnreader.herokuapp.com/api/find-user-vote/`, null, { params: { obra: obra } }).then((res) => { return res.data.PUNTOS })
     }
 
     //Obtiene la media de puntuaciones de la obra
     getAVG = () => {
         const { obra } = this.state
-        axios.post(`/api/find-avg-obra/`, null, { params: { obra: obra } }).then((res) => { this.setState({ avg: (Math.round(res.data.MEDIA * 100) / 100) || 'N/P' }) })
+        axios.post(`https://mcnreader.herokuapp.com/api/find-avg-obra/`, null, { params: { obra: obra } }).then((res) => { this.setState({ avg: (Math.round(res.data.MEDIA * 100) / 100) || 'N/P' }) })
     }
 
     //Función llamada al hacer click

@@ -114,7 +114,7 @@ export default class Register extends Component {
     const { username, password, email, usernameBool, passBool, repassBool, emailBool } = this.state;
 
     if (usernameBool & passBool & repassBool & emailBool) {
-      axios.post('/api/create-user/', null, {
+      axios.post('https://mcnreader.herokuapp.com/api/create-user/', null, {
         params: {
           email: email,
           username: username,

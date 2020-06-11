@@ -54,7 +54,7 @@ export default class LoginEditor extends Component {
 
     const { username, password } = this.state;
 
-    return axios.post('/api/generate-token/', null, {
+    return axios.post('https://mcnreader.herokuapp.com/api/generate-token/', null, {
       params: {
         user: username,
         password: password,

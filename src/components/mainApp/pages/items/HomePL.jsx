@@ -21,7 +21,7 @@ export default class HomePL extends Component {
 
     //Carga los capitulos pendientes al state
     findPendientes = () => {
-        axios.post(`/api/get-no-leidos/`).then((res) => {
+        axios.post(`https://mcnreader.herokuapp.com/api/get-no-leidos/`).then((res) => {
 
             const filtrado = res.data.filter(item => item.TOTALCAPS !== item.LEIDOS)
             this.setState({ pendientes: filtrado })
@@ -31,13 +31,13 @@ export default class HomePL extends Component {
 
     //Carga los capitulos pendientes al state
     findListaSeguidos = () => {
-        axios.post(`/api/get-list-follow`).then((res) => { this.setState({ lista: res.data }) })
+        axios.post(`https://mcnreader.herokuapp.com/api/get-list-follow`).then((res) => { this.setState({ lista: res.data }) })
 
     }
 
     //Deja de seguir una obra
     unfollow = (obra) => {
-        axios.post(`/api/unfollow-obra/`, null, { params: { obra: obra } }).then(() => { this.findListaSeguidos() })
+        axios.post(`https://mcnreader.herokuapp.com/api/unfollow-obra/`, null, { params: { obra: obra } }).then(() => { this.findListaSeguidos() })
     }
 
     //Cambia la selección

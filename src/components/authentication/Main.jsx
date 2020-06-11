@@ -24,7 +24,7 @@ export default class Main extends Component {
    */
   checkAuth = async () => {
 
-    const incognita = await axios.get('/api/checkToken')
+    const incognita = await axios.get('https://mcnreader.herokuapp.com/api/checkToken')
 
     //TODO Puede que tenga que encryptar muy posiblemente
 

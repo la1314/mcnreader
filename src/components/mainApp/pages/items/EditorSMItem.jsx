@@ -23,7 +23,7 @@ export default class EditorSMItem extends Component {
 
         const { media, obra, link } = this.state
 
-        axios.post(`/api/update-social-media/`, null, { params: { obra: obra, media: media, link: link } }).then(()=>{this.setState({ activo: 0 })})
+        axios.post(`https://mcnreader.herokuapp.com/api/update-social-media/`, null, { params: { obra: obra, media: media, link: link } }).then(()=>{this.setState({ activo: 0 })})
 
     }
 

@@ -34,7 +34,7 @@ export default class ObraLector extends Component {
 
         const { obra } = this.state
 
-        axios.post('/api/find-info-obra/', null, {
+        axios.post('https://mcnreader.herokuapp.com/api/find-info-obra/', null, {
             params: { obra: obra }
         }).then(res => {
             const datos = res.data[0];
@@ -67,7 +67,7 @@ export default class ObraLector extends Component {
 
         const { obra } = this.state
 
-        return axios.post(`/api/find-${option}/`, null, { params: { obra: obra } }).then(function (res) {
+        return axios.post(`https://mcnreader.herokuapp.com/api/find-${option}/`, null, { params: { obra: obra } }).then(function (res) {
             // handle success
             return res.data
         })
@@ -82,7 +82,7 @@ export default class ObraLector extends Component {
     // compruba que el usuario sigue una obra
     checkFollow = (obra) => {
         const { rol } = this.state
-        return rol === 'READER' ? axios.post(`/api/find-follow/`, null, { params: { obra: obra } }).then((res) => { return res.data.Booleano }) : 0
+        return rol === 'READER' ? axios.post(`https://mcnreader.herokuapp.com/api/find-follow/`, null, { params: { obra: obra } }).then((res) => { return res.data.Booleano }) : 0
     }
 
     // follow obra
@@ -91,7 +91,7 @@ export default class ObraLector extends Component {
         const incognita = await this.checkFollow(obra);
 
         if (!incognita) {
-            axios.post(`/api/follow-obra/`, null, { params: { obra: obra } }).then(this.setState({ follow: 1 }))
+            axios.post(`https://mcnreader.herokuapp.com/api/follow-obra/`, null, { params: { obra: obra } }).then(this.setState({ follow: 1 }))
         }
 
     }
@@ -101,7 +101,7 @@ export default class ObraLector extends Component {
         const { obra } = this.state
         const incognita = await this.checkFollow(obra);
         if (incognita) {
-            axios.post(`/api/unfollow-obra/`, null, { params: { obra: obra } }).then(this.setState({ follow: 0 }))
+            axios.post(`https://mcnreader.herokuapp.com/api/unfollow-obra/`, null, { params: { obra: obra } }).then(this.setState({ follow: 0 }))
         }
     }
 

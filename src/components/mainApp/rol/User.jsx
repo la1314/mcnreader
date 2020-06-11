@@ -60,7 +60,7 @@ export default class User extends Component {
 
   //Limpia el token se session para hacer el logout
   clearCookie = () => {
-    return axios.post('/api/clear')
+    return axios.post('https://mcnreader.herokuapp.com/api/clear')
       .then(function (response) {
         return response.data
       })

@@ -73,7 +73,7 @@ export default class MainSession extends Component {
   //Comprueba que el usuario actual exista 0/1
   checkUser = async (username, type) => {
 
-    return await axios.post('/api/check-user/', null, {
+    return await axios.post('https://mcnreader.herokuapp.com/api/check-user/', null, {
       params: {
         user: username,
         type: type

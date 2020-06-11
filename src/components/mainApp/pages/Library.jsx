@@ -20,7 +20,7 @@ export default class Library extends Component {
   //Obtiene las distintas caracteristicas de una obra
   findLetras = () => {
 
-    axios.post(`/api/find-first-letra/`).then(res => { this.setState({ letras: res.data }) }).then(() => {
+    axios.post(`https://mcnreader.herokuapp.com/api/find-first-letra/`).then(res => { this.setState({ letras: res.data }) }).then(() => {
 
       const { letras } = this.state
       this.findLista(letras[0].LETRA)
@@ -30,7 +30,7 @@ export default class Library extends Component {
 
   //Obtiene las distintas caracteristicas de una obra
   findLista = (letra) => {
-    axios.post(`/api/find-by-letra/`, null, { params: { letra: letra } }).then(res => {
+    axios.post(`https://mcnreader.herokuapp.com/api/find-by-letra/`, null, { params: { letra: letra } }).then(res => {
       this.setState({ lista: res.data })
     })
   }
