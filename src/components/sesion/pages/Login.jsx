@@ -96,8 +96,8 @@ export default class Login extends Component {
         <button type="button" onClick={() => this.cambiarLogin()} className="btnC">
             Acceso editor
           </button>
-        <div className="header">Acceso Lectores</div>
-        <div className="content">
+        <div className="header fade">Acceso Lectores</div>
+        <div className="content fade">
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario o email</label>
@@ -109,7 +109,7 @@ export default class Login extends Component {
             </div>
           </div>
         </div>
-        <div className="footer">
+        <div className="footer fade">
           <button type="submit" onClick={() => this.checkLogin()} className="btn">
             Login
           </button>

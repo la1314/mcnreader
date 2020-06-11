@@ -63,14 +63,14 @@ $main-font-size-h1: 28px;
 
         .main-container-logo-session {
             height: 100%;
-            width: 80%;
+            width: 85%;
             display: grid;
             margin-left: auto;
             margin-right: auto;
             justify-items: center;
             align-items: center;
             column-gap: 50px;
-            grid-template-columns: 1.2fr 2fr;
+            grid-template-columns: 1fr 2fr;
 
             .logo-container {
 
@@ -120,6 +120,11 @@ $main-font-size-h1: 28px;
                                 font-size: 25px;
                             }
 
+                            .footer{
+                                .btn{
+                                    margin-top: 10px;
+                                }
+                            }
                         }
                     }
 
@@ -134,10 +139,7 @@ $main-font-size-h1: 28px;
                     }
                 }
             }
-
         }
-
-
     }
 
 
@@ -695,7 +697,7 @@ $main-font-size-h1: 28px;
             margin-bottom: 15px;
 
             .edit-obra-chapters-list-item {
-                height: 150px;
+                height: 200px ;
             }
         }
 

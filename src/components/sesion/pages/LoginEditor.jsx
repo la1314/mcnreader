@@ -62,7 +62,7 @@ export default class LoginEditor extends Component {
       }
     }).then(function (res) {
       // handle success
-      console.log('Login: ' + res.data);
+      //console.log('Login: ' + res.data);
       //TODO
       localStorage.removeItem('page');
       return res.data
@@ -95,8 +95,8 @@ export default class LoginEditor extends Component {
         <button type="button" onClick={() => this.cambiarLogin()} className="btnC">
           Acceso lector
           </button>
-        <div className="header">Acceso Editores</div>
-        <div className="content">
+        <div className="header fade">Acceso Editores</div>
+        <div className="content fade">
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario o email</label>
@@ -108,7 +108,7 @@ export default class LoginEditor extends Component {
             </div>
           </div>
         </div>
-        <div className="footer">
+        <div className="footer fade">
           <button type="submit" onClick={() => this.checkLogin()} className="btn">
             Login
           </button>

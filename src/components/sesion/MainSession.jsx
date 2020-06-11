@@ -84,6 +84,13 @@ export default class MainSession extends Component {
     })
   }
 
+  callAnimate = () => {
+    const {animate} = this.state
+
+    this.setState({animate: !animate})
+
+  }
+
   render() {
 
     const { centro, derecha, loginP, registerP } = this.state;
@@ -113,7 +120,9 @@ export default class MainSession extends Component {
           </div>
           <div className='main-session-container' >
             <div className="session-container">
-              <div className="session-cent" ref={ref => (this.container = ref)}>
+              <div 
+              className={'session-cent ' + ((centro===1 && (registerP ? 'editor-login' : 'reader-login')) || (centro===0 && loginP ? 'editor-login' : 'reader-login' ))} 
+              ref={ref => (this.container = ref)}>
                 {centro === 0 && (loginP ?
                   <Editor cambiarLogin={this.cambiarLogin} checkAuth={this.props.checkAuth} checkUser={this.checkUser} containerRef={ref => (this.current = ref)} />
                   :

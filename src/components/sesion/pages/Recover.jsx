@@ -12,7 +12,7 @@ export default class Recover extends Component {
 
   render() {
     return (
-      <div className="base-container" ref={this.props.containerRef}>
+      <div className="base-container fade" ref={this.props.containerRef}>
         <div className="header">Recover</div>
         <div className="content">
           <div className="form">

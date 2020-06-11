@@ -722,11 +722,18 @@ $main-height-cover-phone: 210px;
         margin-bottom: 15px;
 
         .edit-obra-chapters-list-item {
-            height: 150px;
-            border: 1px solid $main-border-color;
+            height: 150px !important;
+            border: 1px solid white;
             display: grid;
             justify-items: center;
             align-items: center;
+            background-image: url('./images/logo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 60% 60%;
+
+            display: grid;
+            text-align: center;
 
             .chapter-item-name {
                 text-align: center;
@@ -754,19 +761,24 @@ $main-height-cover-phone: 210px;
 
 /** Edición de capitulo y paginas **/
 .edit-chapter {
-
+    border-top: 1px solid $main-border-section;
     display: grid;
     row-gap: 10px;
 
     .return-edit-obra {
+        margin-top: 20px;
         display: grid;
 
         button {
+            margin-left: 5px;
+            background-color: $main-transparente;
+            color: $main-button-color;
+            border: $main-button-color 1px solid;
+        }
 
-            border: 1px solid $main-border-color;
+        button:hover {
             background-color: $main-button-color;
-            margin-left: auto;
-            margin-right: auto;
+            color: black;
         }
 
     }
@@ -775,6 +787,23 @@ $main-height-cover-phone: 210px;
         width: 100%;
         display: grid;
         grid-template-columns: 1fr;
+
+        input{
+            height: 50px;
+        }
+
+        button {
+            margin-top: 10px;
+            background-color: $main-transparente;
+            color: $main-button-color;
+            border: $main-button-color 1px solid;
+        }
+
+        button:hover {
+            background-color: $main-button-color;
+            color: black;
+        }
+
     }
 
     .edit-chapter-pages {
@@ -784,21 +813,29 @@ $main-height-cover-phone: 210px;
         column-gap: 10px;
         row-gap: 20px;
 
+
         .edit-page-item {
-            border: solid 1px $main-border-color;
+            border: solid 1px white;
             background-color: $main-bg-cover-text;
             width: 100%;
+
 
             img {
                 width: 100%;
                 height: $main-height-cover-phone;
             }
 
+
             .btn {
-                border: 1px solid $main-border-color;
-                background-color: $main-buttonC-color;
-                margin-top: 5px;
-                width: 100%;
+                margin-left: 5px;
+                background-color: $main-transparente;
+                color: $main-button-color;
+                border: $main-button-color 1px solid;
+            }
+
+            .btn:hover {
+                background-color: $main-button-color;
+                color: black;
             }
         }
 
@@ -915,9 +952,12 @@ $main-height-cover-phone: 210px;
 
 .library-container {
 
+    border-top: 1px solid $main-button-color;
     display: grid;
 
     .library-abcedario {
+
+        margin-top: 20px;
         justify-self: center;
         align-self: center;
 
@@ -932,7 +972,7 @@ $main-height-cover-phone: 210px;
             width: 100%;
 
             div {
-                
+
                 border: 1px solid $main-button-color;
                 width: 100%;
                 font-size: 15px;
@@ -941,7 +981,7 @@ $main-height-cover-phone: 210px;
                 text-align: center;
             }
 
-            div:hover{
+            div:hover {
                 background-color: $main-button-color;
                 color: black;
             }
@@ -1010,7 +1050,8 @@ $main-height-cover-phone: 210px;
 .recientes:hover,
 .seguidos:hover,
 .library-obra:hover,
-.ol-chapter-item:hover {
+.ol-chapter-item:hover,
+.edit-obra-chapters-list-item:hover {
     border: $main-border-section 1px solid !important;
 }
 

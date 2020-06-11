@@ -182,8 +182,8 @@ export default class Register extends Component {
         <button type="button" onClick={() => this.cambiarRegistro()} className="btnC">
           Registar Lector
           </button>
-        <div className="header">Registrar editor</div>
-        <div className="content">
+        <div className="header fade">Registrar editor</div>
+        <div className="content fade">
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario</label>
@@ -207,7 +207,7 @@ export default class Register extends Component {
             </div>
           </div>
         </div>
-        <div className="footer">
+        <div className="footer fade">
           <button type="submit" onClick={() => this.createUser()} className="btn">
             Register
           </button>
