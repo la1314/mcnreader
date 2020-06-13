@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ReactDOM from 'react-dom';
+import Dialog from '../../mainApp/pages/items/Dialog.jsx'
+import Tooltip from '../../mainApp/pages/items/ToolTip.jsx'
 const md5 = require('md5');
 axios.defaults.withCredentials = true;
 
@@ -19,6 +22,11 @@ export default class Register extends Component {
       emailBool: false,
       phoneBool: false
     };
+    this.ipUsername = React.createRef();
+    this.ipPass = React.createRef();
+    this.ipRePass = React.createRef();
+    this.ipEmail = React.createRef();
+    this.ipPhone = React.createRef();
   }
 
   //carga los datos de la pagina actual
@@ -37,17 +45,36 @@ export default class Register extends Component {
   //Comprueba que el usuario actual exista
   verificarUsuario = async (name) => {
 
+
     const nameInput = name;
     const { username, email } = this.state
+    const patron = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
     if (nameInput === 'username') {
 
-      const incognita = await this.props.checkUser(username);
-      incognita ? this.setState({ usernameBool: false }) : this.setState({ usernameBool: true })
+      const incognita = await this.props.checkUser(username, 1);
+
+      if (username.length < 4) {
+        this.ipUsername.current.className = '';
+      } else {
+        if (incognita) {
+          this.setState({ usernameBool: false }, () => { this.ipUsername.current.className = 'red-input' })
+        } else {
+          this.setState({ usernameBool: true }, () => { this.ipUsername.current.className = 'green-input' })
+        }
+      }
     } else {
 
-      const incognita = await this.props.checkUser(email);
-      incognita ? this.setState({ emailBool: false }) : this.setState({ emailBool: true })
+      if (email === '') {
+        this.ipEmail.current.className = ''
+      } else {
+        if (patron.test(email)) {
+          const incognita = await this.props.checkUser(email, 1);
+          incognita ? this.setState({ emailBool: false }, () => { this.ipEmail.current.className = 'red-input' }) : this.setState({ emailBool: true }, () => { this.ipEmail.current.className = 'green-input' })
+        } else {
+          this.ipEmail.current.className = 'red-input'
+        }
+      }
     }
   }
 
@@ -62,8 +89,14 @@ export default class Register extends Component {
 
     const username = this.limpiarTargetValue(e);
 
-    localStorage.setItem('username', username);
-    this.setState({ username: username })
+    if (username.length < 4) {
+      this.setState({ username: username })
+      this.ipUsername.current.className = '';
+
+    } else {
+      localStorage.setItem('username', username);
+      this.setState({ username: username })
+    }
   }
 
   //Actualiza el estado email con el value del target
@@ -71,57 +104,72 @@ export default class Register extends Component {
 
     const email = this.limpiarTargetValue(e);
 
+    if (email === '') {
+      this.ipEmail.current.className = '';
+    }
+
     localStorage.setItem('email', email);
     this.setState({ email: email })
   }
 
-   //Actualiza el estado phone con el value del target
+  //Actualiza el estado phone con el value del target
   updatePhone = (e) => {
 
     const phone = this.limpiarTargetValue(e);
     localStorage.setItem('phone', phone);
+    const re = /^[0-9\b]+$/;
+    if ((phone === '' || re.test(phone))) {
+      if (phone !== '') {
+        this.setState({ phoneBool: true })
+      } else {
+        this.setState({ phoneBool: false })
+      }
 
-    if (phone !== '') {
-      this.setState({ phoneBool: true })
-    } else {
-      this.setState({ phoneBool: false })
+      this.setState({ phone: phone })
+
     }
-
-    this.setState({ phone: phone })
-
   }
 
   //Actualiza el estado password con el value del target
   updatePassword = (e) => {
 
     const password = md5(this.limpiarTargetValue(e));
-    // Descomentar cuando se acabe la MainAPP
-    // const patron = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z$.\-@_]{8,}$/;
 
     this.setState({ password: password })
-    this.setState({ passBool: true, repassBool: false })
-    /* if (patron.test(this.limpiarTargetValue(e))) {
-       this.setState({ passBool: true, repassBool: false })
-     } else {
-       this.setState({ passBool: false, repassBool: false })
-     }*/
+  }
+
+  //Comprueba que la password este bien formada
+  verifiPass = (e) => {
+    const patron = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z$.\-@_]{8,}$/;
+
+    if (patron.test(e.target.value)) {
+
+      this.setState({ passBool: true, repassBool: false })
+      this.ipPass.current.className = 'green-input';
+    } else {
+
+      this.setState({ passBool: false, repassBool: false })
+      this.ipPass.current.className = 'red-input'
+    }
   }
 
   //Actualiza el estado password con el value del target
   updateRePassword = (e) => {
 
     const repassword = md5(this.limpiarTargetValue(e));
-    //Función flecha utilizada para esperar que el state sea reasignado para lanzar la función comparatePassword
-    this.setState({ repassword: repassword }, () => { this.comparatePassword() })
+    this.setState({ repassword: repassword })
   }
 
   //Función que compara las contraseña para determinar si son iguales o no
-  comparatePassword = () => {
+  comparatePassword = (e) => {
 
     const { password, repassword } = this.state
     if (password === repassword) {
+
+      this.ipRePass.current.className = 'green-input'
       this.setState({ repassBool: true })
     } else {
+      this.ipRePass.current.className = 'red-input'
       this.setState({ repassBool: false })
     }
   }
@@ -159,13 +207,28 @@ export default class Register extends Component {
           formData.append('action', 'newEditorDirectory');
           axios.post('https://tuinki.gupoe.com/media/options.php', formData)
 
-        }).then(this.props.resetPages())
+        }).then(() => {
+          localStorage.removeItem('username');
+          localStorage.removeItem('email');
+          this.showDialog('Bienvenido a Minerva:', 'La cuenta del editor ha sido creada exitosamente');
+          this.props.resetPages();
+
+        })
       })
     } else {
       //TODO por finalizar cuando se acabe la MainAPP
-      console.log('Se mantienen los datos');
+      this.showDialog('Error:', 'Faltan datos en el formulario')
 
     }
+  }
+
+  //Función que añade al ReactDOM una carta con los datos pasados
+  showDialog = (titulo, mensaje) => {
+
+    let contenedor = document.getElementById('dialog');
+    ReactDOM.unmountComponentAtNode(contenedor);
+    let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+    ReactDOM.render(carta, contenedor)
   }
 
   //Cambia el componente actual por el registro normal
@@ -187,23 +250,27 @@ export default class Register extends Component {
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario</label>
-              <input type="text" onChange={this.updateUsername} value={username} onBlur={() => { this.verificarUsuario('username') }} name="username" placeholder="Usuario" />
+              <input type="text" ref={this.ipUsername} onChange={this.updateUsername} value={username} onBlur={() => { this.verificarUsuario('username') }} name="username" placeholder="Usuario" />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input type="email" onChange={this.updateEmail} value={email} onBlur={() => { this.verificarUsuario('email') }} name="email" placeholder="Email" />
+              <input type="text" ref={this.ipEmail} onChange={this.updateEmail} value={email} onBlur={() => { this.verificarUsuario('email') }} name="email" placeholder="Email" />
             </div>
             <div className="form-group">
               <label htmlFor="phone">Teléfono</label>
-              <input type="number" onChange={this.updatePhone} value={phone} name="phone" placeholder="Ingresar teléfono" />
+              <input onChange={this.updatePhone} value={phone} name="phone" placeholder="Ingresar teléfono" />
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
-              <input type="password" onChange={this.updatePassword} name="password" placeholder="Ingresar contraseña" />
+              <div className='pass-info'>
+                <input type="password" ref={this.ipPass} onChange={this.updatePassword} onBlur={(e) => this.verifiPass(e)} name="password" placeholder="Ingresar contraseña" />
+                <Tooltip mensaje='Mínimo 8 carácteres:
+                ha de contener mayúsculas, minúsculas y números ' />
+              </div>
             </div>
             <div className="form-group">
               <label htmlFor="repassword">Repetir contraseña</label>
-              <input type="password" onChange={this.updateRePassword} name="repassword" placeholder="Repetir contraseña" />
+              <input type="password" ref={this.ipRePass} onChange={this.updateRePassword} onBlur={(e) => { this.comparatePassword(e) }} name="repassword" placeholder="Repetir contraseña" />
             </div>
           </div>
         </div>

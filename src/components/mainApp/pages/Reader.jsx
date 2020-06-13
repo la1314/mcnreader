@@ -201,7 +201,7 @@ export default class Reader extends Component {
         if (styleManga === null) { return null }
 
         return (
-            <div className={reader}>
+            <div className={reader + ' border-reader'}>
 
                 {reader === 'cascada' && (listPages.map((item, index) => {
                     return [

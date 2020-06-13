@@ -846,6 +846,7 @@ $main-height-cover-phone: 210px;
 
 .paginada {
 
+    border-top: $main-border-section 1px solid !important;
     .reader-grid {
         margin-top: 15px;
         margin-bottom: 15px;
@@ -870,6 +871,8 @@ $main-height-cover-phone: 210px;
 
 .paginada-occidental,
 .paginada-oriental {
+
+    border-top: $main-border-section 1px solid !important;
     margin-left: auto;
     margin-right: auto;
     width: 90%;
@@ -893,6 +896,7 @@ $main-height-cover-phone: 210px;
 
 
 .reader-button {
+    
     display: grid;
     grid-template-columns: 1fr 1fr;
 
@@ -911,6 +915,7 @@ $main-height-cover-phone: 210px;
 
 .cascada {
 
+    border-top: $main-border-section 1px solid !important;
     margin-top: 10px;
     display: grid;
     grid-template-columns: 1fr;
@@ -930,6 +935,7 @@ $main-height-cover-phone: 210px;
 .cascada-oriental,
 .cascada-occidental {
 
+    border-top: $main-border-section 1px solid !important;
     margin-left: auto;
     margin-right: auto;
     width: 90%;

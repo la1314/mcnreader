@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Dialog from '../../mainApp/pages/items/Dialog.jsx';
+import ReactDOM from 'react-dom';
 const md5 = require('md5');
 axios.defaults.withCredentials = true;
 
@@ -8,6 +10,9 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = { username: "", password: "", usernameBool: false, passBool: false };
+
+    this.ipUsername = React.createRef();
+    this.ipPassword = React.createRef();
   }
 
   //Comprueba que el usuario actual exista
@@ -18,8 +23,11 @@ export default class Login extends Component {
 
     if (incognita) {
       this.setState({ usernameBool: true })
+      this.ipUsername.current.className = 'green-input';
     } else {
       this.setState({ usernameBool: false })
+      this.ipUsername.current.className = 'red-input';
+      
     }
   }
 
@@ -81,6 +89,9 @@ export default class Login extends Component {
 
         this.props.checkAuth()
 
+      }else{
+        this.showDialog('Error:', 'Contraseña incorrecta')
+        this.ipPassword.current.className = 'red-input'
       }
     }
   }
@@ -90,22 +101,31 @@ export default class Login extends Component {
     this.props.cambiarLogin(1)
   }
 
+  //Función que añade al ReactDOM una carta con los datos pasados
+  showDialog = (titulo, mensaje) => {
+
+    let contenedor = document.getElementById('dialog');
+    ReactDOM.unmountComponentAtNode(contenedor);
+    let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+    ReactDOM.render(carta, contenedor)
+  }
+
   render() {
     return (
       <div className="base-container" ref={this.props.containerRef}>
         <button type="button" onClick={() => this.cambiarLogin()} className="btnC">
-            Acceso editor
+          Acceso editor
           </button>
         <div className="header fade">Acceso Lectores</div>
         <div className="content fade">
           <div className="form">
             <div className="form-group">
               <label htmlFor="username">Usuario o email</label>
-              <input type="text" onChange={this.updateUsername} onBlur={this.verificarUsuario} name="username" placeholder="Usuario o email" />
+              <input type="text" ref={this.ipUsername} onChange={this.updateUsername} onBlur={this.verificarUsuario} name="username" placeholder="Usuario o email" />
             </div>
             <div className="form-group">
               <label htmlFor="password">Contraseña</label>
-              <input onChange={this.updatePassword} type="password" name="password" placeholder="Contraseña" />
+              <input ref={this.ipPassword} onChange={this.updatePassword} type="password" name="password" placeholder="Contraseña" />
             </div>
           </div>
         </div>

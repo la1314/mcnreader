@@ -29,24 +29,24 @@ export default class Main extends Component {
     //TODO Puede que tenga que encryptar muy posiblemente
 
     if (incognita.data) {
-      this.setState({redirect: true, user: incognita.data.user, rol: incognita.data.rol})
-    }else{
-      this.setState({redirect: false, user: ''})
+      this.setState({ redirect: true, user: incognita.data.user, rol: incognita.data.rol })
+    } else {
+      this.setState({ redirect: false, user: '' })
     }
-    
+
   }
 
   render() {
 
     const { redirect, rol, user } = this.state;
-    
+
     if (redirect === null) { return null }
     return (
 
       <div className="App">
-
+        <div id='dialog'></div>
         {redirect ?
-          <MainApp checkAuth={this.checkAuth} rol={rol} user= {user} />
+          <MainApp checkAuth={this.checkAuth} rol={rol} user={user} />
           :
           <Session checkAuth={this.checkAuth} />
         }

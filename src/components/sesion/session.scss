@@ -117,11 +117,11 @@ $main-buttonC-color: #ffffff00;
                         }
                     }
 
-                   
+
 
                     .btn {
 
-                       
+
                         background-color: $main-button-color;
                         border: 1px solid $main-select-color;
                     }
@@ -154,14 +154,14 @@ $main-buttonC-color: #ffffff00;
     }
 }
 
-.reader-login{
+.reader-login {
     background-image: url('../mainApp/pages/images/libro.png');
     background-size: 90% 90%;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.editor-login{
+.editor-login {
     background-image: url('../mainApp/pages/images/pluma.gif');
     background-size: 90% 90%;
     background-repeat: no-repeat;
@@ -206,4 +206,80 @@ $main-buttonC-color: #ffffff00;
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+
+.red-input {
+
+    border: solid 3px red;
+}
+
+.green-input {
+
+    border: solid 3px green;
+}
+
+
+/** Apartado del dialog**/
+
+.dialog {
+    height: 150px;
+    width: 250px;
+    background: $main-bg-color;
+    border: white 1px solid;
+    z-index: 80;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+
+    .dialog-hb-container{
+
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        grid-template-rows: 1fr 3fr;
+        width: 100%;
+
+        .dialog-body{
+            text-align: center;
+        }
+    }
+
+    .cerrar-dialog {
+        float: right;
+        position: relative;
+        color: $main-select-color;
+        z-index: 99 !important;
+        text-align: center;
+        background-color: $main-button-color;
+        border: 1px solid $main-select-color;
+    }
+
+
+    .cerrar-dialog:hover {
+        background-color: $main-select-color;
+        color: black;
+    }
+}
+
+.info-img{
+    width: 35px;
+}
+
+.pass-info{
+    display: grid;
+    grid-template-columns: 6fr 1fr;
+}
+
+.tooltip{
+    
+    width: 170px;
+    background-color: $main-bg-color;
+   border: $main-select-color 1px solid !important;
+
+   *{
+    font-size: 15px !important;
+   }
 }
