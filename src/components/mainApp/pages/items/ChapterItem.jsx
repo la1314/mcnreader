@@ -78,7 +78,7 @@ export default class HomePL extends Component {
                     <div>Número: {number}</div>
                     <div>{name}</div>
                 </div>
-                {rol === 'READER' && (<div className='ol-chapter-vl' onClick={() => { this.changeLeido() }} >
+                {rol === 'READER' && (<div className={'ol-chapter-vl ' + (leido ? 'chapter-leido' : 'chapter-no-leido') } onClick={() => { this.changeLeido() }} >
                     <img alt='' src={leido ? imgSrc[1] : imgSrc[0]} ></img>
                 </div>)}
 

@@ -371,6 +371,16 @@ $main-height-cover-phone: 210px;
     }
 }
 
+.chapter-no-leido {
+    background: rgb(174, 238, 203);
+    background: radial-gradient(circle, rgba(174, 238, 203, 1) 0%, rgba(37, 91, 32, 1) 100%);
+}
+
+.chapter-leido {
+    background: rgb(219, 88, 102);
+    background: radial-gradient(circle, rgba(219, 88, 102, 1) 0%, rgba(193, 21, 45, 1) 100%);
+}
+
 //Clases para la puntiación y AVG de la obra
 .ol-rating-follow {
 
@@ -788,7 +798,7 @@ $main-height-cover-phone: 210px;
         display: grid;
         grid-template-columns: 1fr;
 
-        input{
+        input {
             height: 50px;
         }
 
@@ -847,6 +857,7 @@ $main-height-cover-phone: 210px;
 .paginada {
 
     border-top: $main-border-section 1px solid !important;
+
     .reader-grid {
         margin-top: 15px;
         margin-bottom: 15px;
@@ -897,13 +908,28 @@ $main-height-cover-phone: 210px;
 
 
 .reader-button {
-    
+
     display: grid;
     grid-template-columns: 1fr 1fr;
 
     .reader-left-Button,
     .reader-right-Button {
-        border: 1px solid $main-border-color;
+
+        border: 1px solid $main-button-color;
+
+        * {
+            color: $main-button-color;
+        }
+    }
+
+    .reader-left-Button:hover,
+    .reader-right-Button:hover {
+        background-color: $main-button-color;
+
+        * {
+            background-color: $main-button-color;
+            color: black;
+        }
     }
 
     div {
@@ -911,6 +937,52 @@ $main-height-cover-phone: 210px;
         display: grid;
         justify-items: center;
         align-items: center;
+    }
+}
+
+.reader-control-tipe {
+
+    margin-bottom: 15px;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    column-gap: 10px;
+    grid-template-columns: repeat(7, 1fr);
+
+    .reader-control-tipe-Button {
+        width: 100%;
+        border: 1px solid $main-button-color;
+        text-align: center;
+
+        * {
+            color: $main-button-color;
+        }
+    }
+
+    .reader-control-tipe-Button:hover {
+
+        background-color: $main-button-color;
+
+        * {
+
+            background-color: $main-button-color;
+            color: black;
+        }
+    }
+}
+
+.reader-control-chapter {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.select-o {
+    background-color: $main-button-color;
+
+    * {
+        color: black !important;
     }
 }
 

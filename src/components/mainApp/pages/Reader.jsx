@@ -109,7 +109,7 @@ export default class Reader extends Component {
     //Devuelve las paginas de un capítulo
     findPages = () => {
         const { chapter } = this.state
-        
+
         return axios.post('https://mcnreader.herokuapp.com/api/find-chapter-pages/', null, {
             params: { chapter: parseInt(chapter) }
         }).then(res => { return res.data })
@@ -151,7 +151,7 @@ export default class Reader extends Component {
         localStorage.setItem("chapter", chapter)
         axios.post('https://mcnreader.herokuapp.com/api/find-chapter-pages/', null, {
             params: { chapter: chapter }
-        }).then(res => { this.setState({ listPages: res.data, chapter: chapter }, () => {this.reordenarManga(this.state.listPages)} )})
+        }).then(res => { this.setState({ listPages: res.data, chapter: chapter, puntero: 0, dobles: 0 }, () => { this.reordenarManga(this.state.listPages) }) })
     }
 
     //Utilizada en caso de vista de dos páginas
@@ -224,12 +224,12 @@ export default class Reader extends Component {
         return (
             <div className={reader + ' border-reader'}>
                 <div className='reader-control-tipe'>
-                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 0) }} className='reader-control-tipe-Button' current='P' />
-                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 1, 0) }} className='reader-control-tipe-Button' current='P-D-OC' />
-                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 1) }} className='reader-control-tipe-Button' current='P-D-OR' />
-                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 0) }} className='reader-control-tipe-Button' current='C' />
-                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 1, 0) }} className='reader-control-tipe-Button' current='C-D-OC' />
-                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 1) }} className='reader-control-tipe-Button' current='C-D-OC' />
+                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 0) }} className={'reader-control-tipe-Button ' + (reader==='paginada' && 'select-o') } current='P' />
+                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 1, 0) }} className={'reader-control-tipe-Button ' + (reader==='paginada-occidental' && 'select-o') } current='P-D-OC' />
+                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 1) }} className={'reader-control-tipe-Button ' + (reader==='paginada-oriental' && 'select-o') } current='P-D-OR' />
+                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 0) }} className={'reader-control-tipe-Button ' + (reader==='cascada' && 'select-o') } current='C' />
+                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 1, 0) }} className={'reader-control-tipe-Button ' + (reader==='cascada-occidental' && 'select-o') } current='C-D-OC' />
+                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 1) }} className={'reader-control-tipe-Button ' + (reader==='cascada-oriental' && 'select-o') } current='C-D-OC' />
 
                     <div className='reader-control-chapter' >
                         <label>Capítulos: </label>
@@ -237,7 +237,6 @@ export default class Reader extends Component {
                             {listChapters.map((item, index) => <option key={item.NUMERO + index + item.ID} value={item.ID}>{item.NUMERO}</option>)}
                         </select>
                     </div>
-
                 </div>
                 {reader === 'cascada' && (listPages.map((item, index) => {
                     return [
@@ -275,7 +274,13 @@ export default class Reader extends Component {
                 )}
                 {reader === 'paginada-occidental' && (this.devolverPaginadoDoble(listPages, dobles, estilo))}
                 {reader === 'paginada-oriental' && (this.devolverPaginadoDoble(styleManga, dobles, estilo))}
-
+                
+                <div className='reader-control-chapter' >
+                        <label>Capítulos: </label>
+                        <select id="select-chapter" value={chapter} onChange={(e) => { this.cambiarCapitulo(e) }} >
+                            {listChapters.map((item, index) => <option key={item.NUMERO + index + item.ID} value={item.ID}>{item.NUMERO}</option>)}
+                        </select>
+                </div>
             </div>
 
         );

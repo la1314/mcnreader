@@ -52,8 +52,8 @@ export default class HomePL extends Component {
         return (
             <div className='home-pl-container'>
                 <div className='home-pl-options'>
-                    <div className={`option-pl h1-section `+ (!isSelect && clsname)} onClick={() => { this.changeSelect(0) }}>Capítulos pendientes</div>
-                    <div className={`option-pl h1-section `+ (isSelect && clsname)} onClick={() => { this.changeSelect(1) }}>Lista</div>
+                    <div className={`option-pl h1-section ` + (!isSelect && clsname)} onClick={() => { this.changeSelect(0) }}>Capítulos pendientes</div>
+                    <div className={`option-pl h1-section ` + (isSelect && clsname)} onClick={() => { this.changeSelect(1) }}>Lista</div>
                 </div>
 
                 <div className='home-pl-list' >
@@ -62,6 +62,7 @@ export default class HomePL extends Component {
                         lista.map((item, index) => {
                             return [
                                 <div className='seguidos' onClick={() => { this.props.verObra(item.ID) }} key={'pl-l' + index} >
+                                    <div className={`cover-tipo ` + item.TIPO.replace(' ', '')}>{item.TIPO}</div>
                                     <img alt='cover de la obra' src={item.COVER}></img>
                                     <div className='cover-name'>{item.NOMBRE}</div>
                                 </div>
@@ -71,6 +72,7 @@ export default class HomePL extends Component {
                         pendientes.map((item, index) => {
                             return [
                                 <div className='pendientes' onClick={() => { this.props.verObra(item.ID) }} key={'pl-p' + index} >
+                                    <div className={`cover-tipo ` + item.TIPO.replace(' ', '')}>{item.TIPO}</div>
                                     <img alt='cover de la obra' src={item.COVER} ></img>
                                     <div className='cover-name'>{item.NOMBRE}</div>
                                     <div className='cover-leido'>{item.LEIDOS}/{item.TOTALCAPS}</div>
