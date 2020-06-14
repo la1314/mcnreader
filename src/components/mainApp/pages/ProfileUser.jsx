@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import UL from './items/UserLector.jsx';
+import ReactDOM from 'react-dom';
+import Dialog from '../../mainApp/pages/items/Dialog.jsx';
 const md5 = require('md5');
 axios.defaults.withCredentials = true;
 
@@ -105,6 +107,7 @@ export default class ProfileUser extends Component {
     }).then(() => { this.findDetailts() })
     this.setState({ disabledUserE: false })
     this.refEditUser.current.disabled = true;
+    this.showDialog('Mensaje del sistema:', 'Nombre de usuario actualizado correctamente')
 
   }
 
@@ -137,6 +140,7 @@ export default class ProfileUser extends Component {
     }).then(() => { this.findDetailts() })
     this.refEditEmail.current.disabled = true;
     this.setState({ disabledEmailE: false })
+    this.showDialog('Mensaje del sistema:', 'Email del usuario actualizado correctamente')
   }
 
   //Comprueba si la preferencia existe, en caso contrario la crea
@@ -182,13 +186,17 @@ export default class ProfileUser extends Component {
 
     Promise.resolve(this.comparatePassword()).then(() => {
       const { passBool, repassBool, newPassword } = this.state
-
-      if (passBool && repassBool) {
-        axios.post('https://mcnreader.herokuapp.com/api/edit-user-password/', null, {
-          params: { password: md5(newPassword) }
-        })
+      if (newPassword.length > 7) {
+        if (passBool && repassBool) {
+          axios.post('https://mcnreader.herokuapp.com/api/edit-user-password/', null, {
+            params: { password: md5(newPassword) }
+          })
+          this.showDialog('Mensaje del sistema:','Contraseña del usuario actualizada correctamente')
+        } else {
+          this.showDialog('Mensaje del sistema:','Las contraseñas no son iguales')
+        }
       } else {
-        console.log('No iguales');
+        this.showDialog('Mensaje del sistema:', 'Contraseña demasiado corta')
       }
     })
   }
@@ -279,6 +287,8 @@ export default class ProfileUser extends Component {
       this.refNewPassword.current.disabled = false;
       this.refRNewPassword.current.disabled = false;
       this.setState({ disabledPasswordUpdate: true, disabledPasswordCheck: false })
+    } else {
+      this.showDialog('Mensaje del sistema:', 'La contraseña ingresada es incorrecta')
     }
   }
 
@@ -326,6 +336,14 @@ export default class ProfileUser extends Component {
 
   }
 
+  //Función que añade al ReactDOM una carta con los datos pasados
+  showDialog = (titulo, mensaje) => {
+
+    let contenedor = document.getElementById('dialog');
+    ReactDOM.unmountComponentAtNode(contenedor);
+    let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+    ReactDOM.render(carta, contenedor)
+  }
 
   render() {
 
@@ -384,7 +402,7 @@ export default class ProfileUser extends Component {
             <div className='profile-lector-create'>
               {tipos.map((item, index) => {
                 return [
-                  <UL findLectores={this.findLectores} key={'plc'+index} tipo={item.ID} name={item.NOMBRE} />
+                  <UL findLectores={this.findLectores} key={'plc' + index} tipo={item.ID} name={item.NOMBRE} />
                 ]
               })}
             </div>

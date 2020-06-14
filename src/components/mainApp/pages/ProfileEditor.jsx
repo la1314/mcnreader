@@ -79,7 +79,7 @@ export default class ProfileEditor extends Component {
     this.setState({ disabledUserE: false })
     this.refEditUserE.current.disabled = true;
 
-    this.showDialog('Mensaje del sistema:','Nombre de usuario actualziado correctamente')
+    this.showDialog('Mensaje del sistema:','Nombre de editor actualizado correctamente')
 
   }
 
@@ -111,7 +111,7 @@ export default class ProfileEditor extends Component {
     }).then(() => { this.findDetailts() })
     this.refEditEmailE.current.disabled = true;
     this.setState({ disabledEmailE: false })
-    this.showDialog('Mensaje del sistema:','Email del usuario actualziado correctamente')
+    this.showDialog('Mensaje del sistema:','Email del editor actualizado correctamente')
   }
 
   //Actualiza el telefono del editor
@@ -123,7 +123,7 @@ export default class ProfileEditor extends Component {
     }).then(() => { this.findDetailts() })
     this.refEditPhone.current.disabled = true;
     this.setState({ disabledPHone: false })
-    this.showDialog('Mensaje del sistema:','Teléfono del usuario actualziado correctamente')
+    this.showDialog('Mensaje del sistema:','Teléfono del editor actualizado correctamente')
   }
 
 
@@ -163,7 +163,7 @@ export default class ProfileEditor extends Component {
           this.refNewPasswordE.current.disabled = true;
           this.refRNewPasswordE.current.disabled = true;
           this.setState({ disabledPasswordUpdate: false })
-          this.showDialog('Mensaje del sistema:','Contraseña del usuario actualziada correctamente')
+          this.showDialog('Mensaje del sistema:','Contraseña del editor actualizada correctamente')
         } else {
           this.showDialog('Mensaje del sistema:','Las contraseñas no son iguales')
         }
