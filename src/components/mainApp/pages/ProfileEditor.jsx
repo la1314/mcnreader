@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import Dialog from '../../mainApp/pages/items/Dialog.jsx';
 import axios from 'axios';
 const md5 = require('md5');
 axios.defaults.withCredentials = true;
+
 
 export default class ProfileEditor extends Component {
 
@@ -34,7 +37,7 @@ export default class ProfileEditor extends Component {
 
   // Carga los datos del usuario al state
   findDetailts = () => {
-    axios.post('/api/find-editor-details/')
+    axios.post('https://mcnreader.herokuapp.com/api/find-editor-details/')
       .then(res => {
         this.setState({
           user: res.data.USERNAME,
@@ -52,8 +55,8 @@ export default class ProfileEditor extends Component {
 
     const { newName } = this.state
 
-    if (newName.length > 4) {
-      axios.post('/api/check-username/', null, {
+    if (newName.length > 3) {
+      axios.post('https://mcnreader.herokuapp.com/api/check-username/', null, {
         params: { username: newName }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
@@ -62,17 +65,21 @@ export default class ProfileEditor extends Component {
           this.setState({ disabledUserE: false })
         }
       })
+    } else{
+      this.setState({ disabledUserE: false })
     }
   }
 
   //Actualiza el nombre del editor
   updateUserName = () => {
     const { newName } = this.state
-    axios.post('/api/edit-username/', null, {
+    axios.post('https://mcnreader.herokuapp.com/api/edit-username/', null, {
       params: { username: newName }
     }).then(() => { this.findDetailts() })
     this.setState({ disabledUserE: false })
     this.refEditUserE.current.disabled = true;
+
+    this.showDialog('Mensaje del sistema:','Nombre de usuario actualziado correctamente')
 
   }
 
@@ -81,7 +88,7 @@ export default class ProfileEditor extends Component {
 
     const { newEmail } = this.state
     if (newEmail.length > 8) {
-      axios.post('/api/check-email/', null, {
+      axios.post('https://mcnreader.herokuapp.com/api/check-email/', null, {
         params: { email: newEmail }
       }).then(res => {
         if (parseInt(res.data[0].booleano) === 0) {
@@ -90,6 +97,8 @@ export default class ProfileEditor extends Component {
           this.setState({ disabledEmailE: false })
         }
       })
+    }else{
+      this.setState({ disabledEmailE: false })
     }
   }
 
@@ -97,22 +106,24 @@ export default class ProfileEditor extends Component {
   updateEmail = () => {
 
     const { newEmail } = this.state
-    axios.post('/api/edit-email/', null, {
+    axios.post('https://mcnreader.herokuapp.com/api/edit-email/', null, {
       params: { email: newEmail }
     }).then(() => { this.findDetailts() })
     this.refEditEmailE.current.disabled = true;
     this.setState({ disabledEmailE: false })
+    this.showDialog('Mensaje del sistema:','Email del usuario actualziado correctamente')
   }
 
   //Actualiza el telefono del editor
   updatePhone = () => {
 
     const { newPhone } = this.state
-    axios.post('/api/edit-phone/', null, {
+    axios.post('https://mcnreader.herokuapp.com/api/edit-phone/', null, {
       params: { phone: newPhone }
     }).then(() => { this.findDetailts() })
     this.refEditPhone.current.disabled = true;
     this.setState({ disabledPHone: false })
+    this.showDialog('Mensaje del sistema:','Teléfono del usuario actualziado correctamente')
   }
 
 
@@ -143,18 +154,23 @@ export default class ProfileEditor extends Component {
     Promise.resolve(this.comparatePassword()).then(() => {
       const { passBool, repassBool, newPassword } = this.state
 
-      if (passBool && repassBool) {
-        axios.post('/api/edit-editor-password/', null, {
-          params: { password: md5(newPassword) }
-        })
-
-        this.refNewPasswordE.current.disabled = true;
-        this.refRNewPasswordE.current.disabled = true;
-        this.setState({ disabledPasswordUpdate: false })
-
-      } else {
-        console.log('No iguales');
+      if (newPassword.length > 7) {
+        if (passBool && repassBool) {
+          axios.post('https://mcnreader.herokuapp.com/api/edit-editor-password/', null, {
+            params: { password: md5(newPassword) }
+          })
+  
+          this.refNewPasswordE.current.disabled = true;
+          this.refRNewPasswordE.current.disabled = true;
+          this.setState({ disabledPasswordUpdate: false })
+          this.showDialog('Mensaje del sistema:','Contraseña del usuario actualziada correctamente')
+        } else {
+          this.showDialog('Mensaje del sistema:','Las contraseñas no son iguales')
+        }
+      }else{
+        this.showDialog('Mensaje del sistema:','Contraseña demasiado corta')
       }
+     
     })
   }
 
@@ -253,7 +269,7 @@ export default class ProfileEditor extends Component {
 
     const { oldPassword } = this.state
 
-    const comprobacion = await axios.post('/api/check-editor-password/', null, {
+    const comprobacion = await axios.post('https://mcnreader.herokuapp.com/api/check-editor-password/', null, {
       params: { password: md5(oldPassword) }
     }).then(res => { return parseInt(res.data[0].booleano) })
 
@@ -262,7 +278,18 @@ export default class ProfileEditor extends Component {
       this.refNewPasswordE.current.disabled = false;
       this.refRNewPasswordE.current.disabled = false;
       this.setState({ disabledPasswordUpdate: true, disabledPasswordCheckE: false })
+    }else{
+      this.showDialog('Mensaje del sistema:','La contraseña ingresada es incorrecta')
     }
+  }
+
+  //Función que añade al ReactDOM una carta con los datos pasados
+  showDialog = (titulo, mensaje) => {
+
+    let contenedor = document.getElementById('dialog');
+    ReactDOM.unmountComponentAtNode(contenedor);
+    let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+    ReactDOM.render(carta, contenedor)
   }
 
   render() {

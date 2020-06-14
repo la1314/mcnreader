@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import EOItem from './items/EditorObraItem.jsx';
+import ReactDOM from 'react-dom';
+import Dialog from '../../mainApp/pages/items/Dialog.jsx';
 axios.defaults.withCredentials = true;
 
 export default class Gestor extends Component {
@@ -158,7 +160,7 @@ export default class Gestor extends Component {
         this.setState({ coverList: await this.findObras() })
 
         axios.post('https://mcnreader.herokuapp.com/api/default-demografia/', null, { params: { obra: obra } })
-
+        this.showDialog('Mensaje del sistema', 'Obra creada exitosamente')
       })
     })
   }
@@ -174,7 +176,15 @@ export default class Gestor extends Component {
 
   }
 
-  //TODO Crear interfaz y verificar la creación correcta en el servidor, modificar php para incluir el cover
+    //Función que añade al ReactDOM una carta con los datos pasados
+    showDialog = (titulo, mensaje) => {
+
+      let contenedor = document.getElementById('dialog');
+      ReactDOM.unmountComponentAtNode(contenedor);
+      let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+      ReactDOM.render(carta, contenedor)
+  }
+
   render() {
 
     const { tipos, estados, nombre, autor, lanzamiento, coverList } = this.state

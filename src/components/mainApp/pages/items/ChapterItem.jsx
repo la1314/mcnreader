@@ -4,6 +4,7 @@ axios.defaults.withCredentials = true;
 
 export default class HomePL extends Component {
 
+    _isMounted3 = false;
     constructor(props) {
         super(props);
         this.state = {
@@ -18,9 +19,13 @@ export default class HomePL extends Component {
 
     //Carga los datos al state
     componentDidMount() {
+        this._isMounted3 = true;
         this.checkLeido();
     }
 
+    componentWillUnmount() {
+        this._isMounted3 = false;
+    }
 
     // compruba que el usuario ha leido el capítulo
     checkLeido = () => {
@@ -35,7 +40,9 @@ export default class HomePL extends Component {
     createLeido = async () => {
         const { chapter, leido } = this.state
         if (!parseInt(leido)) {
-            axios.post(`https://mcnreader.herokuapp.com/api/new-leido/`, null, { params: { chapter: chapter } }).then(() => { this.setState({ leido: 1 }) })
+            axios.post(`https://mcnreader.herokuapp.com/api/new-leido/`, null, { params: { chapter: chapter } }).then(() => { 
+                if (this._isMounted3) {this.setState({ leido: 1 })}
+             })
         }
     }
 
@@ -78,7 +85,7 @@ export default class HomePL extends Component {
                     <div>Número: {number}</div>
                     <div>{name}</div>
                 </div>
-                {rol === 'READER' && (<div className={'ol-chapter-vl ' + (leido ? 'chapter-leido' : 'chapter-no-leido') } onClick={() => { this.changeLeido() }} >
+                {rol === 'READER' && (<div className={'ol-chapter-vl ' + (leido ? 'chapter-leido' : 'chapter-no-leido')} onClick={() => { this.changeLeido() }} >
                     <img alt='' src={leido ? imgSrc[1] : imgSrc[0]} ></img>
                 </div>)}
 

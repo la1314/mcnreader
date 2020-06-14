@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ReactDOM from 'react-dom';
+import Dialog from '../../mainApp/pages/items/Dialog.jsx';
 axios.defaults.withCredentials = true;
 
 export default class EditChapter extends Component {
@@ -79,7 +81,8 @@ export default class EditChapter extends Component {
                 break;
 
             case 4:
-                this.setState({ visibilidad: value })
+                this.setState({ visibilidad: value }, () => { this.showUpdate(4) })
+
                 break;
 
             //Al borrar cambiar la pagina a Gestor TODO
@@ -187,6 +190,42 @@ export default class EditChapter extends Component {
         }
     }
 
+
+    //Función que añade al ReactDOM una carta con los datos pasados
+    showDialog = (titulo, mensaje) => {
+
+        let contenedor = document.getElementById('dialog');
+        ReactDOM.unmountComponentAtNode(contenedor);
+        let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+        ReactDOM.render(carta, contenedor)
+    }
+
+
+    showUpdate = (tipe) => {
+
+        switch (tipe) {
+            case 1:
+                this.showDialog('Mensaje del sistema', 'Nombre del capítulo actualizado correctamente')
+                break;
+
+            case 2:
+                this.showDialog('Mensaje del sistema', 'Número del capítulo  actualizado correctamente')
+                break;
+
+            case 3:
+                this.showDialog('Mensaje del sistema', 'Fecha de lanzamiento del capítulo  actualizado correctamente')
+                break;
+
+            case 4:
+                this.showDialog('Mensaje del sistema', 'Visibilidad del capítulo  actualizado correctamente')
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
     render() {
 
         const { name, number, date, listPages, visibilidad, obra, estilos } = this.state
@@ -201,15 +240,15 @@ export default class EditChapter extends Component {
                     <div className='h1-section'>Detalles del capítulo</div>
                     <div className='edit-chapter-name'>
                         <label htmlFor='label-new-chapter-number'>Nombre: </label>
-                        <input type='text' value={name} name="input-new-chapter-name" onChange={(e) => { this.editChapter(e, 2) }} placeholder="Nombre del capítulo" />
+                        <input type='text' value={name} name="input-new-chapter-name" onChange={(e) => { this.editChapter(e, 2) }} onBlur={() => { this.showUpdate(1) }} placeholder="Nombre del capítulo" />
                     </div>
                     <div className='edit-chapter-number'>
-                        <label htmlFor='label-new-chapter-number'>Numero: </label>
-                        <input type='number' value={number} name="input-new-chapter-number" onChange={(e) => { this.editChapter(e, 1) }} placeholder="Número del capítulo" />
+                        <label htmlFor='label-new-chapter-number'>Número: </label>
+                        <input type='number' value={number} name="input-new-chapter-number" onChange={(e) => { this.editChapter(e, 1) }} onBlur={() => { this.showUpdate(2) }} placeholder="Número del capítulo" />
                     </div>
                     <div className='edit-chapter-date'>
                         <label htmlFor='label-new-chapter-number'>Fecha lanzamiento: </label>
-                        <input type='date' value={date} onChange={(e) => { this.editChapter(e, 3) }} name="input-new-chapter-date" />
+                        <input type='date' value={date} onChange={(e) => { this.editChapter(e, 3) }} onBlur={() => { this.showUpdate(3) }} name="input-new-chapter-date" />
                     </div>
 
                     <div className='edit-chapter-visibilidad'>

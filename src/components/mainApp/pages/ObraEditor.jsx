@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ECItem from './items/EditorChapterItem.jsx';
+import ReactDOM from 'react-dom';
+import Dialog from '../../mainApp/pages/items/Dialog.jsx';
 import ESM from './items/EditorSM.jsx';
 import ESMI from './items/EditorSMItem.jsx';
 axios.defaults.withCredentials = true;
@@ -160,10 +162,10 @@ export default class ObraEditor extends Component {
 
             case 3:
 
-                if ( (value === '' || re.test(value)) && value.length < 5 ) {
+                if ((value === '' || re.test(value)) && value.length < 5) {
                     this.setState({ lanzamiento: value })
                 }
-                
+
                 break;
 
             case 4:
@@ -272,7 +274,6 @@ export default class ObraEditor extends Component {
     //Añade/Elimina un capítulo
 
     //Añade un nuevo capítulo a la obra
-    //TODO SI EL NUMERO DEL CAPITULO YA EXISTE 
     newChapter = () => {
 
         const { newChapterName, newChapterNumber, newChapterDate, newChapterVisibilidad, obra, editor } = this.state
@@ -307,7 +308,9 @@ export default class ObraEditor extends Component {
             formData.append('action', 'newChapterDirectory');
             axios.post('https://tuinki.gupoe.com/media/options.php', formData, config)
 
-        })).then(async () => this.setState({ listChapters: await this.findCaracteristicaObra('chapters') }))
+        })).then(async () => this.setState({ listChapters: await this.findCaracteristicaObra('chapters') }, () => {
+            this.showDialog('Mensaje del sistema', 'Capítulo añadido correctamente')
+        }))
     }
 
     //Actualiza los estados para la creación de un nuevo capítulo
@@ -339,6 +342,40 @@ export default class ObraEditor extends Component {
         }
     }
 
+    //Función que añade al ReactDOM una carta con los datos pasados
+    showDialog = (titulo, mensaje) => {
+
+        let contenedor = document.getElementById('dialog');
+        ReactDOM.unmountComponentAtNode(contenedor);
+        let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+        ReactDOM.render(carta, contenedor)
+    }
+
+    showUpdate = (tipe) => {
+
+        switch (tipe) {
+            case 1:
+                this.showDialog('Mensaje del sistema', 'Nombre de la obra actualizado correctamente')
+                break;
+
+            case 2:
+                this.showDialog('Mensaje del sistema', 'Autor de la obra actualizado correctamente')
+                break;
+
+            case 3:
+                this.showDialog('Mensaje del sistema', 'Lanzamiento de la obra actualizado correctamente')
+                break;
+
+            case 4:
+                this.showDialog('Mensaje del sistema', 'Descripción de la obra actualizado correctamente')
+                break;
+
+            default:
+                break;
+        }
+
+    }
+
     render() {
 
         const { autor, nombre, lanzamiento, demografia, demografiaValue, generos, listDemografias, listGeneros,
@@ -360,15 +397,15 @@ export default class ObraEditor extends Component {
 
                             <div className='edit-obra-name'>
                                 <label htmlFor="obra-name">Nombre: </label>
-                                <input type="text" value={nombre} onChange={(e) => { this.editObra(e, 1) }} name="obra-name" placeholder="Editar nombre" />
+                                <input type="text" value={nombre} onChange={(e) => { this.editObra(e, 1) }} onBlur={() => { this.showUpdate(1) }} name="obra-name" placeholder="Editar nombre" />
                             </div>
                             <div className='edit-obra-autor'>
                                 <label htmlFor="obra-autor">Autor: </label>
-                                <input type="text" value={autor} onChange={(e) => { this.editObra(e, 2) }} name="obra-autor" placeholder="Editar autor" />
+                                <input type="text" value={autor} onChange={(e) => { this.editObra(e, 2) }} onBlur={() => { this.showUpdate(2) }} name="obra-autor" placeholder="Editar autor" />
                             </div>
                             <div className='edit-obra-lanzamiento' >
                                 <label htmlFor="obra-lanzamiento">Lanzamiento: </label>
-                                <input value={lanzamiento} onChange={(e) => { this.editObra(e, 3) }} name="obra-lanzamiento" placeholder="Editar año de anzamiento" />
+                                <input value={lanzamiento} onChange={(e) => { this.editObra(e, 3) }} onBlur={() => { this.showUpdate(3) }} name="obra-lanzamiento" placeholder="Editar año de anzamiento" />
                             </div>
                             <div className='edit-obra-tipo' >
                                 <label htmlFor="obra-tipo">Tipo: {tipo}</label>
@@ -429,7 +466,7 @@ export default class ObraEditor extends Component {
 
                 <div className='edit-obra-resume'>
                     <div className='h1-section'>Descripción: </div>
-                    <textarea rows={20} cols={40} placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
+                    <textarea rows={20} cols={40} placeholder='Añanir descripción a la obra' className='edit-obra-resume-textarea' onBlur={() => { this.showUpdate(4) }} onChange={(e) => { this.editObra(e, 4) }} value={descripcion} />
                 </div>
 
                 <div className='edit-obra-social-media-container' >
