@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import UL from './items/UserLector.jsx';
 const md5 = require('md5');
 axios.defaults.withCredentials = true;
 
@@ -383,10 +384,7 @@ export default class ProfileUser extends Component {
             <div className='profile-lector-create'>
               {tipos.map((item, index) => {
                 return [
-                  <div key={'pl' + index}>
-                    <label>{item.NOMBRE}</label>
-                    <button onClick={() => { this.activarPreferencia(item.ID) }} >Activar</button>
-                  </div>
+                  <UL findLectores={this.findLectores} key={'plc'+index} tipo={item.ID} name={item.NOMBRE} />
                 ]
               })}
             </div>

@@ -523,11 +523,11 @@ $main-height-cover-phone: 210px;
 
     .profile-lector-edit {
         margin-top: 10px;
+        margin-bottom: 20px;
         border-top: $main-border-section 1px solid;
 
         .profile-lector-options {
             margin-top: 10px;
-
         }
     }
 
@@ -859,12 +859,12 @@ $main-height-cover-phone: 210px;
 
     .reader-grid .simple {
 
-        height: 650px;
+        height: 450px;
         width: 75%;
     }
 
     .reader-grid .doble {
-        height: 600px;
+        height: 450px;
         width: 100%;
     }
 }
@@ -889,6 +889,7 @@ $main-height-cover-phone: 210px;
     }
 
     .reader-grid .doble {
+        height: 450px;
         width: 100%;
     }
 
@@ -923,11 +924,12 @@ $main-height-cover-phone: 210px;
     justify-items: center;
 
     .simple {
-        height: 500px;
-        width: 65%;
+        height: 450px;
+        width: 75%;
     }
 
     .doble {
+        height: 450px;
         width: 100%;
     }
 }
