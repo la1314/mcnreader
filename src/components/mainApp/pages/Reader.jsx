@@ -8,7 +8,7 @@ export default class Reader extends Component {
         super(props);
         this.state = {
             obra: '', chapter: '', listPages: null, reader: 'paginada', tipo: '', estilo: ['simple', 'doble'],
-            styleManga: null, puntero: 0, dobles: 0, opciones: []
+            styleManga: null, puntero: 0, dobles: 0, opciones: [], listChapters: []
         }
     }
 
@@ -19,13 +19,13 @@ export default class Reader extends Component {
             const obra = parseInt(localStorage.getItem('obra'));
             const chapter = parseInt(localStorage.getItem('chapter'));
             const rol = localStorage.getItem('rol')
-            this.setState({ obra: obra, chapter: chapter, puntero: 0, rol:rol }, async () => {
+            this.setState({ obra: obra, chapter: chapter, puntero: 0, rol: rol }, async () => {
 
                 if (rol === 'READER') {
                     this.findTipoLector();
                 }
 
-                this.setState({ listPages: await this.findPages() }, () => {
+                this.setState({ listPages: await this.findPages(), listChapters: await this.findCaracteristicaObra('chapters') }, () => {
                     this.reordenarManga(this.state.listPages)
                     document.addEventListener("keydown", this.eventosKey, false);
                 })
@@ -49,6 +49,17 @@ export default class Reader extends Component {
         if (e.keyCode === 39) {
             this.modificarPuntero(1);
         }
+    }
+
+    //Obtiene las distintas caracteristicas de una obra
+    findCaracteristicaObra = (option) => {
+
+        const { obra } = this.state
+
+        return axios.post(`https://mcnreader.herokuapp.com/api/find-${option}/`, null, { params: { obra: obra } }).then(function (res) {
+            // handle success
+            return res.data
+        })
     }
 
     //Modifica los estados puntero y dobles
@@ -98,6 +109,7 @@ export default class Reader extends Component {
     //Devuelve las paginas de un capítulo
     findPages = () => {
         const { chapter } = this.state
+        
         return axios.post('https://mcnreader.herokuapp.com/api/find-chapter-pages/', null, {
             params: { chapter: parseInt(chapter) }
         }).then(res => { return res.data })
@@ -132,6 +144,15 @@ export default class Reader extends Component {
         this.setState({ reader: filtrado[0].estilo })
     }
 
+    //Cambia de capítulo actual
+    cambiarCapitulo = (e) => {
+
+        const chapter = parseInt(e.target.value)
+        localStorage.setItem("chapter", chapter)
+        axios.post('https://mcnreader.herokuapp.com/api/find-chapter-pages/', null, {
+            params: { chapter: chapter }
+        }).then(res => { this.setState({ listPages: res.data, chapter: chapter }, () => {this.reordenarManga(this.state.listPages)} )})
+    }
 
     //Utilizada en caso de vista de dos páginas
     devolverPaginadoDoble = (lista, puntero, estilo) => {
@@ -195,14 +216,29 @@ export default class Reader extends Component {
     //TODO Cambio de vista ha de ser un nuevo componente
     render() {
 
-        const { listPages, reader, estilo, styleManga, puntero, dobles } = this.state
+        const { listPages, reader, estilo, styleManga, puntero, dobles, listChapters, chapter } = this.state
 
         if (listPages === null) { return null }
         if (styleManga === null) { return null }
 
         return (
             <div className={reader + ' border-reader'}>
+                <div className='reader-control-tipe'>
+                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 0) }} className='reader-control-tipe-Button' current='P' />
+                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 1, 0) }} className='reader-control-tipe-Button' current='P-D-OC' />
+                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 1) }} className='reader-control-tipe-Button' current='P-D-OR' />
+                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 0) }} className='reader-control-tipe-Button' current='C' />
+                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 1, 0) }} className='reader-control-tipe-Button' current='C-D-OC' />
+                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 1) }} className='reader-control-tipe-Button' current='C-D-OC' />
 
+                    <div className='reader-control-chapter' >
+                        <label>Capítulos: </label>
+                        <select id="select-chapter" value={chapter} onChange={(e) => { this.cambiarCapitulo(e) }} >
+                            {listChapters.map((item, index) => <option key={item.NUMERO + index + item.ID} value={item.ID}>{item.NUMERO}</option>)}
+                        </select>
+                    </div>
+
+                </div>
                 {reader === 'cascada' && (listPages.map((item, index) => {
                     return [
                         <img className={'reader-page ' + estilo[item.ESTILO]} key={'img' + index} alt='imagen del capítulo' src={item.RUTA} />
