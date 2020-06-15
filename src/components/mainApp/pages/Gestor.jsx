@@ -130,7 +130,7 @@ export default class Gestor extends Component {
         estado: estado,
         name: nombre,
         autor: autor,
-        lanzamiento: lanzamiento,
+        lanzamiento: lanzamiento || 1990,
         visibilidad: visibilidad
       }
     }).then(() => {

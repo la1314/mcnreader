@@ -47,7 +47,7 @@ export default class Editor extends Component {
         return <Library changeToObra={this.changeToObra} />;
 
       case 2:
-        return <ProfileE />;
+        return <ProfileE logout={this.logout} />;
 
       case 3:
         return <ObraL obra={obra} changeToChapter={this.changeToChapter} />;
@@ -59,7 +59,7 @@ export default class Editor extends Component {
         return <EditChapter user={user} obraID={obraEditID} changeToEditObra={this.changeToEditObra} chapter={chapterEditID} />;
 
       case 6:
-        return <ObraE user={user} obraID={obraEditID} changeToEditChapter={this.changeToEditChapter} />;
+        return <ObraE changePage={this.changePage} user={user} obraID={obraEditID} changeToEditChapter={this.changeToEditChapter} />;
 
       default:
         return <Gestor user={user} changeToEditObra={this.changeToEditObra} />;
@@ -96,6 +96,8 @@ export default class Editor extends Component {
       localStorage.removeItem('chapter');
       localStorage.removeItem('obraEdit');
       localStorage.removeItem('user');
+      localStorage.removeItem('obra');
+      localStorage.removeItem('rol');
       this.props.checkAuth()
     }
   }

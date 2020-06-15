@@ -831,7 +831,9 @@ $main-height-cover-phone: 210px;
             background-color: $main-bg-cover-text;
             width: 100%;
 
-
+            display: grid;
+            justify-items: center;
+            align-items: center;
             img {
                 width: 100%;
                 height: $main-height-cover-phone;
@@ -839,7 +841,8 @@ $main-height-cover-phone: 210px;
 
 
             .btn {
-                margin-left: 5px;
+                margin-top: 5px;
+                width: 100%;
                 background-color: $main-transparente;
                 color: $main-button-color;
                 border: $main-button-color 1px solid;
@@ -957,6 +960,10 @@ $main-height-cover-phone: 210px;
         border: 1px solid $main-button-color;
         text-align: center;
 
+        img {
+            width: 100%;
+        }
+
         * {
             color: $main-button-color;
         }
@@ -1052,6 +1059,17 @@ $main-height-cover-phone: 210px;
             display: grid;
             justify-items: center;
             width: 100%;
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Old versions of Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
 
             div {
 

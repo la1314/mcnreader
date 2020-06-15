@@ -19,6 +19,11 @@ export default class ProfileEditor extends Component {
       disabledUserE: false, disabledEmailE: false,
       disabledPasswordCheckE: false, disabledPHone: false,
       disabledPasswordUpdateE: false,
+      pass: '',
+      disabledPasswordCheck: false,
+      palabra: '',
+      disabledEliminar: false,
+      palabraEliminacion: 'ELIMINAR'
     }
 
     this.refEditUserE = React.createRef();
@@ -27,12 +32,19 @@ export default class ProfileEditor extends Component {
     this.refNewPasswordE = React.createRef();
     this.refRNewPasswordE = React.createRef();
     this.refEditPhone = React.createRef();
+    this.refPassword = React.createRef();
+    this.refPalabra = React.createRef();
   }
 
   //Carga los datos al state
   componentDidMount() {
 
     this.findDetailts();
+    if (localStorage.getItem('user')) {
+      const editor = parseInt(localStorage.getItem('user'));
+      this.setState({ editor: editor })
+    }
+    
   }
 
   // Carga los datos del usuario al state
@@ -65,7 +77,7 @@ export default class ProfileEditor extends Component {
           this.setState({ disabledUserE: false })
         }
       })
-    } else{
+    } else {
       this.setState({ disabledUserE: false })
     }
   }
@@ -79,7 +91,7 @@ export default class ProfileEditor extends Component {
     this.setState({ disabledUserE: false })
     this.refEditUserE.current.disabled = true;
 
-    this.showDialog('Mensaje del sistema:','Nombre de editor actualizado correctamente')
+    this.showDialog('Mensaje del sistema:', 'Nombre de editor actualizado correctamente')
 
   }
 
@@ -97,7 +109,7 @@ export default class ProfileEditor extends Component {
           this.setState({ disabledEmailE: false })
         }
       })
-    }else{
+    } else {
       this.setState({ disabledEmailE: false })
     }
   }
@@ -111,7 +123,7 @@ export default class ProfileEditor extends Component {
     }).then(() => { this.findDetailts() })
     this.refEditEmailE.current.disabled = true;
     this.setState({ disabledEmailE: false })
-    this.showDialog('Mensaje del sistema:','Email del editor actualizado correctamente')
+    this.showDialog('Mensaje del sistema:', 'Email del editor actualizado correctamente')
   }
 
   //Actualiza el telefono del editor
@@ -123,7 +135,7 @@ export default class ProfileEditor extends Component {
     }).then(() => { this.findDetailts() })
     this.refEditPhone.current.disabled = true;
     this.setState({ disabledPHone: false })
-    this.showDialog('Mensaje del sistema:','Teléfono del editor actualizado correctamente')
+    this.showDialog('Mensaje del sistema:', 'Teléfono del editor actualizado correctamente')
   }
 
 
@@ -159,18 +171,18 @@ export default class ProfileEditor extends Component {
           axios.post('https://mcnreader.herokuapp.com/api/edit-editor-password/', null, {
             params: { password: md5(newPassword) }
           })
-  
+
           this.refNewPasswordE.current.disabled = true;
           this.refRNewPasswordE.current.disabled = true;
           this.setState({ disabledPasswordUpdate: false })
-          this.showDialog('Mensaje del sistema:','Contraseña del editor actualizada correctamente')
+          this.showDialog('Mensaje del sistema:', 'Contraseña del editor actualizada correctamente')
         } else {
-          this.showDialog('Mensaje del sistema:','Las contraseñas no son iguales')
+          this.showDialog('Mensaje del sistema:', 'Las contraseñas no son iguales')
         }
-      }else{
-        this.showDialog('Mensaje del sistema:','Contraseña demasiado corta')
+      } else {
+        this.showDialog('Mensaje del sistema:', 'Contraseña demasiado corta')
       }
-     
+
     })
   }
 
@@ -278,8 +290,8 @@ export default class ProfileEditor extends Component {
       this.refNewPasswordE.current.disabled = false;
       this.refRNewPasswordE.current.disabled = false;
       this.setState({ disabledPasswordUpdate: true, disabledPasswordCheckE: false })
-    }else{
-      this.showDialog('Mensaje del sistema:','La contraseña ingresada es incorrecta')
+    } else {
+      this.showDialog('Mensaje del sistema:', 'La contraseña ingresada es incorrecta')
     }
   }
 
@@ -292,12 +304,93 @@ export default class ProfileEditor extends Component {
     ReactDOM.render(carta, contenedor)
   }
 
+  /**Eliminación**/
+
+  //Elimina la cuenta del editor
+  deleteEditor = () => {
+
+    const { editor } = this.state
+    const config = { headers: { 'content-type': 'multipart/form-data' } }
+
+    const formData = new FormData();
+    formData.append('editor', editor);
+    formData.append('action', 'deleteEditorDirectory');
+
+    axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then(
+      axios.post('https://mcnreader.herokuapp.com/api/delete-editor/').then(() => {
+        this.showDialog('Mensaje del sistema:', 'Cuenta del editor eliminada correctamente')
+        this.props.logout()
+      })
+    )
+  }
+
+  updateSate = (e, tipo) => {
+
+    switch (tipo) {
+      case 1:
+        this.setState({ pass: e.target.value })
+        break;
+
+      case 2:
+        this.setState({ palabra: e.target.value })
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  //Activa/Desactiva el input y el boton para editar la password
+  activarEditPassword = () => {
+
+    if (this.refPassword.current.disabled) {
+      this.setState({ disabledPasswordCheck: true })
+      this.refPassword.current.disabled = false;
+
+    } else {
+      this.setState({ disabledPasswordCheck: false, disabledPasswordUpdate: false })
+    }
+  }
+
+  //Activa/Desactiva el input los input para la nueva contraseña
+  activarEliminacion = async () => {
+
+    const { pass } = this.state
+
+    const comprobacion = await axios.post('https://mcnreader.herokuapp.com/api/check-editor-password/', null, {
+      params: { password: md5(pass) }
+    }).then(res => { return parseInt(res.data[0].booleano) })
+
+    if (comprobacion) {
+      this.refPassword.current.disabled = true;
+      this.refPalabra.current.disabled = false;
+      this.setState({ disabledPasswordCheck: false, disabledEliminar: true })
+      this.showDialog('Mensaje del sistema:', 'Inserte ELIMINAR para eliminar la obra')
+    } else {
+      this.showDialog('Mensaje del sistema:', 'La contraseña ingresada es incorrecta')
+    }
+  }
+
+  checkPalabra = () => {
+
+    const { palabra, palabraEliminacion } = this.state
+
+    if (palabra === palabraEliminacion) {
+
+      this.deleteEditor()
+
+    } else {
+      this.showDialog('Mensaje del sistema:', 'Palabra de eliminación incorrecta')
+    }
+  }
+
   render() {
 
     //TODO IMPLEMENTAR UPDATE NAME EMAIL AND PHONE, EN LECTOR TAMBIEN
 
     const { user, email, disabledPasswordCheckE, disabledPasswordUpdate, disabledUserE, disabledEmailE,
-      newEmail, newName, oldPassword, newPassword, reNewPassword, phone, newPhone, disabledPHone
+      newEmail, newName, oldPassword, newPassword, reNewPassword, phone, newPhone, disabledPHone,
+      pass, disabledPasswordCheck, palabra, disabledEliminar
     } = this.state
 
     return (
@@ -351,6 +444,20 @@ export default class ProfileEditor extends Component {
             </div>
           </div>
 
+
+        </div>
+        <div className='h1-section'>Eliminar Editor</div>
+        <div className='delete-section'>
+          <div className='delete-check-pass'>
+            <input type='password' ref={this.refPassword} value={pass} onChange={(e) => { this.updateSate(e, 1) }} placeholder='Contraseña actual' disabled />
+            <button disabled={!disabledPasswordCheck} onClick={(e) => { this.activarEliminacion() }} >Comprobar</button>
+            <button onClick={() => { this.activarEditPassword() }}>editar</button>
+          </div>
+
+          <div className='delete-check-palabra'>
+            <input type='text' value={palabra} ref={this.refPalabra} onChange={(e) => { this.updateSate(e, 2) }} placeholder='Ingresar ELIMINAR' disabled />
+            <button disabled={!disabledEliminar} onClick={(e) => { this.checkPalabra() }} >Borrar</button>
+          </div>
 
         </div>
       </div>

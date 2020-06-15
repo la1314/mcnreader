@@ -427,6 +427,14 @@ $main-font-size-h1: 28px;
 
     }
 
+    
+    .reader-control-tipe-Button {
+        margin-top: $main-column-gap;
+        img {
+            width: 50% !important;
+        }
+    }
+
 
     /***************************************************************/
     /** Profile Lector **/
@@ -736,9 +744,9 @@ $main-font-size-h1: 28px;
 
         .edit-chapter-pages {
 
-            grid-template-columns: repeat(6, 1fr);
-            column-gap: $main-column-gap;
-            row-gap: $main-row-gap;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: 15px;
+            row-gap: 15px;
             margin-bottom: $main-column-gap;
 
             .edit-page-item {
@@ -753,6 +761,7 @@ $main-font-size-h1: 28px;
                 }
 
                 .btn {
+                
                     margin-top: 5px;
                     width: 100%;
                 }

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import vp from './images/p.png';
+import vpdoc from './images/p-d-oc.png';
+import vpdor from './images/p-d-or.png';
+import vc from './images/c.png';
+import vcdoc from './images/c-d-oc.png';
+import vcdor from './images/c-d-or.png';
 axios.defaults.withCredentials = true;
 
 export default class Reader extends Component {
@@ -241,12 +247,12 @@ export default class Reader extends Component {
         return (
             <div className={reader + ' border-reader'}>
                 <div className='reader-control-tipe'>
-                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 0) }} className={'reader-control-tipe-Button ' + (reader === 'paginada' && 'select-o')} current='P' />
-                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 1, 0) }} className={'reader-control-tipe-Button ' + (reader === 'paginada-occidental' && 'select-o')} current='P-D-OC' />
-                    <ReaderButton onClick={() => { this.devolverReader(0, 1, 0, 1) }} className={'reader-control-tipe-Button ' + (reader === 'paginada-oriental' && 'select-o')} current='P-D-OR' />
-                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 0) }} className={'reader-control-tipe-Button ' + (reader === 'cascada' && 'select-o')} current='C' />
-                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 1, 0) }} className={'reader-control-tipe-Button ' + (reader === 'cascada-occidental' && 'select-o')} current='C-D-OC' />
-                    <ReaderButton onClick={() => { this.devolverReader(1, 0, 0, 1) }} className={'reader-control-tipe-Button ' + (reader === 'cascada-oriental' && 'select-o')} current='C-D-OC' />
+                    <ReaderVista src={vp} onClick={() => { this.devolverReader(0, 1, 0, 0) }} className={'reader-control-tipe-Button ' + (reader === 'paginada' && 'select-o')} current='P' />
+                    <ReaderVista src={vpdoc} onClick={() => { this.devolverReader(0, 1, 1, 0) }} className={'reader-control-tipe-Button ' + (reader === 'paginada-occidental' && 'select-o')} current='P-D-OC' />
+                    <ReaderVista src={vpdor} onClick={() => { this.devolverReader(0, 1, 0, 1) }} className={'reader-control-tipe-Button ' + (reader === 'paginada-oriental' && 'select-o')} current='P-D-OR' />
+                    <ReaderVista src={vc} onClick={() => { this.devolverReader(1, 0, 0, 0) }} className={'reader-control-tipe-Button ' + (reader === 'cascada' && 'select-o')} current='C' />
+                    <ReaderVista src={vcdoc} onClick={() => { this.devolverReader(1, 0, 1, 0) }} className={'reader-control-tipe-Button ' + (reader === 'cascada-occidental' && 'select-o')} current='C-D-OC' />
+                    <ReaderVista src={vcdor} onClick={() => { this.devolverReader(1, 0, 0, 1) }} className={'reader-control-tipe-Button ' + (reader === 'cascada-oriental' && 'select-o')} current='C-D-OC' />
 
                     <div className='reader-control-chapter' >
                         <label>Capítulos: </label>
@@ -314,6 +320,18 @@ const ReaderButton = props => {
             <div className="inner-container">
                 {props.current}
             </div>
+        </div>
+    );
+};
+
+// Componente usado para mostrar el siguiente elemento a mostrar
+const ReaderVista = props => {
+    return (
+        <div
+            className={props.className}
+            onClick={props.onClick}
+        >
+            <img alt='' src={props.src} />
         </div>
     );
 };

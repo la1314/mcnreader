@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import Dialog from '../../mainApp/pages/items/Dialog.jsx';
+const md5 = require('md5');
 axios.defaults.withCredentials = true;
 
 export default class EditChapter extends Component {
@@ -15,8 +16,15 @@ export default class EditChapter extends Component {
             visibilidad: '',
             listPages: [],
             listFiles: [],
-            estilos: ['Simple', 'Doble']
+            estilos: ['Simple', 'Doble'],
+            pass: '',
+            disabledPasswordCheckE: false,
+            palabra: '',
+            disabledEliminar: false,
+            palabraEliminacion: 'ELIMINAR'
         };
+        this.refPassword = React.createRef();
+        this.refPalabra = React.createRef();
     }
 
     //Carga los datos del capítulo
@@ -91,7 +99,6 @@ export default class EditChapter extends Component {
         }
     }
 
-    /* Funciones que afectan a las páginas de los capítulos */
     //Elimina las paginas de un capítulo
     deleteChapterPages = (page, name) => {
 
@@ -116,6 +123,8 @@ export default class EditChapter extends Component {
             })
         )
     }
+
+
 
     //Función llamada para editar el numero de una pagina
     editPageNumber = (e, page) => {
@@ -200,7 +209,7 @@ export default class EditChapter extends Component {
         ReactDOM.render(carta, contenedor)
     }
 
-
+    // Muestra un mensaje dependiendo al valor de tipe
     showUpdate = (tipe) => {
 
         switch (tipe) {
@@ -223,12 +232,95 @@ export default class EditChapter extends Component {
             default:
                 break;
         }
+    }
 
+    /**Eliminación**/
+
+    //Elimina las paginas de un capítulo
+    deleteChapter = () => {
+
+        const { editor, obra, chapter } = this.state
+        const config = { headers: { 'content-type': 'multipart/form-data' } }
+
+        const formData = new FormData();
+        formData.append('editor', editor);
+        formData.append('work', obra);
+        formData.append('chapter', chapter);
+        formData.append('action', 'deleteChapterDirectory');
+
+        axios.post('https://tuinki.gupoe.com/media/options.php', formData, config).then(
+            axios.post('https://mcnreader.herokuapp.com/api/delete-chapter/', null, {
+                params: { chapter: parseInt(chapter) }
+            }).then(() => {
+                this.showDialog('Mensaje del sistema:', 'Capítulo eliminado correctamente')
+                this.props.changeToEditObra(obra)
+            })
+        )
+    }
+
+    updateSate = (e, tipo) => {
+
+        switch (tipo) {
+            case 1:
+                this.setState({ pass: e.target.value })
+                break;
+
+            case 2:
+                this.setState({ palabra: e.target.value })
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    //Activa/Desactiva el input y el boton para editar la password
+    activarEditPassword = () => {
+
+        if (this.refPassword.current.disabled) {
+            this.setState({ disabledPasswordCheckE: true })
+            this.refPassword.current.disabled = false;
+
+        } else {
+            this.setState({ disabledPasswordCheckE: false, disabledPasswordUpdate: false })
+        }
+    }
+
+    //Activa/Desactiva el input los input para la nueva contraseña
+    activarEliminacion = async () => {
+
+        const { pass } = this.state
+
+        const comprobacion = await axios.post('https://mcnreader.herokuapp.com/api/check-editor-password/', null, {
+            params: { password: md5(pass) }
+        }).then(res => { return parseInt(res.data[0].booleano) })
+
+        if (comprobacion) {
+            this.refPassword.current.disabled = true;
+            this.refPalabra.current.disabled = false;
+            this.setState({ disabledPasswordCheckE: false, disabledEliminar: true })
+            this.showDialog('Mensaje del sistema:', 'Inserte ELIMINAR para eliminar el capítulo')
+        } else {
+            this.showDialog('Mensaje del sistema:', 'La contraseña ingresada es incorrecta')
+        }
+    }
+
+    checkPalabra = () => {
+
+        const { palabra, palabraEliminacion } = this.state
+
+        if (palabra === palabraEliminacion) {
+
+            this.deleteChapter()
+
+        } else {
+            this.showDialog('Mensaje del sistema:', 'Palabra de eliminación incorrecta')
+        }
     }
 
     render() {
 
-        const { name, number, date, listPages, visibilidad, obra, estilos } = this.state
+        const { name, number, date, listPages, visibilidad, obra, estilos, pass, disabledPasswordCheckE, palabra, disabledEliminar } = this.state
 
         return (
             <div className='edit-chapter'>
@@ -267,6 +359,7 @@ export default class EditChapter extends Component {
                     <button onClick={() => { this.uploadPages() }} >Subir paginas</button>
                 </div>
 
+                <div className='h1-section'>Lista de páginas</div>
                 <div className='edit-chapter-pages'>
                     {listPages.map((item, index) => {
                         return [
@@ -277,7 +370,7 @@ export default class EditChapter extends Component {
                                     <input type='number' value={item.NUMERO} name="input-new-page-number" onChange={(e) => { this.editPageNumber(e, item.ID) }} placeholder="Número de la pagina" />
                                 </div>
                                 <div>
-                                    <label htmlFor="pagina-estilo">Estilo: {estilos[item.ESTILO]}</label>
+                                    <label htmlFor="pagina-estilo">Estilo: {estilos[item.ESTILO]} </label>
                                     <select id="edit-estilo-page" value={item.ESTILO} onChange={(e) => { this.editPageStyle(e, item.ID) }} >
                                         <option key={'ep-0'} value='0'>Simple</option>
                                         <option key={'ep-1'} value='1'>Doble</option>
@@ -289,6 +382,20 @@ export default class EditChapter extends Component {
                     })}
                 </div>
 
+                <div className='h1-section'>Borrar capítulo</div>
+                <div className='delete-section'>
+                    <div className='delete-check-pass'>
+                        <input type='password' ref={this.refPassword} value={pass} onChange={(e) => { this.updateSate(e, 1) }} placeholder='Contraseña actual' disabled />
+                        <button disabled={!disabledPasswordCheckE} onClick={(e) => { this.activarEliminacion() }} >Comprobar</button>
+                        <button onClick={() => { this.activarEditPassword() }}>editar</button>
+                    </div>
+
+                    <div className='delete-check-palabra'>
+                        <input type='text' value={palabra} ref={this.refPalabra} onChange={(e) => { this.updateSate(e, 2) }} placeholder='Ingresar ELIMINAR' disabled />
+                        <button disabled={!disabledEliminar} onClick={(e) => { this.checkPalabra() }} >Borrar</button>
+                    </div>
+
+                </div>
 
             </div>
         );
