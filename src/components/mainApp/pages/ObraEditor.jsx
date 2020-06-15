@@ -307,7 +307,7 @@ export default class ObraEditor extends Component {
                 return a.ID - b.ID;
             });
             const last = listChapters.length - 1;
-            console.log(filtro[last].ID);
+           
 
             const formData = new FormData();
             formData.append('editor', editor);
