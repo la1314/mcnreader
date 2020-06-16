@@ -24,8 +24,6 @@ $main-border-section: #c9af0f;
 
 $main-transparente: #00000000;
 
-$main-height-cover-phone: 210px;
-
 /************************************************************************/
 
 
@@ -57,7 +55,7 @@ $main-height-cover-phone: 210px;
                 width: 100%;
 
                 img {
-                    height: $main-height-cover-phone;
+                    object-fit: cover;
                     width: 100%;
                 }
             }
@@ -100,7 +98,7 @@ $main-height-cover-phone: 210px;
                     width: 100%;
 
                     img {
-                        height: $main-height-cover-phone;
+                        object-fit: cover;
                         width: 100%;
                     }
                 }
@@ -111,7 +109,7 @@ $main-height-cover-phone: 210px;
                     width: 100%;
 
                     img {
-                        height: $main-height-cover-phone;
+                        object-fit: cover;
                         width: 100%;
                     }
                 }
@@ -141,8 +139,8 @@ $main-height-cover-phone: 210px;
                 //If an image is 100% wide and height:auto and you think it's too tall, that is specifically 
                 // because the aspect ratio is preserved.
                 img {
+                    object-fit: cover;
                     width: 100%;
-                    height: $main-height-cover-phone;
                 }
             }
         }
@@ -261,6 +259,7 @@ $main-height-cover-phone: 210px;
             width: 100%;
 
             img {
+                object-fit: cover;
                 width: 100%;
             }
 
@@ -588,8 +587,8 @@ $main-height-cover-phone: 210px;
         user-select: none;
 
         .editor-cover-image {
+            object-fit: cover;
             width: 100%;
-            height: $main-height-cover-phone;
 
         }
 
@@ -765,7 +764,7 @@ $main-height-cover-phone: 210px;
     }
 
     .edit-obra-new-chapter {
-        
+
         border-top: $main-border-section 1px solid;
 
         button {
@@ -845,9 +844,10 @@ $main-height-cover-phone: 210px;
             display: grid;
             justify-items: center;
             align-items: center;
+
             img {
+                object-fit: cover;
                 width: 100%;
-                height: $main-height-cover-phone;
             }
 
 
@@ -874,8 +874,11 @@ $main-height-cover-phone: 210px;
 
     border-top: $main-border-section 1px solid !important;
 
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+
     .reader-grid {
-        margin-top: 15px;
         margin-bottom: 15px;
         display: grid;
         grid-template-columns: 1fr;
@@ -886,41 +889,76 @@ $main-height-cover-phone: 210px;
 
     .reader-grid .simple {
 
-        height: 450px;
-        width: 75%;
+        /* height: 450px;
+        width: 75%;*/
+        object-fit: cover;
+        width: 95%;
+
     }
 
     .reader-grid .doble {
-        height: 450px;
-        width: 100%;
+        object-fit: cover;
+        width: 95%;
     }
 }
 
 .paginada-occidental,
 .paginada-oriental {
-
+    margin-top: 10px;
     border-top: $main-border-section 1px solid !important;
     margin-left: auto;
     margin-right: auto;
-    width: 90%;
-
-    .reader-grid {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
 
     .reader-grid .simple {
-        height: 450px;
+        object-fit: cover;
         width: 50%;
-        margin-top: 15px;
     }
 
     .reader-grid .doble {
-        height: 450px;
-        width: 100%;
+        object-fit: cover;
+        width: 950%;
     }
 
 }
+
+
+
+.cascada {
+    margin-top: 10px;
+    border-top: $main-border-section 1px solid !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+    justify-items: center;
+
+    .simple {
+        object-fit: cover;
+        width: 95%;
+    }
+
+    .doble {
+        object-fit: cover;
+        width: 95%;
+    }
+}
+
+.cascada-oriental,
+.cascada-occidental {
+    margin-top: 10px;
+    border-top: $main-border-section 1px solid !important;
+
+    .simple {
+        object-fit: cover;
+        width: 50%;
+    }
+
+    .doble {
+        object-fit: cover;
+        width: 95%;
+    }
+
+}
+
 
 
 .reader-button {
@@ -1006,48 +1044,6 @@ $main-height-cover-phone: 210px;
     }
 }
 
-.cascada {
-
-    border-top: $main-border-section 1px solid !important;
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 15px;
-    justify-items: center;
-
-    .simple {
-        height: 450px;
-        width: 75%;
-    }
-
-    .doble {
-        height: 450px;
-        width: 100%;
-    }
-}
-
-.cascada-oriental,
-.cascada-occidental {
-
-    border-top: $main-border-section 1px solid !important;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
-    margin-top: 10px;
-
-    .simple {
-        height: 450px;
-        width: 50%;
-        margin-top: 15px;
-    }
-
-    .doble {
-        height: 450px;
-        width: 100%;
-    }
-
-}
-
 /** Library **/
 
 .library-container {
@@ -1114,7 +1110,7 @@ $main-height-cover-phone: 210px;
             width: 100%;
 
             img {
-                height: $main-height-cover-phone;
+                object-fit: cover;
                 width: 100%;
             }
         }
@@ -1170,16 +1166,18 @@ $main-height-cover-phone: 210px;
     border-top: $main-border-section 1px solid !important;
 }
 
-.delete-container{
+.delete-container {
     border-top: $main-border-section 1px solid !important;
     margin-bottom: 15px;
-    .delete-section{
+
+    .delete-section {
         display: grid;
         grid-template-columns: 1fr;
 
 
-        .delete-check-pass, .delete-check-palabra{
-            button{
+        .delete-check-pass,
+        .delete-check-palabra {
+            button {
                 margin-left: 5px;
                 border: 1px solid $main-border-section;
                 background-color: $main-transparente;
@@ -1190,7 +1188,7 @@ $main-height-cover-phone: 210px;
                 text-decoration: line-through;
             }
 
-            button:hover{
+            button:hover {
                 background-color: $main-button-color;
                 color: black;
             }

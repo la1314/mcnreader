@@ -22,7 +22,6 @@ export default class Gestor extends Component {
     this._isMounted2 = true;
     this.cargarItems();
     this.cargarDatos();
-
   }
 
   componentWillUnmount() {
@@ -94,7 +93,7 @@ export default class Gestor extends Component {
     const re = /^[0-9\b]+$/;
     const lanzamiento = e.target.value;
 
-    if ( (lanzamiento === '' || re.test(lanzamiento)) && lanzamiento.length < 5 ) {
+    if ((lanzamiento === '' || re.test(lanzamiento)) && lanzamiento.length < 5) {
       localStorage.setItem('lanzamiento', lanzamiento);
       this.setState({ lanzamiento: lanzamiento })
     }
@@ -176,13 +175,13 @@ export default class Gestor extends Component {
 
   }
 
-    //Función que añade al ReactDOM una carta con los datos pasados
-    showDialog = (titulo, mensaje) => {
+  //Función que añade al ReactDOM una carta con los datos pasados
+  showDialog = (titulo, mensaje) => {
 
-      let contenedor = document.getElementById('dialog');
-      ReactDOM.unmountComponentAtNode(contenedor);
-      let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
-      ReactDOM.render(carta, contenedor)
+    let contenedor = document.getElementById('dialog');
+    ReactDOM.unmountComponentAtNode(contenedor);
+    let carta = <Dialog titulo={titulo} mensaje={mensaje} />;
+    ReactDOM.render(carta, contenedor)
   }
 
   render() {
@@ -197,7 +196,7 @@ export default class Gestor extends Component {
         </div>
 
         <div className='create-obra-container' >
-        <div className='h1-section'>Añadir Obra</div>
+          <div className='h1-section'>Añadir Obra</div>
           <div className="form">
             <div className="form-group">
               <label htmlFor="nameObra">nombre: </label>

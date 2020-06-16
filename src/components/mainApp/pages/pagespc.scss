@@ -2,7 +2,6 @@
 
 //Se requiere en este scss
 $main-border-section: #c9af0f;
-$main-height-cover-pc: 470px;
 $main-columns-MAX: 5;
 $main-row-gap: 20px;
 $main-column-gap: 20px;
@@ -185,7 +184,8 @@ $main-font-size-h1: 28px;
 
                 .top-10 {
                     img {
-                        height: $main-height-cover-pc;
+                        object-fit: cover;
+                        width: 100%;
                     }
                 }
             }
@@ -198,13 +198,15 @@ $main-font-size-h1: 28px;
 
                     .pendientes {
                         img {
-                            height: $main-height-cover-pc;
+                            object-fit: cover;
+                            width: 100%;
                         }
                     }
 
                     .seguidos{
                         img {
-                            height: $main-height-cover-pc;
+                            object-fit: cover;
+                        width: 100%;
                         }
                     }
                 }
@@ -217,7 +219,8 @@ $main-font-size-h1: 28px;
 
                 .recientes {
                     img {
-                        height: $main-height-cover-pc;
+                        object-fit: cover;
+                        width: 100%;
                     }
                 }
             }
@@ -237,10 +240,6 @@ $main-font-size-h1: 28px;
             .ol-cover {
                 margin-top: $main-row-gap;
                 width: 100%;
-
-                img {
-                    width: 100%;
-                }
 
             }
 
@@ -357,77 +356,8 @@ $main-font-size-h1: 28px;
     /************************************************************************/
     /** READER **/
 
-    .paginada {
+ 
 
-        .reader-grid .simple {
-
-            height: 1200px;
-            width: 75%;
-         
-        }
-
-        .reader-grid .doble {
-            height: 1200px;
-            width: 100%;
-        }
-    }
-
-    .paginada-occidental,
-    .paginada-oriental {
-        .reader-grid {
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-
-        .reader-grid .simple {
-            height: 1200px;
-            width: 50%;
-            margin-top: 15px;
-        }
-
-        .reader-grid .doble {
-            height: 1200px;
-            width: 100%;
-        }
-    }
-
-
-    .cascada {
-
-        margin-top: 10px;
-        display: grid;
-        grid-template-columns: 1fr;
-        row-gap: $main-row-gap;
-        justify-items: center;
-
-        .simple {
-            height: 1200px;
-            width: 65%;
-        }
-
-        .doble {
-            height: 1200px;
-            width: 100%;
-        }
-    }
-
-    .cascada-oriental,
-    .cascada-occidental {
-        .simple {
-            margin-top: 15px;
-            height: 1200px;
-            width: 50%;
-
-        }
-
-        .doble {
-            height: 1200px;
-            width: 100%;
-        }
-
-    }
-
-    
     .reader-control-tipe-Button {
         margin-top: $main-column-gap;
         img {
@@ -530,8 +460,7 @@ $main-font-size-h1: 28px;
             .library-obra {
                 width: 100%;
                 img {
-
-                    height: $main-height-cover-pc;
+                    object-fit: cover;
                     width: 100%;
                 }
             }
@@ -555,8 +484,8 @@ $main-font-size-h1: 28px;
             font-size: $main-font-size;
 
             .editor-cover-image {
+                object-fit: cover;
                 width: 100%;
-                height: $main-height-cover-pc;
 
             }
 
@@ -596,15 +525,6 @@ $main-font-size-h1: 28px;
                 grid-template-columns: 1fr 3fr;
                 column-gap: $main-column-gap;
                 row-gap: $main-row-gap;
-
-
-                .edit-obra-cover {
-                    img {
-
-                        width: 100%;
-                        height: $main-height-cover-pc;
-                    }
-                }
 
                 .edit-obra-details {
 
@@ -754,11 +674,6 @@ $main-font-size-h1: 28px;
                 display: grid;
                 justify-items: center;
                 align-items: center;
-
-                img {
-                    width: 100%;
-                    height: $main-height-cover-pc;
-                }
 
                 .btn {
                 
