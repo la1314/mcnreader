@@ -575,6 +575,17 @@ $main-height-cover-phone: 210px;
     .editor-cover-list {
 
         border: 1px solid $main-border-color;
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Safari */
+        -khtml-user-select: none;
+        /* Konqueror HTML */
+        -moz-user-select: none;
+        /* Old versions of Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
 
         .editor-cover-image {
             width: 100%;
@@ -754,8 +765,8 @@ $main-height-cover-phone: 210px;
     }
 
     .edit-obra-new-chapter {
+        
         border-top: $main-border-section 1px solid;
-        margin-bottom: 15px;
 
         button {
             margin-left: 5px;
@@ -1157,4 +1168,33 @@ $main-height-cover-phone: 210px;
 
 .ol-chapter-vl:hover {
     border-top: $main-border-section 1px solid !important;
+}
+
+.delete-container{
+    border-top: $main-border-section 1px solid !important;
+    margin-bottom: 15px;
+    .delete-section{
+        display: grid;
+        grid-template-columns: 1fr;
+
+
+        .delete-check-pass, .delete-check-palabra{
+            button{
+                margin-left: 5px;
+                border: 1px solid $main-border-section;
+                background-color: $main-transparente;
+                color: $main-button-color;
+            }
+
+            button:disabled {
+                text-decoration: line-through;
+            }
+
+            button:hover{
+                background-color: $main-button-color;
+                color: black;
+            }
+        }
+
+    }
 }

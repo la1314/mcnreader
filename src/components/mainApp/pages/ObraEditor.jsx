@@ -307,7 +307,7 @@ export default class ObraEditor extends Component {
                 return a.ID - b.ID;
             });
             const last = listChapters.length - 1;
-           
+
 
             const formData = new FormData();
             formData.append('editor', editor);
@@ -624,20 +624,21 @@ export default class ObraEditor extends Component {
                         </button>
                     </div>
                 </div>
+                <div className='delete-container'>
+                    <div className='h1-section'>Eliminar obra</div>
+                    <div className='delete-section'>
+                        <div className='delete-check-pass'>
+                            <input type='password' ref={this.refPassword} value={pass} onChange={(e) => { this.updateSate(e, 1) }} placeholder='Contraseña actual' disabled />
+                            <button disabled={!disabledPasswordCheckE} onClick={(e) => { this.activarEliminacion() }} >Comprobar</button>
+                            <button onClick={() => { this.activarEditPassword() }}>editar</button>
+                        </div>
 
-                <div className='h1-section'>Eliminar obra</div>
-                <div className='delete-section'>
-                    <div className='delete-check-pass'>
-                        <input type='password' ref={this.refPassword} value={pass} onChange={(e) => { this.updateSate(e, 1) }} placeholder='Contraseña actual' disabled />
-                        <button disabled={!disabledPasswordCheckE} onClick={(e) => { this.activarEliminacion() }} >Comprobar</button>
-                        <button onClick={() => { this.activarEditPassword() }}>editar</button>
+                        <div className='delete-check-palabra'>
+                            <input type='text' value={palabra} ref={this.refPalabra} onChange={(e) => { this.updateSate(e, 2) }} placeholder='Ingresar ELIMINAR' disabled />
+                            <button disabled={!disabledEliminar} onClick={(e) => { this.checkPalabra() }} >Borrar</button>
+                        </div>
+
                     </div>
-
-                    <div className='delete-check-palabra'>
-                        <input type='text' value={palabra} ref={this.refPalabra} onChange={(e) => { this.updateSate(e, 2) }} placeholder='Ingresar ELIMINAR' disabled />
-                        <button disabled={!disabledEliminar} onClick={(e) => { this.checkPalabra() }} >Borrar</button>
-                    </div>
-
                 </div>
             </div>
         );

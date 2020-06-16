@@ -44,7 +44,7 @@ export default class ProfileEditor extends Component {
       const editor = parseInt(localStorage.getItem('user'));
       this.setState({ editor: editor })
     }
-    
+
   }
 
   // Carga los datos del usuario al state
@@ -446,20 +446,23 @@ export default class ProfileEditor extends Component {
 
 
         </div>
-        <div className='h1-section'>Eliminar Editor</div>
-        <div className='delete-section'>
-          <div className='delete-check-pass'>
-            <input type='password' ref={this.refPassword} value={pass} onChange={(e) => { this.updateSate(e, 1) }} placeholder='Contraseña actual' disabled />
-            <button disabled={!disabledPasswordCheck} onClick={(e) => { this.activarEliminacion() }} >Comprobar</button>
-            <button onClick={() => { this.activarEditPassword() }}>editar</button>
-          </div>
+        <div className='delete-container'>
+          <div className='h1-section'>Eliminar Editor</div>
+          <div className='delete-section'>
+            <div className='delete-check-pass'>
+              <input type='password' ref={this.refPassword} value={pass} onChange={(e) => { this.updateSate(e, 1) }} placeholder='Contraseña actual' disabled />
+              <button disabled={!disabledPasswordCheck} onClick={(e) => { this.activarEliminacion() }} >Comprobar</button>
+              <button onClick={() => { this.activarEditPassword() }}>editar</button>
+            </div>
 
-          <div className='delete-check-palabra'>
-            <input type='text' value={palabra} ref={this.refPalabra} onChange={(e) => { this.updateSate(e, 2) }} placeholder='Ingresar ELIMINAR' disabled />
-            <button disabled={!disabledEliminar} onClick={(e) => { this.checkPalabra() }} >Borrar</button>
-          </div>
+            <div className='delete-check-palabra'>
+              <input type='text' value={palabra} ref={this.refPalabra} onChange={(e) => { this.updateSate(e, 2) }} placeholder='Ingresar ELIMINAR' disabled />
+              <button disabled={!disabledEliminar} onClick={(e) => { this.checkPalabra() }} >Borrar</button>
+            </div>
 
+          </div>
         </div>
+
       </div>
     );
   }
