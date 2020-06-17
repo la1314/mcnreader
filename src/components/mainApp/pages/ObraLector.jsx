@@ -156,7 +156,7 @@ export default class ObraLector extends Component {
                             {socialMedia.map((item, index) => {
                                 return [
                                     <div className='ol-social-item' key={'ol-sm' + index} >
-                                        <a href={item.LINK} rel={'author'}  ><img className='logo-sm' alt={''} src={item.LOGO} /></a>
+                                        <a href={item.LINK} target="_blank" rel="noopener noreferrer"><img className='logo-sm' alt={''} src={item.LOGO} /></a>
                                     </div>
                                 ]
                             })}

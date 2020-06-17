@@ -13,9 +13,19 @@ export default class Main extends Component {
     };
   }
 
+  onBackButtonEvent = (e) => {
+    e.preventDefault();
+    console.log(e);
+    
+    this.goBack();
+  }
+
   componentDidMount() {
 
     this.checkAuth()
+
+    window.onpopstate = this.onBackButtonEvent;
+
   }
 
   /**
