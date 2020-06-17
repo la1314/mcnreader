@@ -219,8 +219,7 @@ $main-transparente: #00000000;
     -ms-user-select: none;
     /* Internet Explorer/Edge */
     user-select: none;
-    /* Non-prefixed version, currently
-                                  supported by Chrome, Edge, Opera and Firefox */
+    
 }
 
 .cover-name:hover,
@@ -247,7 +246,17 @@ $main-transparente: #00000000;
 /** Obra-Lector **/
 
 .obra-lector {
-
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
     .ol-cover-details {
         border-top: $main-border-section 1px solid;
         display: grid;
@@ -1133,6 +1142,10 @@ $main-transparente: #00000000;
 
 .NOVELA {
     background-color: #537740;
+}
+
+.WEBTOONS {
+    background-color: #75b7d1;
 }
 
 .select {
