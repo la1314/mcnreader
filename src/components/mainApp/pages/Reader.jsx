@@ -247,7 +247,7 @@ export default class Reader extends Component {
 
         if (listPages === null) { return null }
         if (styleManga === null) { return null }
-        console.log(listPages.length);
+  
         
         return (
             <div className={reader + ' border-reader'}>
